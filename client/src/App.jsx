@@ -1,12 +1,12 @@
 import "./App.css";
 import {Outlet} from "react-router-dom";
-
+import Navbar from "./components/navbar/Navbar.jsx";
 function App() {
   return (
-    <>
-      <h1>App layout</h1>
+    <div>
+      <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 }
 
