@@ -20,6 +20,7 @@
 }
 .items {
   width: 55%;
+  position: relative;
 }
 .addBtn {
   width: 55%;

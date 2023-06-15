@@ -1,6 +1,15 @@
 import Class from "./DiaryItem.module.css";
 import OptionsBtn from "./OptionsBtn";
+import {useState} from "react";
+import OptionsModal from "./OptionsModal";
+
 function DiaryItem(props) {
+  const [isActive, setIsActive] = useState(false);
+
+  const setActiveHandler = () => {
+    setIsActive(!isActive);
+  };
+
   return (
     <div className={Class.item}>
       <div className={Class.itemGroup}>
@@ -9,8 +18,9 @@ function DiaryItem(props) {
       </div>
       <div className={Class.actionGroup}>
         <div className={Class.itemCalories}>{props.calories}</div>
-        <OptionsBtn />
+        <OptionsBtn onOptionsClick={setActiveHandler} isActive={isActive} />
       </div>
+      {isActive && <OptionsModal setIsActive={setActiveHandler} />}
     </div>
   );
 }

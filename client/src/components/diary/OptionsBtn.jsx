@@ -1,10 +1,8 @@
 import Class from "./OptionsBtn.module.css";
-import {useState} from "react";
 
-function OptionsBtn() {
-  const [isActive, setIsActive] = useState(false);
+function OptionsBtn({onOptionsClick, isActive}) {
   const clickHandler = () => {
-    setIsActive(!isActive);
+    onOptionsClick();
   };
 
   return (
