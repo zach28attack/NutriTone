@@ -1,0 +1,27 @@
+.container {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: white 1px solid;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.line1 {
+  width: 1.2rem;
+  height: 0.2rem;
+  background-color: white;
+  position: absolute;
+  border-radius: 1rem;
+}
+.line2 {
+  width: 1.2rem;
+  height: 0.2rem;
+  background-color: white;
+  position: absolute;
+  border-radius: 1rem;
+  transform: rotate(90deg);
+}
