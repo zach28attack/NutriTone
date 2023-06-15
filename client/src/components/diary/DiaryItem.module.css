@@ -1,0 +1,24 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-left: 1px solid #bf7d60;
+  border-right: 1px solid #bf7d60;
+}
+.itemGroup {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+.itemName {
+  font-size: 2rem;
+}
+.itemServings {
+  letter-spacing: 1px;
+  opacity: 0.5;
+}
+.itemCalories {
+  font-size: 1.5rem;
+  padding-right: 4rem;
+}
