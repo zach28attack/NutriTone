@@ -1,9 +1,15 @@
+import Class from "./WelcomePage.module.css";
 import UserSignup from "../components/user/Signup";
 import UserLogin from "../components/user/Login";
-import Class from "./WelcomePage.module.css";
 
 function WelcomePage() {
-  return;
+  return (
+    <div className={Class.jumbotron}>
+      <UserSignup />
+      <div className={Class.divider}></div>
+      <UserLogin />
+    </div>
+  );
 }
 
 export default WelcomePage;
