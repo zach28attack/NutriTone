@@ -44,3 +44,12 @@
 .formLink {
   font-size: 0.8rem;
 }
+.title {
+  font-size: 3rem;
+  color: #fff3e6;
+  margin: 0.2rem auto;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
