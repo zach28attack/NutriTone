@@ -25,7 +25,7 @@
   height: 100%;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  animation: buttonsShow 0.4s ease-in forwards;
+  animation: buttonsShow 0.2s ease-in forwards;
   transform: translateX(-5rem);
 }
 .actionGroup button {
