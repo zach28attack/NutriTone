@@ -1,0 +1,33 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  background-color: #fff3e6;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  position: relative;
+  color: #905d48;
+}
+.label {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+.input {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  color: #bf7d60;
+  background-color: #fff3e6;
+  border: #905d48 2px solid;
+  border-radius: 5px;
+}
+.submit {
+  font-size: 1.2rem;
+  width: 6rem;
+  padding: 0.4rem 1rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #bf7d60;
+  color: white;
+  align-self: flex-end;
+  cursor: pointer;
+}
