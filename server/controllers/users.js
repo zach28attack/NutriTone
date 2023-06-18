@@ -2,6 +2,7 @@ const User = require("../models/user");
 const {genToken} = require("../jwtAuth");
 
 exports.signup = async (req, res, next) => {
+  console.log("User signup!");
   const user = new User();
   user.email = req.body.email;
   user.username = req.body.username;
@@ -9,9 +10,8 @@ exports.signup = async (req, res, next) => {
 
   if (user.email && user.username && user.password && user.password === req.body.passwordConfirmation) {
     const result = await user.saveNew();
-    const token = genToken(result.insertedId);
-
     if (result) {
+      const token = genToken(result.insertedId);
       res.status(200).json({
         id: result.insertedId,
         token: token,
