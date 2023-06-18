@@ -1,15 +1,21 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
-const {signup, logout, login} = require("./controllers/users");
+const {signup, login} = require("./controllers/users");
 const {verifyToken} = require("./authenticate");
 
-app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
+  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
-app.post("/user/signup", signup);
+app.use(express.json());
 
-app.get("/user/login", login);
+app.post("/user", signup);
 
-app.get("/user/logout", logout);
+// app.get("/user", login);
+
+// app.get("/user/logout", logout);
 
 app.listen(3000);
