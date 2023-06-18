@@ -9,6 +9,19 @@ class User {
 
   async saveNew() {
     const db = await connectDB();
+    const emailIsTaken = await db.collection("users").findOne({email: this.email});
+    if (!emailIsTaken) {
+      console.log("Saving new user:");
+      try {
+        const result = await db
+          .collection("users")
+          .insertOne({email: this.email, username: this.username, password: this.password});
+
+        return result;
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 }
 
