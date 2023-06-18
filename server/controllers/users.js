@@ -7,7 +7,7 @@ exports.signup = async (req, res, next) => {
   user.username = req.body.username;
   user.password = req.body.password;
 
-  if (user.email && user.username && user.password) {
+  if (user.email && user.username && user.password && user.password === req.body.passwordConfirmation) {
     const result = await user.saveNew();
     const token = genToken(result.insertedId);
 
@@ -23,4 +23,8 @@ exports.signup = async (req, res, next) => {
   } else {
     res.status(400).json();
   }
+};
+
+exports.login = async (req, res, next) => {
+  const {username, password} = req.body;
 };
