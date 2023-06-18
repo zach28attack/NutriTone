@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "createUserIndex": "node scripts/createUserIndex.js"
   },
   "author": "",
   "license": "ISC",
