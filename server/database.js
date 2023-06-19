@@ -8,7 +8,6 @@ async function connectDB() {
   try {
     const client = await mongoClient.connect(uri);
     db = client.db();
-    console.log("DB connection success");
     return db;
   } catch (error) {
     console.error(error);

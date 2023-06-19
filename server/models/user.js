@@ -37,12 +37,10 @@ class User {
     }
   }
   async revokeToken() {
-    console.log("revoke executed");
     const db = await connectDB();
     const result = await db
       .collection("tokens")
       .updateOne({token: this.token, userId: new mongoDB.ObjectId(this.id), revoked: false}, {$set: {revoked: true}});
-    console.log(result);
     if (result.modifiedCount === 1) {
       return true;
     }
