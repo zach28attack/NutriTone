@@ -12,9 +12,9 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.post("/user", signup);
+app.post("/user/signup", signup);
 
-// app.get("/user", login);
+app.post("/user/login", login);
 
 app.get("/user/logout", verifyToken, logout);
 
