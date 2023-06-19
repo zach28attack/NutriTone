@@ -30,7 +30,6 @@ function Signup() {
       console.log("signup api call");
       const success = await signup(email, username, password, passwordConfirmation);
       if (success) {
-        console.log("User signed up", "Cookies:", Cookies.get("userId"));
         navigate("/");
       }
     }
@@ -57,7 +56,7 @@ function Signup() {
           onChange={passwordConfirmationInputHandler}
         />
 
-        <button className={Class.submit}>Submit</button>
+        <input type="submit" className={Class.submit} />
       </form>
     </div>
   );
