@@ -1,5 +1,6 @@
 const {connectDB} = require("../database");
 const {genToken} = require("../jwtAuth");
+const mongoDB = require("mongodb");
 class User {
   constructor(email, username, password, token, id) {
     this.email = email;
@@ -14,7 +15,6 @@ class User {
     const emailIsTaken = await db.collection("users").findOne({email: this.email});
     const usernameIsTaken = await db.collection("users").findOne({username: this.username});
     if (!emailIsTaken && !usernameIsTaken) {
-      console.log("Saving new user:");
       try {
         const result = await db
           .collection("users")
@@ -28,14 +28,24 @@ class User {
       }
     }
   }
-  async saveToken() {
-    const db = await connectDB();
-    const result = await db.collection("tokens").insertOne({token: this.token, userId: this.id, createdAt: new Date()});
-    return result;
-  }
+
   async validateToken() {
     const db = await connectDB();
-    const result = await db.collection("tokens").find({token: this.token, userId: this.id});
+    const result = await db.collection("tokens").find({token: this.token, userId: this.id, revoked: false});
+    if (result) {
+      return true;
+    }
+  }
+  async revokeToken() {
+    console.log("revoke executed");
+    const db = await connectDB();
+    const result = await db
+      .collection("tokens")
+      .updateOne({token: this.token, userId: new mongoDB.ObjectId(this.id), revoked: false}, {$set: {revoked: true}});
+    console.log(result);
+    if (result.modifiedCount === 1) {
+      return true;
+    }
   }
 }
 
