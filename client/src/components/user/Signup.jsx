@@ -2,6 +2,7 @@ import Class from "./Signup.module.css";
 import {useState} from "react";
 import {signup} from "../../../api";
 import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ function Signup() {
   const passwordConfirmationInputHandler = (val) => {
     setPasswordConfirmation(val.target.value);
   };
-
+  const navigate = useNavigate();
   const formSubmitHandler = async (e) => {
     e.preventDefault();
     console.log("input:", email, username, password, passwordConfirmation);
@@ -30,7 +31,7 @@ function Signup() {
       const success = await signup(email, username, password, passwordConfirmation);
       if (success) {
         console.log("User signed up", "Cookies:", Cookies.get("userId"));
-        //TODO: after signup nav to homepage
+        navigate("/");
       }
     }
   };
