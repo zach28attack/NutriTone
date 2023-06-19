@@ -1,6 +1,6 @@
 import Class from "./Signup.module.css";
 import {useState} from "react";
-import {signup} from "../../../api";
+import {signup} from "../../api";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 
