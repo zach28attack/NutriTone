@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const {signup, login} = require("./controllers/users");
+const {signup, login, logout} = require("./controllers/users");
 const {verifyToken} = require("./authenticate");
 
 app.use((req, res, next) => {
@@ -16,6 +16,6 @@ app.post("/user", signup);
 
 // app.get("/user", login);
 
-// app.get("/user/logout", logout);
+app.get("/user/logout", logout);
 
 app.listen(3000);
