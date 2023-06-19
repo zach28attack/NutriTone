@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
-    "createUserIndex": "node scripts/createUserIndex.js"
+    "createUserIndex": "node scripts/createUserIndex.js",
+    "createTokenIndex": "node scripts/createJwtIndex.js"
   },
   "author": "",
   "license": "ISC",
