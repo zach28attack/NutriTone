@@ -16,6 +16,6 @@ app.post("/user", signup);
 
 // app.get("/user", login);
 
-app.get("/user/logout", logout);
+app.get("/user/logout", verifyToken, logout);
 
 app.listen(3000);
