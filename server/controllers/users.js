@@ -1,30 +1,25 @@
 const User = require("../models/user");
-const {genToken} = require("../jwtAuth");
 
 exports.signup = async (req, res, next) => {
-  console.log("User signup!");
   const user = new User();
   user.email = req.body.email;
   user.username = req.body.username;
   user.password = req.body.password;
 
   if (user.email && user.username && user.password && user.password === req.body.passwordConfirmation) {
-    const result = await user.saveNew();
-    if (result) {
-      const token = genToken(result.insertedId);
+    try {
+      await user.saveNew();
       res.status(200).json({
-        id: result.insertedId,
-        token: token,
+        id: user.id,
+        token: user.token,
       });
-    } else {
+    } catch (error) {
+      console.error(error);
       res.status(400).json();
-      console.error("failed to save");
     }
   } else {
     res.status(400).json();
   }
 };
 
-exports.login = async (req, res, next) => {
-  const {username, password} = req.body;
-};
+exports.logout = async (req, res, next) => {};
