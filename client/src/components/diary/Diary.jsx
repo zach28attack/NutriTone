@@ -18,7 +18,13 @@ function Diary(props) {
       </header>
       <main className={Class.items}>
         {props.diaries.map((item) => (
-          <DiaryItem timeOfDay={props.timeOfDay} name={item.name} servings={item.servings} calories={item.calories} />
+          <DiaryItem
+            key={`${Math.random()}`}
+            timeOfDay={props.timeOfDay}
+            name={item.name}
+            servings={item.servings}
+            calories={item.calories}
+          />
         ))}
       </main>
       <div className={Class.addBtn}></div>
