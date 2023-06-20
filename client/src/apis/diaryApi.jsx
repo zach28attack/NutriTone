@@ -20,17 +20,21 @@ export async function getOneDiary() {
 }
 
 export async function getTenDiaries() {
-  const res = fetch("http://localhost:3000/diaries", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${Cookies.get("token")}`,
-    },
-    body: JSON.stringify({date: "1/1/2023"}),
-  });
+  try {
+    const res = await fetch("http://localhost:3000/diaries", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      body: JSON.stringify({date: "1/1/2023"}),
+    });
 
-  if (res) {
-    const data = await res.json();
-    return data.diaries;
+    if (res) {
+      const data = await res.json();
+      return data.diaries;
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
