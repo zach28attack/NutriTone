@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const {signup, login, logout} = require("./controllers/users");
-const {getDiary, saveItemToDiary} = require("./controllers/diaries");
+const {getDiary, saveItemToDiary, getTenDiaries} = require("./controllers/diaries");
 const {verifyToken} = require("./authenticate");
 
 app.use((req, res, next) => {
@@ -22,5 +22,7 @@ app.get("/user/logout", verifyToken, logout);
 app.post("/diary/item", verifyToken, saveItemToDiary);
 
 app.post("/diary", verifyToken, getDiary); // get one diary by date
+
+app.post("/diaries", verifyToken, getTenDiaries);
 
 app.listen(3000);

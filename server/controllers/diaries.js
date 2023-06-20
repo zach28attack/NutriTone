@@ -20,11 +20,16 @@ exports.getDiary = async (req, res, next) => {
   }
 };
 
+exports.getTenDiaries = async (req, res, next) => {
+  const diary = new Diary();
+  diary.userId = req.user.id;
+  diary.date = req.body.date;
+  const diaries = await diary.getTenDiaries();
+};
+
 exports.saveItemToDiary = async (req, res, next) => {
   const diary = new Diary();
   diary.userId = req.user.id;
-
-  const {day, month, year} = req.body;
-  diary.date = `${month}/${day}/${year}`;
+  diary.date = req.body.date;
   diary.saveItemToDiary();
 };
