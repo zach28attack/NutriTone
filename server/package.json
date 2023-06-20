@@ -6,7 +6,10 @@
   "scripts": {
     "start": "nodemon app.js",
     "createUserIndex": "node scripts/createUserIndex.js",
-    "createTokenIndex": "node scripts/createJwtIndex.js"
+    "createTokenIndex": "node scripts/createJwtIndex.js",
+    "createDiaryIndex": "node scripts/createDiaryIndex.js",
+    "createFoodIndex": "node scripts/createFoodsIndex.js",
+    "createRecipeIndex": "node scripts/createRecipesIndex.js"
   },
   "author": "",
   "license": "ISC",
