@@ -32,9 +32,14 @@ class User {
     try {
       const db = await connectDB();
       const result = await db.collection("users").findOne({username: this.username, password: this.password});
-      this.id = result._id;
-      this.token = await genToken(this.id);
-      await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
+      if (result !== null) {
+        this.id = result._id;
+        this.token = await genToken(this.id);
+        await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.error(error);
     }

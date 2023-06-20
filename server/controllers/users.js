@@ -27,20 +27,19 @@ exports.login = async (req, res, next) => {
   user.email = req.body.email;
   user.username = req.body.username;
   user.password = req.body.password;
-
-  if (user.username && user.password) {
-    try {
-      await user.validateUser();
+  try {
+    const success = await user.validateUser();
+    if (success) {
       res.status(200).json({
         id: user.id,
         token: user.token,
       });
-    } catch (error) {
-      console.error(error);
-      res.status(400).json();
+    } else {
+      res.status(401).json({});
     }
-  } else {
-    res.status(400).json();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json();
   }
 };
 
