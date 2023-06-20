@@ -40,7 +40,7 @@ export async function logout() {
     if (response.ok) {
       Cookies.remove("userId");
       Cookies.remove("token");
-      console.log("cookies removed");
+      return true;
     } else {
       console.error("Issue done happened");
     }

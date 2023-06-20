@@ -3,11 +3,15 @@ import {BiLineChartDown} from "react-icons/bi";
 import {FaUserFriends, FaUser} from "react-icons/fa";
 import {GiWhistle} from "react-icons/gi";
 import {logout} from "../../api";
+import {useNavigate} from "react-router-dom";
 
 function Navbar() {
-  const logoutHandler = () => {
-    logout();
-    console.log("logout ran");
+  const navigate = useNavigate();
+  const logoutHandler = async () => {
+    const success = await logout();
+    if (success) {
+      navigate("/welcome");
+    }
   };
 
   return (
