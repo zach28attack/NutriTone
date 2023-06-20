@@ -5,15 +5,21 @@ import {useState, useEffect} from "react";
 
 function HomePage() {
   // const diaries = [{name: "Egg", servings: 1, calories: 205}];
-  const [items, setItems] = useState([{name: "", servings: undefined, calories: undefined}]);
-  const [items2, setItems2] = useState([{name: "", servings: undefined, calories: undefined}]);
-  const [items3, setItems3] = useState([{name: "", servings: undefined, calories: undefined}]);
+  const [breakfastItems, setBreakfastItems] = useState([]);
+  const [lunchItems, setLunchItems] = useState([]);
+  const [dinnerItems, setDinnerItems] = useState([]);
 
   const getItemsFromDiary = async () => {
     const items = await getOneDiary(); // will return all items from a given day
+    console.log("items", items);
 
-    // filter each item by tOD
-    setItems(items);
+    items.forEach((item) => {
+      item.timeOfDay === "Breakfast"
+        ? setBreakfastItems((prevItems) => [...prevItems, item])
+        : item.timeOfDay === "Lunch"
+        ? setLunchItems((prevItems) => [...prevItems, item])
+        : setDinnerItems((prevItems) => [...prevItems, item]);
+    });
   };
 
   useEffect(() => {
@@ -24,9 +30,9 @@ function HomePage() {
   return (
     <>
       <DiarySummary />
-      <Diary timeOfDay={"Breakfast"} diaries={items} />
-      <Diary timeOfDay={"Lunch"} diaries={items2} />
-      <Diary timeOfDay={"Dinner"} diaries={items3} />
+      <Diary timeOfDay={"Breakfast"} diaries={breakfastItems} />
+      <Diary timeOfDay={"Lunch"} diaries={lunchItems} />
+      <Diary timeOfDay={"Dinner"} diaries={dinnerItems} />
     </>
   );
 }
