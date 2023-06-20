@@ -1,6 +1,6 @@
 import Class from "./Login.module.css";
 import {useState} from "react";
-import {login} from "../../api";
+import {login} from "../../apis/userApi";
 import {useNavigate} from "react-router-dom";
 function Login() {
   const [username, setUsername] = useState("");

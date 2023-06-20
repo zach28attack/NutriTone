@@ -2,7 +2,7 @@ import Class from "./Navbar.module.css";
 import {BiLineChartDown} from "react-icons/bi";
 import {FaUserFriends, FaUser} from "react-icons/fa";
 import {GiWhistle} from "react-icons/gi";
-import {logout} from "../../api";
+import {logout} from "../../apis/userApi";
 import {useNavigate} from "react-router-dom";
 
 function Navbar() {
