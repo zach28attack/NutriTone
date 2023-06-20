@@ -27,7 +27,16 @@ class Diary {
       return false;
     }
   }
-  async getTenDiaries() {}
+  async getTenDiaries() {
+    const db = await connectDB();
+    const result = await db
+      .collection("diaries")
+      .find({userId: new mongoDB.ObjectId(this.userId)})
+      .limit(10)
+      .toArray();
+
+    console.log("result", result);
+  }
 }
 
 module.exports = Diary;
