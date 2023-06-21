@@ -34,7 +34,7 @@ function DiaryForm({isActive}) {
           <label className={Class.label}>Calories</label>
           <input type="number" onChange={inputCaloriesHandler} className={Class.input} />
         </div>
-        <div className={Class.formGroup2}>
+        <div className={Class.formGroup3}>
           <label className={Class.label}>Servings</label>
           <input type="number" onChange={inputServingsHandler} className={Class.input} />
         </div>
