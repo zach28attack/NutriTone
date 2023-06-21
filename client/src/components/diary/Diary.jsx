@@ -3,16 +3,13 @@ import DiaryItem from "./DiaryItem";
 import AddIcon from "./AddIcon";
 
 function Diary(props) {
-  let totalCalories = 0;
-  for (let i = 0; i < props.diaries.length; i++) {
-    totalCalories += props.diaries[i].calories;
-  }
-
   return (
     <div className={Class.container}>
       <header className={Class.header}>
-        <div>{`${props.timeOfDay}: ${totalCalories}`}</div>
-        <AddIcon />
+        <div>
+          {props.timeOfDay}: {props.totalCalories}
+        </div>
+        <AddIcon addItem={props.addItem} />
       </header>
       {props.isLoading ? (
         <main className={Class.items}>
@@ -22,7 +19,7 @@ function Diary(props) {
       ) : (
         <main className={Class.items}>
           <div id="form-location"></div>
-          {props.diaries.map((item) => (
+          {props.items.map((item) => (
             <DiaryItem
               key={`${Math.random()}`}
               timeOfDay={props.timeOfDay}
