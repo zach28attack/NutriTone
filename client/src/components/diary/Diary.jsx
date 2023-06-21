@@ -16,17 +16,23 @@ function Diary(props) {
         </div>
         <AddIcon />
       </header>
-      <main className={Class.items}>
-        {props.diaries.map((item) => (
-          <DiaryItem
-            key={`${Math.random()}`}
-            timeOfDay={props.timeOfDay}
-            name={item.name}
-            servings={item.servings}
-            calories={item.calories}
-          />
-        ))}
-      </main>
+      {props.isLoading ? (
+        <main className={Class.items}>
+          <div className={Class.loading}>Loading...</div>
+        </main>
+      ) : (
+        <main className={Class.items}>
+          {props.diaries.map((item) => (
+            <DiaryItem
+              key={`${Math.random()}`}
+              timeOfDay={props.timeOfDay}
+              name={item.name}
+              servings={item.servings}
+              calories={item.calories}
+            />
+          ))}
+        </main>
+      )}
       <div className={Class.addBtn}></div>
     </div>
   );
