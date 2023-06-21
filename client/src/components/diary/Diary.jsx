@@ -11,11 +11,7 @@ function Diary(props) {
   return (
     <div className={Class.container}>
       <header className={Class.header}>
-        <div>
-          {props.timeOfDay}
-          {": "}
-          {totalCalories}
-        </div>
+        <div>{`${props.timeOfDay}: ${totalCalories}`}</div>
         <AddIcon />
       </header>
       {props.isLoading ? (
