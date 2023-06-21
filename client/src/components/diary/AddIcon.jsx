@@ -3,7 +3,7 @@ import {useState} from "react";
 import {createPortal} from "react-dom";
 import DiaryForm from "./DiaryForm";
 
-function AddIcon() {
+function AddIcon(props) {
   const addItemClickHandler = () => {
     setIsActive(!isActive);
   };
@@ -15,7 +15,11 @@ function AddIcon() {
         <div className={Class.line1}></div>
         <div className={Class.line2}></div>
       </div>
-      {isActive && createPortal(<DiaryForm isActive={isActive} />, document.querySelector("#form-location"))}
+      {isActive &&
+        createPortal(
+          <DiaryForm isActive={isActive} addItem={props.addItem} setIsActive={setIsActive} />,
+          document.querySelector("#form-location")
+        )}
     </>
   );
 }
