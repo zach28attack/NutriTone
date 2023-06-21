@@ -9,6 +9,7 @@
   border: white 1px solid;
   cursor: pointer;
   margin-right: 1rem;
+  transition: transform 0.3s ease-in-out;
 }
 .line1 {
   width: 1.2rem;
@@ -24,4 +25,7 @@
   position: absolute;
   border-radius: 1rem;
   transform: rotate(90deg);
+}
+.active {
+  transform: rotate(45deg) scale(1.5);
 }
