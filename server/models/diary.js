@@ -35,7 +35,7 @@ class Diary {
       .limit(10)
       .toArray();
 
-    console.log("result", result);
+    return result;
   }
 }
 
