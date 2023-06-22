@@ -38,3 +38,22 @@ export async function getTenDiaries() {
     console.error(error);
   }
 }
+
+export async function saveNewItem(item) {
+  try {
+    const res = await fetch("http://localhost:3000/diary/item", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      body: JSON.stringify({item: item, date: "1/1/2023"}),
+    });
+    if (res) {
+      const data = await res.json();
+      return data._id;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
