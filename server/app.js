@@ -19,10 +19,10 @@ app.post("/user/login", login);
 
 app.get("/user/logout", verifyToken, logout);
 
-app.post("/diary/item", verifyToken, saveItemToDiary);
+app.post("/diary/item", verifyToken, saveItemToDiary); // new item route
 
 app.post("/diary", verifyToken, getDiary); // get one diary by date
 
-app.post("/diaries", verifyToken, getTenDiaries);
+app.post("/diaries", verifyToken, getTenDiaries); // lazy load the past ten days of diaries
 
 app.listen(3000);
