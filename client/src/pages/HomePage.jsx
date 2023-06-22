@@ -1,6 +1,6 @@
 import DiarySummary from "../components/diary/DiarySummary";
 import Diary from "../components/diary/Diary";
-import {getOneDiary, getTenDiaries} from "../apis/diaryApi";
+import {getOneDiary, getTenDiaries, saveNewItem} from "../apis/diaryApi";
 import {useState, useEffect} from "react";
 
 function HomePage() {
@@ -30,11 +30,11 @@ function HomePage() {
   };
   const getCalorieTotals = (item) => {
     item.timeOfDay === "Breakfast"
-      ? setTotalBreakfastCalories((prevItems) => prevItems + item.calories)
+      ? setTotalBreakfastCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories))
       : item.timeOfDay === "Lunch"
-      ? setTotalLunchCalories((prevItems) => prevItems + item.calories)
+      ? setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories))
       : item.timeOfDay === "Dinner"
-      ? setTotalDinnerCalories((prevItems) => prevItems + item.calories)
+      ? setTotalDinnerCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories))
       : undefined;
   };
   const [totalBreakfastCalories, setTotalBreakfastCalories] = useState(0);
@@ -46,17 +46,41 @@ function HomePage() {
     // getTenDiaries();
   }, []);
 
-  const breakfastAddHandler = (newItem) => {
-    setBreakfastItems((prevItems) => [newItem, ...prevItems]);
-    setTotalBreakfastCalories((prevItems) => prevItems + parseInt(newItem.calories));
+  const breakfastAddHandler = async (newItem) => {
+    newItem._id = 0;
+    setBreakfastItems((prevItems) => [...prevItems, newItem]);
+    setTotalBreakfastCalories((prevItems) => parseInt(prevItems) + parseInt(newItem.calories));
+
+    newItem._id = await saveNewItem(newItem);
+    setBreakfastItems((prevItems) => {
+      const arr = [...prevItems];
+      arr[-1] = newItem;
+      return arr;
+    });
   };
-  const lunchAddHandler = (newItem) => {
-    setLunchItems((prevItems) => [newItem, ...prevItems]);
-    setTotalLunchCalories((prevItems) => prevItems + parseInt(newItem.calories));
+  const lunchAddHandler = async (newItem) => {
+    newItem._id = 0;
+    setLunchItems((prevItems) => [...prevItems, newItem]);
+    setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(newItem.calories));
+
+    newItem._id = await saveNewItem(newItem);
+    setLunchItems((prevItems) => {
+      const arr = [...prevItems];
+      arr[-1] = newItem;
+      return arr;
+    });
   };
-  const DinnerAddHandler = (newItem) => {
-    setDinnerItems((prevItems) => [newItem, ...prevItems]);
-    setTotalDinnerCalories((prevItems) => prevItems + parseInt(newItem.calories));
+  const DinnerAddHandler = async (newItem) => {
+    newItem._id = 0;
+    setDinnerItems((prevItems) => [...prevItems, newItem]);
+    setTotalDinnerCalories((prevItems) => parseInt(prevItems) + parseInt(newItem.calories));
+
+    newItem._id = await saveNewItem(newItem);
+    setDinnerItems((prevItems) => {
+      const arr = [...prevItems];
+      arr[-1] = newItem;
+      return arr;
+    });
   };
 
   return (
