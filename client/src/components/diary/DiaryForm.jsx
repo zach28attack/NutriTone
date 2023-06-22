@@ -2,14 +2,14 @@ import Class from "./DiaryForm.module.css";
 import {useState} from "react";
 import {BsFillArrowRightCircleFill} from "react-icons/bs";
 
-function DiaryForm({addItem, setIsActive}) {
+function DiaryForm({addItem, setIsActive, timeOfDay}) {
   const formSubmitHandlerClick = () => {
-    addItem({name: inputName, calories: inputCalories, servings: inputServings});
+    addItem({name: inputName, calories: inputCalories, servings: inputServings, timeOfDay: timeOfDay});
     setIsActive(false);
   };
   const formSubmitHandlerKeypress = (e) => {
     if (e.key === "Enter") {
-      addItem({name: inputName, calories: inputCalories, servings: inputServings});
+      addItem({name: inputName, calories: inputCalories, servings: inputServings, timeOfDay: timeOfDay});
       setIsActive(false);
     }
   };

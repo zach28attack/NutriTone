@@ -17,7 +17,12 @@ function AddIcon(props) {
       </div>
       {isActive &&
         createPortal(
-          <DiaryForm isActive={isActive} addItem={props.addItem} setIsActive={setIsActive} />,
+          <DiaryForm
+            isActive={isActive}
+            addItem={props.addItem}
+            setIsActive={setIsActive}
+            timeOfDay={props.timeOfDay}
+          />,
           document.querySelector(id)
         )}
     </>
