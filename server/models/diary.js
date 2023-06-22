@@ -2,20 +2,12 @@ const mongoDB = require("mongodb");
 const {connectDB} = require("../database");
 
 class Diary {
-  constructor(id, userId, items, date) {
+  constructor(id, userId, items, date, item) {
     this.id = id;
     this.userId = userId;
     this.items = items;
     this.date = date;
-  }
-  async saveItemToDiary() {
-    const db = await connectDB();
-    const result = await db.collection("diaries").findOne({userId: this.userId, date: this.date});
-    if (result !== null) {
-      return true;
-    } else {
-      return false;
-    }
+    this.item = item;
   }
   async getOneDiary() {
     const db = await connectDB();
@@ -36,6 +28,30 @@ class Diary {
       .toArray();
 
     return result;
+  }
+  async saveItemToDiary() {
+    const db = await connectDB();
+    const id = new mongoDB.ObjectId();
+    const result = await db.collection("diaries").updateOne(
+      {userId: new mongoDB.ObjectId(this.userId), date: this.date},
+      {
+        $push: {
+          items: {
+            _id: id,
+            name: this.item.name,
+            calories: this.item.calories,
+            servings: this.item.servings,
+            timeOfDay: this.item.timeOfDay,
+          },
+        },
+      },
+      {upsert: true}
+    );
+    if (result) {
+      return id;
+    } else {
+      return false;
+    }
   }
 }
 
