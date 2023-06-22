@@ -50,6 +50,14 @@ function HomePage() {
     setBreakfastItems((prevItems) => [newItem, ...prevItems]);
     setTotalBreakfastCalories((prevItems) => prevItems + parseInt(newItem.calories));
   };
+  const lunchAddHandler = (newItem) => {
+    setLunchItems((prevItems) => [newItem, ...prevItems]);
+    setTotalLunchCalories((prevItems) => prevItems + parseInt(newItem.calories));
+  };
+  const DinnerAddHandler = (newItem) => {
+    setDinnerItems((prevItems) => [newItem, ...prevItems]);
+    setTotalDinnerCalories((prevItems) => prevItems + parseInt(newItem.calories));
+  };
 
   return (
     <>
@@ -65,14 +73,14 @@ function HomePage() {
         timeOfDay={"Lunch"}
         items={lunchItems}
         isLoading={isLoading}
-        addItem={breakfastAddHandler}
+        addItem={lunchAddHandler}
         totalCalories={totalLunchCalories}
       />
       <Diary
         timeOfDay={"Dinner"}
         items={dinnerItems}
         isLoading={isLoading}
-        addItem={breakfastAddHandler}
+        addItem={DinnerAddHandler}
         totalCalories={totalDinnerCalories}
       />
     </>

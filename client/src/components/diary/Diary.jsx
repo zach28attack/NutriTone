@@ -9,7 +9,7 @@ function Diary(props) {
         <div>
           {props.timeOfDay}: {props.totalCalories}
         </div>
-        <AddIcon addItem={props.addItem} />
+        <AddIcon addItem={props.addItem} timeOfDay={props.timeOfDay} />
       </header>
       {props.isLoading ? (
         <main className={Class.items}>
@@ -18,10 +18,10 @@ function Diary(props) {
         </main>
       ) : (
         <main className={Class.items}>
-          <div id="form-location"></div>
+          <div id={`form-${props.timeOfDay}`}></div>
           {props.items.map((item) => (
             <DiaryItem
-              key={`${Math.random()}`}
+              key={item._id} // change to item id
               timeOfDay={props.timeOfDay}
               name={item.name}
               servings={item.servings}

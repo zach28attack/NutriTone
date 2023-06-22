@@ -8,7 +8,7 @@ function AddIcon(props) {
     setIsActive(!isActive);
   };
   const [isActive, setIsActive] = useState(false);
-
+  const id = `#form-${props.timeOfDay}`;
   return (
     <>
       <div className={`${Class.container} ${isActive && Class.active}`} onClick={addItemClickHandler}>
@@ -18,7 +18,7 @@ function AddIcon(props) {
       {isActive &&
         createPortal(
           <DiaryForm isActive={isActive} addItem={props.addItem} setIsActive={setIsActive} />,
-          document.querySelector("#form-location")
+          document.querySelector(id)
         )}
     </>
   );
