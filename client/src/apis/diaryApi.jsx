@@ -57,3 +57,26 @@ export async function saveNewItem(item) {
     console.error(error);
   }
 }
+
+export async function updateItem(item) {
+  console.log("item:", item);
+  const res = await fetch("http://localhost:3000/diary/item", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+    body: JSON.stringify({
+      name: item.name,
+      calories: item.calories,
+      _id: item._id,
+      servings: item.servings,
+      date: item.date,
+      timeOfDay: item.timeOfDay,
+    }),
+  });
+  console.log(res);
+}
+export async function deleteItem() {
+  return;
+}
