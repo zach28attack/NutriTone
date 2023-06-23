@@ -54,3 +54,21 @@ exports.saveItemToDiary = async (req, res, next) => {
     console.error(error);
   }
 };
+
+exports.updateItem = async (req, res, next) => {
+  const diary = new Diary();
+
+  diary.userId = req.user.id;
+  const {name, calories, _id, servings, date, timeOfDay} = req.body;
+
+  const item = {
+    _id: _id,
+    name: name,
+    calories: calories,
+    servings: servings,
+    timeOfDay: timeOfDay,
+  };
+  diary.item = item;
+  diary.date = date;
+  diary.updateItem();
+};

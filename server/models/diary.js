@@ -53,6 +53,20 @@ class Diary {
       return false;
     }
   }
+  async updateItem() {
+    const db = await connectDB();
+    const result = await db.collection("diaries").updateOne(
+      {
+        userId: new mongoDB.ObjectId(this.userId),
+        date: this.date,
+        items: {$elemMatch: {_id: new mongoDB.ObjectId(this.item._id)}},
+      },
+      {
+        $set: {"items.$[]": this.item},
+      }
+    );
+    console.log(result);
+  }
 }
 
 module.exports = Diary;
