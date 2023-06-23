@@ -14,7 +14,7 @@ function OptionsModal(props) {
       {createPortal(<BackgroundModal setIsActive={props.setIsActive} />, document.querySelector("#modal"))}
       <div className={Class.actionGroup}>
         <div className={Class.actionGroupBg}>
-          <button>Edit</button>
+          <button onClick={props.onEditClick}>Edit</button>
           <button>Remove</button>
         </div>
       </div>
