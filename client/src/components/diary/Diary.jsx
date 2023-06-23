@@ -21,7 +21,8 @@ function Diary(props) {
           <div id={`form-${props.timeOfDay}`}></div>
           {props.items.map((item) => (
             <DiaryItem
-              key={item._id} // change to item id
+              key={item._id}
+              _id={item._id}
               timeOfDay={props.timeOfDay}
               name={item.name}
               servings={item.servings}
