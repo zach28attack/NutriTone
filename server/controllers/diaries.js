@@ -57,18 +57,15 @@ exports.saveItemToDiary = async (req, res, next) => {
 
 exports.updateItem = async (req, res, next) => {
   const diary = new Diary();
+  const {item, date} = req.body;
 
-  diary.userId = req.user.id;
-  const {name, calories, _id, servings, date, timeOfDay} = req.body;
-
-  const item = {
-    _id: _id,
-    name: name,
-    calories: calories,
-    servings: servings,
-    timeOfDay: timeOfDay,
-  };
-  diary.item = item;
-  diary.date = date;
-  diary.updateItem();
+  try {
+    diary.userId = req.user.id;
+    diary.item = item;
+    diary.date = date;
+    console.log("id", diary.item._id);
+    diary.updateItem();
+  } catch (error) {
+    console.error(error);
+  }
 };
