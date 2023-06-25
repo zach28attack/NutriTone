@@ -10,7 +10,7 @@ export async function getOneDiary() {
       },
       body: JSON.stringify({date: "1/1/2023"}),
     });
-    if (res) {
+    if (res.ok) {
       const data = await res.json();
       return data.items;
     }
@@ -30,7 +30,7 @@ export async function getTenDiaries() {
       body: JSON.stringify({date: "1/1/2023"}),
     });
 
-    if (res) {
+    if (res.ok) {
       const data = await res.json();
       return data.diaries;
     }
@@ -49,7 +49,7 @@ export async function saveNewItem(item) {
       },
       body: JSON.stringify({item: item, date: "1/1/2023"}),
     });
-    if (res) {
+    if (res.ok) {
       const data = await res.json();
       return data._id;
     }
@@ -74,6 +74,20 @@ export async function updateItem(item) {
     console.error(error);
   }
 }
-export async function deleteItem() {
-  return;
+export async function deleteItem(_id) {
+  try {
+    const res = await fetch("http://localhost:3000/diary/item", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      body: JSON.stringify({_id: _id, date: "1/1/2023"}),
+    });
+    if (res.ok) {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
