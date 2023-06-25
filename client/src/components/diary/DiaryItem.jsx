@@ -19,7 +19,9 @@ function DiaryItem(props) {
     setIsActive(false);
   };
 
-  const deleteClickHandler = () => {};
+  const deleteClickHandler = () => {
+    props.deleteItem(props._id, props.calories);
+  };
 
   const [name, setName] = useState(props.name);
   const [calories, setCalories] = useState(props.calories);

@@ -1,8 +1,23 @@
 import Class from "./Diary.module.css";
 import DiaryItem from "./DiaryItem";
 import AddIcon from "./AddIcon";
+import {useState, useEffect} from "react";
+import {deleteItem} from "../../apis/diaryApi";
 
 function Diary(props) {
+  const deleteItemHandler = (_id, removedCal) => {
+    deleteItem(_id);
+    setItems((prevItems) => {
+      return prevItems.filter((item) => item._id !== _id);
+    });
+    props.updateTotalCals(removedCal, 0);
+  };
+  useEffect(() => {
+    setItems(props.items);
+  }, [props.items]);
+
+  const [items, setItems] = useState();
+
   return (
     <div className={Class.container}>
       <header className={Class.header}>
@@ -19,7 +34,7 @@ function Diary(props) {
       ) : (
         <main className={Class.items}>
           <div id={`form-${props.timeOfDay}`}></div>
-          {props.items.map((item) => (
+          {items.map((item) => (
             <DiaryItem
               key={item._id}
               _id={item._id}
@@ -28,6 +43,7 @@ function Diary(props) {
               servings={item.servings}
               calories={item.calories}
               updateTotalCals={props.updateTotalCals}
+              deleteItem={deleteItemHandler}
             />
           ))}
         </main>

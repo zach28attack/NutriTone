@@ -15,7 +15,7 @@ function OptionsModal(props) {
       <div className={Class.actionGroup}>
         <div className={Class.actionGroupBg}>
           <button onClick={props.onEditClick}>Edit</button>
-          <button>Remove</button>
+          <button onClick={props.onDeleteClick}>Remove</button>
         </div>
       </div>
     </>
