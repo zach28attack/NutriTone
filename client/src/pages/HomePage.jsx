@@ -78,6 +78,14 @@ function HomePage() {
       return arr;
     });
   };
+  const updateLunchTotals = (prevCal, newCal) => {
+    setTotalLunchCalories((prevCals) => {
+      let total = prevCals;
+      total -= prevCal;
+      return (total += parseInt(newCal));
+    });
+  };
+
   const DinnerAddHandler = async (newItem) => {
     newItem._id = 0;
     setDinnerItems((prevItems) => [newItem, ...prevItems]);
@@ -88,6 +96,13 @@ function HomePage() {
       const arr = [...prevItems];
       arr[-1] = newItem;
       return arr;
+    });
+  };
+  const updateDinnerTotals = (prevCal, newCal) => {
+    setTotalDinnerCalories((prevCals) => {
+      let total = prevCals;
+      total -= prevCal;
+      return (total += parseInt(newCal));
     });
   };
 
@@ -107,6 +122,7 @@ function HomePage() {
         items={lunchItems}
         isLoading={isLoading}
         addItem={lunchAddHandler}
+        updateTotalCals={updateLunchTotals}
         totalCalories={totalLunchCalories}
       />
       <Diary
@@ -114,6 +130,7 @@ function HomePage() {
         items={dinnerItems}
         isLoading={isLoading}
         addItem={DinnerAddHandler}
+        updateTotalCals={updateDinnerTotals}
         totalCalories={totalDinnerCalories}
       />
     </>
