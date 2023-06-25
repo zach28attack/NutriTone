@@ -69,3 +69,17 @@ exports.updateItem = async (req, res, next) => {
     console.error(error);
   }
 };
+
+exports.deleteItem = async (req, res, next) => {
+  const diary = new Diary();
+  const _id = req.body._id;
+  diary.userId = req.user.id;
+  diary.date = req.body.date;
+  diary.item = {_id: _id};
+  const success = await diary.deleteItem();
+  if (success) {
+    res.status(200).json();
+  } else {
+    res.status(400).json();
+  }
+};
