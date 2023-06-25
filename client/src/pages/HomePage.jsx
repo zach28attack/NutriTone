@@ -58,6 +58,14 @@ function HomePage() {
       return arr;
     });
   };
+  const updateBreakfastTotals = (prevCal, newCal) => {
+    setTotalBreakfastCalories((prevCals) => {
+      let total = prevCals;
+      total -= prevCal;
+      return (total += parseInt(newCal));
+    });
+  };
+
   const lunchAddHandler = async (newItem) => {
     newItem._id = 0;
     setLunchItems((prevItems) => [newItem, ...prevItems]);
@@ -91,6 +99,7 @@ function HomePage() {
         items={breakfastItems}
         isLoading={isLoading}
         addItem={breakfastAddHandler}
+        updateTotalCals={updateBreakfastTotals}
         totalCalories={totalBreakfastCalories}
       />
       <Diary

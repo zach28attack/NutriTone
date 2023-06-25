@@ -27,6 +27,7 @@ function Diary(props) {
               name={item.name}
               servings={item.servings}
               calories={item.calories}
+              updateTotalCals={props.updateTotalCals}
             />
           ))}
         </main>
