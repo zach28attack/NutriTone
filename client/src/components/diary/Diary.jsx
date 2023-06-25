@@ -13,7 +13,7 @@ function Diary(props) {
       </header>
       {props.isLoading ? (
         <main className={Class.items}>
-          <div id="form-location"></div>
+          <div id={`form-${props.timeOfDay}`}></div>
           <div className={Class.loading}>Loading...</div>
         </main>
       ) : (
