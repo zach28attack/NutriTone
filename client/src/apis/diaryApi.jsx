@@ -59,23 +59,20 @@ export async function saveNewItem(item) {
 }
 
 export async function updateItem(item) {
-  console.log("item:", item);
-  const res = await fetch("http://localhost:3000/diary/item", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${Cookies.get("token")}`,
-    },
-    body: JSON.stringify({
-      name: item.name,
-      calories: item.calories,
-      _id: item._id,
-      servings: item.servings,
-      date: item.date,
-      timeOfDay: item.timeOfDay,
-    }),
-  });
-  console.log(res);
+  try {
+    const res = await fetch("http://localhost:3000/diary/item", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+      body: JSON.stringify({item: item, date: "1/1/2023"}),
+    });
+
+    //TODO: give user feedback through small notification banner at top of screen for api requests responsees such as this
+  } catch (error) {
+    console.error(error);
+  }
 }
 export async function deleteItem() {
   return;
