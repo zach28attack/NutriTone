@@ -72,6 +72,26 @@ class Diary {
     );
     console.log(result);
   }
+
+  async deleteItem() {
+    console.log(this.item._id);
+    const db = await connectDB();
+    const result = await db.collection("diaries").updateOne(
+      {
+        userId: new mongoDB.ObjectId(this.userId),
+        date: this.date,
+      },
+      {
+        $pull: {
+          items: {_id: new mongoDB.ObjectId(this.item._id)},
+        },
+      }
+    );
+    console.log(result);
+    if (result.modifiedCount === 1) {
+      return true;
+    }
+  }
 }
 
 module.exports = Diary;
