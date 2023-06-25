@@ -17,8 +17,8 @@ export async function signup(email, username, password, passwordConfirmation) {
 
     if (response.ok) {
       const data = await response.json();
-      Cookies.set("userId", data.id, {expires: 1});
-      Cookies.set("token", data.token, {expires: 1});
+      Cookies.set("userId", data.id, {expires: 1, path: "/welcome"});
+      Cookies.set("token", data.token, {expires: 1, path: "/welcome"});
       return true;
     } else {
       return false;
@@ -60,8 +60,8 @@ export async function login(username, password) {
     });
     if (response.ok) {
       const data = await response.json();
-      Cookies.set("token", data.token);
-      Cookies.set("userId", data.id);
+      Cookies.set("token", data.token, {expires: 1, path: "/welcome"});
+      Cookies.set("userId", data.id, {expires: 1, path: "/welcome"});
       return true;
     }
   } catch (error) {
