@@ -59,10 +59,15 @@ class Diary {
       {
         userId: new mongoDB.ObjectId(this.userId),
         date: this.date,
-        items: {$elemMatch: {_id: new mongoDB.ObjectId(this.item._id)}},
+        "items._id": new mongoDB.ObjectId(this.item._id),
       },
       {
-        $set: {"items.$[]": this.item},
+        $set: {
+          "items.$.name": this.item.name,
+          "items.$.calories": this.item.calories,
+          "items.$.servings": this.item.servings,
+          "items.$._id": new mongoDB.ObjectId(this.item._id),
+        },
       }
     );
     console.log(result);
