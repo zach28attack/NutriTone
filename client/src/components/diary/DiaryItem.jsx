@@ -33,8 +33,7 @@ function DiaryItem(props) {
     setCalories(cals);
     setServings(serv);
     setIsEditing(false);
-    console.log(calories, cals);
-    props.updateTotalCals(calories, cals);
+    props.updateTotalCals(calories * servings, cals * serv); // send old calories before update and new calories after update
   };
 
   return (

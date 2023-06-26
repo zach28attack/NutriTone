@@ -4,6 +4,8 @@ import {BsFillArrowRightCircleFill} from "react-icons/bs";
 import {updateItem} from "../../apis/diaryApi";
 
 function DiaryForm({addItem, setIsActive, timeOfDay, isEditing, item, _id, editItem}) {
+  // since this form component is used for new items as well as wediting items
+  // it will execute different functions depending on isEditing prop
   const formSubmitHandlerClick = () => {
     const item = {name: inputName, calories: inputCalories, servings: inputServings, timeOfDay: timeOfDay, _id: _id};
     if (isEditing) {
@@ -15,8 +17,12 @@ function DiaryForm({addItem, setIsActive, timeOfDay, isEditing, item, _id, editI
       setIsActive(false);
     }
   };
+
+  // since this form component is used for new items as well as wediting items
+  // it will execute different functions depending on isEditing prop
   const formSubmitHandlerKeypress = (e) => {
     const item = {name: inputName, calories: inputCalories, servings: inputServings, timeOfDay: timeOfDay, _id: _id};
+
     if (isEditing && e.key === "Enter") {
       updateItem(item);
       editItem(item.name, item.servings, item.calories);
