@@ -2,15 +2,15 @@
   margin: 1rem;
   display: flex;
   gap: 0.4rem;
-  height: 4.5rem;
+  height: 6rem;
   justify-content: center;
   align-items: center;
 }
 
 .summary {
-  width: 40rem;
+  width: 80%;
   height: 100%;
-  font-size: 1.5rem;
+  font-size: 2rem;
   background-color: white;
   border-radius: 5px;
   border: #bf7d60 1px solid;
