@@ -1,7 +1,6 @@
 import Class from "./Diary.module.css";
 import DiaryItem from "./DiaryItem";
 import AddIcon from "./AddIcon";
-import {useState, useEffect} from "react";
 
 function Diary(props) {
   return (
