@@ -1,6 +1,6 @@
 import DiarySummary from "../components/diary/DiarySummary";
 import Diary from "../components/diary/Diary";
-import {getOneDiary, getTenDiaries, saveNewItem} from "../apis/diaryApi";
+import {getOneDiary, getTenDiaries, saveNewItem, deleteItem} from "../apis/diaryApi";
 import {useState, useEffect} from "react";
 
 function HomePage() {
@@ -105,6 +105,27 @@ function HomePage() {
       return (total += parseInt(newCal));
     });
   };
+  const deleteItemHandler = (_id, removedCal, timeOfDay) => {
+    deleteItem(_id);
+    if (timeOfDay === "Breakfast") {
+      setBreakfastItems((prevItems) => {
+        return prevItems.filter((item) => item._id !== _id);
+      });
+      updateBreakfastTotals(removedCal, 0);
+    }
+    if (timeOfDay === "Lunch") {
+      setLunchItems((prevItems) => {
+        return prevItems.filter((item) => item._id !== _id);
+      });
+      updateLunchTotals(removedCal, 0);
+    }
+    if (timeOfDay === "Dinner") {
+      setDinnerItems((prevItems) => {
+        return prevItems.filter((item) => item._id !== _id);
+      });
+      updateDinnerTotals(removedCal, 0);
+    }
+  };
 
   return (
     <>
@@ -116,6 +137,7 @@ function HomePage() {
         addItem={breakfastAddHandler}
         updateTotalCals={updateBreakfastTotals}
         totalCalories={totalBreakfastCalories}
+        deleteItem={deleteItemHandler}
       />
       <Diary
         timeOfDay={"Lunch"}
@@ -124,6 +146,7 @@ function HomePage() {
         addItem={lunchAddHandler}
         updateTotalCals={updateLunchTotals}
         totalCalories={totalLunchCalories}
+        deleteItem={deleteItemHandler}
       />
       <Diary
         timeOfDay={"Dinner"}
@@ -132,6 +155,7 @@ function HomePage() {
         addItem={DinnerAddHandler}
         updateTotalCals={updateDinnerTotals}
         totalCalories={totalDinnerCalories}
+        deleteItem={deleteItemHandler}
       />
     </>
   );
