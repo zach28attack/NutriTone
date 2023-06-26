@@ -12,7 +12,6 @@ function HomePage() {
 
   const getItemsFromDiary = async () => {
     const items = await getOneDiary(); // will return all items from a given day
-
     if (items) {
       setIsLoading(false);
       items.forEach((item) => {
@@ -23,7 +22,6 @@ function HomePage() {
           : item.timeOfDay === "Dinner"
           ? setDinnerItems((prevItems) => [item, ...prevItems])
           : undefined;
-
         getCalorieTotals(item);
       });
     }
@@ -105,6 +103,7 @@ function HomePage() {
       return (total += parseInt(newCal));
     });
   };
+
   const deleteItemHandler = (_id, removedCal, timeOfDay) => {
     deleteItem(_id);
     if (timeOfDay === "Breakfast") {
@@ -112,14 +111,12 @@ function HomePage() {
         return prevItems.filter((item) => item._id !== _id);
       });
       updateBreakfastTotals(removedCal, 0);
-    }
-    if (timeOfDay === "Lunch") {
+    } else if (timeOfDay === "Lunch") {
       setLunchItems((prevItems) => {
         return prevItems.filter((item) => item._id !== _id);
       });
       updateLunchTotals(removedCal, 0);
-    }
-    if (timeOfDay === "Dinner") {
+    } else if (timeOfDay === "Dinner") {
       setDinnerItems((prevItems) => {
         return prevItems.filter((item) => item._id !== _id);
       });
