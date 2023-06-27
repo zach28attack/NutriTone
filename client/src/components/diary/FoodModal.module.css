@@ -17,7 +17,35 @@
 .card {
   background-color: #bf7d60;
   width: 55%;
-  height: 25rem;
+  height: 30rem;
   border-radius: 25px;
-  border: black 1px solid;
+  border: #bf7d60 5px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.tabs {
+  display: flex;
+  height: 4rem;
+  width: 100%;
+  justify-content: center;
+}
+.tab {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: hsla(31, 100%, 95%, 0.7);
+  border-bottom: #fff3e6 dotted 5px;
+  cursor: pointer;
+}
+.activeTab {
+  background-color: #fff3e6;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom: #bf7d60 dotted 5px;
+  color: #bf7d60;
 }
