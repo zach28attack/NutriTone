@@ -38,7 +38,8 @@
 }
 .content {
   background-color: white;
-  height: 70%;
+  height: 20rem;
   width: 90%;
   border: #bf7d60 2px solid;
+  overflow: scroll;
 }
