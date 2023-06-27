@@ -18,7 +18,7 @@ function ModalSearchContent() {
     <div className={Class.page}>
       <div className={Class.container}>
         <form className={Class.searchbar}>
-          <input type="text" className={Class.input} onChange={inputHandler} />
+          <input type="text" className={Class.input} onChange={inputHandler} placeholder="search..." />
           <input type="submit" className={Class.submit} onClick={submitHandler} />
         </form>
         <div className={Class.content}>
