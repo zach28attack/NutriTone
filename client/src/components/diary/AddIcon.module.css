@@ -10,6 +10,7 @@
   cursor: pointer;
   margin-right: 1rem;
   transition: transform 0.3s ease-in-out;
+  z-index: 1;
 }
 .line1 {
   width: 1.2rem;

@@ -2,6 +2,7 @@ import Class from "./AddIcon.module.css";
 import {useState} from "react";
 import {createPortal} from "react-dom";
 import DiaryForm from "./DiaryForm";
+import FoodModalBtn from "./FoodModalBtn";
 
 function AddIcon(props) {
   const addItemClickHandler = () => {
@@ -15,6 +16,7 @@ function AddIcon(props) {
         <div className={Class.line1}></div>
         <div className={Class.line2}></div>
       </div>
+      <FoodModalBtn isActive={isActive} setIsActive={setIsActive} />
       {isActive &&
         createPortal(
           <DiaryForm
