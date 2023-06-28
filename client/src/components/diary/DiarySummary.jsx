@@ -1,18 +1,21 @@
 import Class from "./DiarySummary.module.css";
 import {useState, useEffect} from "react";
+import Cookies from "js-cookie";
 
 function DiarySummary(props) {
   const [calories, setCalories] = useState(0);
   const [caloriesBurned, setCaloriesBurned] = useState(0);
   const [budget, setBudget] = useState(1850);
   const [under, setUnder] = useState(0);
+
   useEffect(() => {
     setCalories(props.calories);
     setUnder(budget - (props.calories - caloriesBurned));
   }, [props.calories]);
+
   return (
     <div className={Class.container}>
-      <div className={Class.arrowLeft}>
+      <div className={Class.arrowLeft} onClick={props.leftArrowClick}>
         <div></div>
       </div>
       <div></div>
@@ -38,8 +41,8 @@ function DiarySummary(props) {
           </li>
         </ul>
       </div>
-      <div className={Class.arrowRight}>
-        <div className={Class.arrowRight2}></div>
+      <div className={Class.arrowRight} onClick={props.rightArrowClick}>
+        <div></div>
       </div>
     </div>
   );

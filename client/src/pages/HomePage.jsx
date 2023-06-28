@@ -2,6 +2,7 @@ import DiarySummary from "../components/diary/DiarySummary";
 import Diary from "../components/diary/Diary";
 import {getOneDiary, getTenDiaries, saveNewItem, deleteItem} from "../apis/diaryApi";
 import {useState, useEffect} from "react";
+import Cookies from "js-cookie";
 
 function HomePage() {
   const [breakfastItems, setBreakfastItems] = useState([]);
@@ -11,6 +12,8 @@ function HomePage() {
   const [totalBreakfastCalories, setTotalBreakfastCalories] = useState(0);
   const [totalLunchCalories, setTotalLunchCalories] = useState(0);
   const [totalDinnerCalories, setTotalDinnerCalories] = useState(0);
+  const [dateOffset, setDateOffset] = useState(0);
+  const [date, setDate] = useState(0);
 
   const breakfastAddHandler = async (newItem) => {
     newItem._id = 0;
@@ -97,6 +100,9 @@ function HomePage() {
   };
 
   const getItemsFromDiary = async () => {
+    setBreakfastItems([]);
+    setLunchItems([]);
+    setDinnerItems([]);
     const items = await getOneDiary(); // will return all items from a given day
     if (items) {
       setIsLoading(false);
@@ -113,6 +119,9 @@ function HomePage() {
     }
   };
   const getCalorieTotals = (item) => {
+    setTotalBreakfastCalories(0);
+    setTotalLunchCalories(0);
+    setTotalDinnerCalories(0);
     item.timeOfDay === "Breakfast"
       ? setTotalBreakfastCalories(
           (prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings)
@@ -137,11 +146,44 @@ function HomePage() {
 
   useEffect(() => {
     getItemsFromDiary();
-    getItemsFromDiaries(); // calls getTenDiaries and extract items
-  }, []);
+    getItemsFromDiaries(); // calls getTenDiaries and extracts items into array
+    return;
+  }, [date]);
+
+  const leftArrowClickHandler = () => {
+    console.log(date);
+    setDateOffset((prev) => {
+      const offset = prev - 1;
+      return offset;
+    });
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 1);
+    const dayDate = Math.ceil((today - startOfYear) / (1000 * 60 * 60 * 24));
+    setDate(dateOffset - 1 + dayDate);
+    Cookies.set("dayDate", dateOffset - 1 + dayDate, {expires: 1});
+    setIsLoading(true);
+  };
+  const rightArrowClickHandler = () => {
+    console.log(date);
+    setDateOffset((prev) => {
+      const offset = prev + 1;
+      return offset;
+    });
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 1);
+    const dayDate = Math.ceil((today - startOfYear) / (1000 * 60 * 60 * 24));
+    setDate(dateOffset + 1 + dayDate);
+    Cookies.set("dayDate", dateOffset + 1 + dayDate, {expires: 1});
+    setIsLoading(true);
+  };
+
   return (
     <>
-      <DiarySummary calories={totalBreakfastCalories + totalLunchCalories + totalDinnerCalories} />
+      <DiarySummary
+        calories={totalBreakfastCalories + totalLunchCalories + totalDinnerCalories}
+        rightArrowClick={rightArrowClickHandler}
+        leftArrowClick={leftArrowClickHandler}
+      />
       <Diary
         timeOfDay={"Breakfast"}
         items={breakfastItems}

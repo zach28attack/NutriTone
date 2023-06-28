@@ -8,7 +8,7 @@ export async function getOneDiary() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-      body: JSON.stringify({date: "1/2/2023"}),
+      body: JSON.stringify({date: `${Cookies.get("dayDate")}/${new Date().getFullYear()}`}),
     });
     if (res.ok) {
       const data = await res.json();
@@ -27,7 +27,7 @@ export async function getTenDiaries() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-      body: JSON.stringify({date: "1/2/2023"}),
+      body: JSON.stringify({date: `${Cookies.get("dayDate")}/${new Date().getFullYear()}`}),
     });
 
     if (res.ok) {
@@ -48,7 +48,7 @@ export async function saveNewItem(item) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-      body: JSON.stringify({item: item, date: "1/2/2023"}),
+      body: JSON.stringify({item: item, date: `${Cookies.get("dayDate")}/${new Date().getFullYear()}`}),
     });
     if (res.ok) {
       const data = await res.json();
@@ -67,7 +67,7 @@ export async function updateItem(item) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-      body: JSON.stringify({item: item, date: "1/2/2023"}),
+      body: JSON.stringify({item: item, date: `${Cookies.get("dayDate")}/${new Date().getFullYear()}`}),
     });
 
     //TODO: give user feedback through small notification banner at top of screen for api requests responsees such as this
@@ -83,7 +83,7 @@ export async function deleteItem(_id) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
-      body: JSON.stringify({_id: _id, date: "1/2/2023"}),
+      body: JSON.stringify({_id: _id, date: `${Cookies.get("dayDate")}/${new Date().getFullYear()}`}),
     });
     if (res.ok) {
       return true;

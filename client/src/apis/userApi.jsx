@@ -17,8 +17,13 @@ export async function signup(email, username, password, passwordConfirmation) {
 
     if (response.ok) {
       const data = await response.json();
+      const today = new Date();
+      const startOfYear = new Date(today.getFullYear(), 0, 1);
+      const dayDate = Math.ceil((today - startOfYear) / (1000 * 60 * 60 * 24));
+      Cookies.set("dayDate", dayDate, {expires: 1});
       Cookies.set("userId", data.id, {expires: 1});
       Cookies.set("token", data.token, {expires: 1});
+
       return true;
     } else {
       return false;
@@ -40,6 +45,7 @@ export async function logout() {
     if (response.ok) {
       Cookies.remove("userId");
       Cookies.remove("token");
+      Cookies.remove("dayDate");
       return true;
     } else {
       console.error("Issue done happened");
@@ -60,6 +66,10 @@ export async function login(username, password) {
     });
     if (response.ok) {
       const data = await response.json();
+      const today = new Date();
+      const startOfYear = new Date(today.getFullYear(), 0, 1);
+      const dayDate = Math.ceil((today - startOfYear) / (1000 * 60 * 60 * 24));
+      Cookies.set("dayDate", dayDate, {expires: 1});
       Cookies.set("token", data.token, {expires: 1});
       Cookies.set("userId", data.id, {expires: 1});
       return true;
