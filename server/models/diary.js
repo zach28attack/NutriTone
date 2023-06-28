@@ -42,6 +42,7 @@ class Diary {
             calories: this.item.calories,
             servings: this.item.servings,
             timeOfDay: this.item.timeOfDay,
+            servingSize: this.item.servingSize,
           },
         },
       },
@@ -71,7 +72,6 @@ class Diary {
         },
       }
     );
-    console.log(result);
   }
 
   async deleteItem() {
@@ -88,7 +88,6 @@ class Diary {
         },
       }
     );
-    console.log(result);
     if (result.modifiedCount === 1) {
       return true;
     }

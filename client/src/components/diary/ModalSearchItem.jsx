@@ -22,11 +22,13 @@ function ModalSearchItem(props) {
         setServingSize(filteredServings.disseminationText);
       }
     } else {
-      const {calories, servings, name} = props.item;
+      const {calories, servingSize, name} = props.item;
       console.log(name);
       setCalories(calories);
-      setServingSize(servings);
       setName(name);
+      if (servingSize) {
+        setServingSize(servingSize);
+      }
     }
   }, []);
 
@@ -37,6 +39,7 @@ function ModalSearchItem(props) {
       calories: parseInt(calories),
       servings: parseInt(servings),
       timeOfDay: props.timeOfDay,
+      servingSize: servingSize,
     };
     props.addItem(item);
     props.setIsActive(false);

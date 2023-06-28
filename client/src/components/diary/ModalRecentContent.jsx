@@ -2,7 +2,6 @@ import Class from "./ModalRecentContent.module.css";
 import ModalSearchItem from "./ModalSearchItem";
 
 function ModalRecentContent(props) {
-  console.log("RecentItems in RI comp", props.recentItems);
   return (
     <div className={Class.page}>
       <div className={Class.container}>

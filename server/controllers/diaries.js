@@ -38,7 +38,6 @@ exports.getTenDiaries = async (req, res, next) => {
 exports.saveItemToDiary = async (req, res, next) => {
   const diary = new Diary();
   const {date, item} = req.body;
-
   diary.userId = req.user.id;
   diary.date = date;
   diary.item = item;
