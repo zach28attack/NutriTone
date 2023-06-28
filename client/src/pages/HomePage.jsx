@@ -4,7 +4,6 @@ import {getOneDiary, getTenDiaries, saveNewItem, deleteItem} from "../apis/diary
 import {useState, useEffect} from "react";
 
 function HomePage() {
-  // const diaries = [{name: "Egg", servings: 1, calories: 205}];
   const [breakfastItems, setBreakfastItems] = useState([]);
   const [lunchItems, setLunchItems] = useState([]);
   const [dinnerItems, setDinnerItems] = useState([]);
