@@ -10,19 +10,31 @@ function FoodModal(props) {
     }
   };
   const [searchTabActive, setSearchTabActive] = useState(true);
+  const tabClickHandler = () => {
+    setSearchTabActive(!searchTabActive);
+  };
   return (
     <div className={Class.backgroundModal} onClick={clickHandler}>
       <div className={Class.container}>
         <div className={Class.card}>
           <div className={Class.tabs}>
-            <div className={`${Class.tab} ${!searchTabActive && Class.activeTab}`}>Recent</div>
-            <div className={`${Class.tab} ${searchTabActive && Class.activeTab}`}>Search</div>
+            <div className={`${Class.tab} ${!searchTabActive && Class.activeTab}`} onClick={tabClickHandler}>
+              Recent
+            </div>
+            <div className={`${Class.tab} ${searchTabActive && Class.activeTab}`} onClick={tabClickHandler}>
+              Search
+            </div>
           </div>
 
           {searchTabActive ? (
             <ModalSearchContent addItem={props.addItem} timeOfDay={props.timeOfDay} setIsActive={props.setIsActive} />
           ) : (
-            <ModalRecentContent />
+            <ModalRecentContent
+              addItem={props.addItem}
+              timeOfDay={props.timeOfDay}
+              setIsActive={props.setIsActive}
+              item={[]}
+            />
           )}
         </div>
       </div>
