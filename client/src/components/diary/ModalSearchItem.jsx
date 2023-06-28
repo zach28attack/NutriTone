@@ -15,15 +15,17 @@ function ModalSearchItem(props) {
       const name = props.item.additionalDescriptions || props.item.description;
       setName(name);
 
-      setCalories(filteredCalories.value);
+      if (filteredCalories) {
+        setCalories(filteredCalories.value);
+      }
       if (filteredServings) {
-        setServings(filteredServings.disseminationText);
+        setServingSize(filteredServings.disseminationText);
       }
     } else {
       const {calories, servings, name} = props.item;
       console.log(name);
       setCalories(calories);
-      setServings(servings);
+      setServingSize(servings);
       setName(name);
     }
   }, []);
@@ -33,14 +35,14 @@ function ModalSearchItem(props) {
     const item = {
       name: name,
       calories: parseInt(calories),
-      servings: parseInt(servingSize),
+      servings: parseInt(servings),
       timeOfDay: props.timeOfDay,
     };
     props.addItem(item);
     props.setIsActive(false);
   };
   const inputHandler = (e) => {
-    setServingSize(parseInt(e.target.value));
+    setServings(parseInt(e.target.value));
   };
 
   return (
@@ -49,7 +51,7 @@ function ModalSearchItem(props) {
         <div className={Class.name}>{name}</div>
         <div className={Class.infoGroup}>
           <div className={Class.calories}>Calories: {calories}</div>
-          <div className={Class.servings}>Serv. Size: {servings}</div>
+          <div className={Class.servings}>Serv. Size: {servingSize}</div>
         </div>
       </div>
       <form className={Class.actionGroup} onSubmit={submitHandler}>
