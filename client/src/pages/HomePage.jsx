@@ -9,42 +9,9 @@ function HomePage() {
   const [lunchItems, setLunchItems] = useState([]);
   const [dinnerItems, setDinnerItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const getItemsFromDiary = async () => {
-    const items = await getOneDiary(); // will return all items from a given day
-    if (items) {
-      setIsLoading(false);
-      items.forEach((item) => {
-        item.timeOfDay === "Breakfast"
-          ? setBreakfastItems((prevItems) => [item, ...prevItems])
-          : item.timeOfDay === "Lunch"
-          ? setLunchItems((prevItems) => [item, ...prevItems])
-          : item.timeOfDay === "Dinner"
-          ? setDinnerItems((prevItems) => [item, ...prevItems])
-          : undefined;
-        getCalorieTotals(item);
-      });
-    }
-  };
-  const getCalorieTotals = (item) => {
-    item.timeOfDay === "Breakfast"
-      ? setTotalBreakfastCalories(
-          (prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings)
-        )
-      : item.timeOfDay === "Lunch"
-      ? setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings))
-      : item.timeOfDay === "Dinner"
-      ? setTotalDinnerCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings))
-      : undefined;
-  };
   const [totalBreakfastCalories, setTotalBreakfastCalories] = useState(0);
   const [totalLunchCalories, setTotalLunchCalories] = useState(0);
   const [totalDinnerCalories, setTotalDinnerCalories] = useState(0);
-
-  useEffect(() => {
-    getItemsFromDiary();
-    // getTenDiaries();
-  }, []);
 
   const breakfastAddHandler = async (newItem) => {
     newItem._id = 0;
@@ -130,6 +97,50 @@ function HomePage() {
     }
   };
 
+  const getItemsFromDiary = async () => {
+    const items = await getOneDiary(); // will return all items from a given day
+    if (items) {
+      setIsLoading(false);
+      items.forEach((item) => {
+        item.timeOfDay === "Breakfast"
+          ? setBreakfastItems((prevItems) => [item, ...prevItems])
+          : item.timeOfDay === "Lunch"
+          ? setLunchItems((prevItems) => [item, ...prevItems])
+          : item.timeOfDay === "Dinner"
+          ? setDinnerItems((prevItems) => [item, ...prevItems])
+          : undefined;
+        getCalorieTotals(item);
+      });
+    }
+  };
+  const getCalorieTotals = (item) => {
+    item.timeOfDay === "Breakfast"
+      ? setTotalBreakfastCalories(
+          (prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings)
+        )
+      : item.timeOfDay === "Lunch"
+      ? setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings))
+      : item.timeOfDay === "Dinner"
+      ? setTotalDinnerCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings))
+      : undefined;
+  };
+  const [recentItems, setRecentItems] = useState([]);
+  const getItemsFromDiaries = async () => {
+    const diaries = await getTenDiaries();
+    let items = [];
+    diaries.map((diary) => {
+      if (items.length <= 20) {
+        items.push(...diary.items);
+      }
+    });
+
+    setRecentItems([...new Set(items.reverse())]);
+  };
+
+  useEffect(() => {
+    getItemsFromDiary();
+    getItemsFromDiaries(); // calls getTenDiaries and extract items
+  }, []);
   return (
     <>
       <DiarySummary calories={totalBreakfastCalories + totalLunchCalories + totalDinnerCalories} />
@@ -141,6 +152,7 @@ function HomePage() {
         updateTotalCals={updateBreakfastTotals}
         totalCalories={totalBreakfastCalories}
         deleteItem={deleteItemHandler}
+        recentItems={recentItems}
       />
       <Diary
         timeOfDay={"Lunch"}
