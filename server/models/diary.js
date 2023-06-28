@@ -47,6 +47,7 @@ class Diary {
       },
       {upsert: true}
     );
+
     if (result) {
       return id;
     } else {

@@ -20,7 +20,7 @@ function DiaryItem(props) {
   };
 
   const deleteClickHandler = () => {
-    props.deleteItem(props._id, props.calories, props.timeOfDay);
+    props.deleteItem(props._id, calories * servings, props.timeOfDay);
   };
 
   const [name, setName] = useState(props.name);

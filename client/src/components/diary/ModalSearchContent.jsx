@@ -3,7 +3,7 @@ import {useState} from "react";
 import {apiTest} from "../../apis/usdaApi";
 import ModalSearchItem from "./ModalSearchItem";
 
-function ModalSearchContent() {
+function ModalSearchContent(props) {
   const [searchInput, setSearchInput] = useState();
   const inputHandler = (input) => {
     setSearchInput(input.target.value);
@@ -22,9 +22,16 @@ function ModalSearchContent() {
           <input type="submit" className={Class.submit} onClick={submitHandler} />
         </form>
         <div className={Class.content}>
-          {console.log("results:", searchResults)}
           {searchResults.map((item) => {
-            return <ModalSearchItem item={item} key={item.fdcId} />;
+            return (
+              <ModalSearchItem
+                item={item}
+                key={item.fdcId}
+                addItem={props.addItem}
+                timeOfDay={props.timeOfDay}
+                setIsActive={props.setIsActive}
+              />
+            );
           })}
         </div>
       </div>

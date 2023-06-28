@@ -39,6 +39,7 @@ export async function getTenDiaries() {
   }
 }
 
+// request requires item.name, item.calories, item.servings, item.timeOfDay, date
 export async function saveNewItem(item) {
   try {
     const res = await fetch("http://localhost:3000/diary/item", {

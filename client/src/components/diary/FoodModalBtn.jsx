@@ -14,7 +14,11 @@ function FoodModalBtn(props) {
       <div className={`${Class.button} ${props.isActive && Class.active}`} onClick={btnClickHandler}>
         Foods
       </div>
-      {modalIsActive && createPortal(<FoodModal setIsActive={setModalIsActive} />, document.querySelector("#modal"))}
+      {modalIsActive &&
+        createPortal(
+          <FoodModal setIsActive={setModalIsActive} addItem={props.addItem} timeOfDay={props.timeOfDay} />,
+          document.querySelector("#modal")
+        )}
     </div>
   );
 }

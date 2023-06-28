@@ -16,7 +16,7 @@ function AddIcon(props) {
         <div className={Class.line1}></div>
         <div className={Class.line2}></div>
       </div>
-      <FoodModalBtn isActive={isActive} setIsActive={setIsActive} />
+      <FoodModalBtn isActive={isActive} setIsActive={setIsActive} addItem={props.addItem} timeOfDay={props.timeOfDay} />
       {isActive &&
         createPortal(
           <DiaryForm

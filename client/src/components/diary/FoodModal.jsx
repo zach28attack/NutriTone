@@ -19,7 +19,11 @@ function FoodModal(props) {
             <div className={`${Class.tab} ${searchTabActive && Class.activeTab}`}>Search</div>
           </div>
 
-          {searchTabActive ? <ModalSearchContent /> : <ModalRecentContent />}
+          {searchTabActive ? (
+            <ModalSearchContent addItem={props.addItem} timeOfDay={props.timeOfDay} setIsActive={props.setIsActive} />
+          ) : (
+            <ModalRecentContent />
+          )}
         </div>
       </div>
     </div>
