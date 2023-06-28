@@ -33,7 +33,7 @@ function Diary(props) {
           ))}
         </main>
       )}
-      <div className={Class.addBtn}></div>
+      <div className={Class.cardBottom}></div>
     </div>
   );
 }
