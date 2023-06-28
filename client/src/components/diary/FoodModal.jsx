@@ -1,7 +1,7 @@
 import Class from "./FoodModal.module.css";
 import ModalRecentContent from "./ModalRecentContent";
 import ModalSearchContent from "./ModalSearchContent";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 function FoodModal(props) {
   const clickHandler = (e) => {
@@ -13,6 +13,10 @@ function FoodModal(props) {
   const tabClickHandler = () => {
     setSearchTabActive(!searchTabActive);
   };
+  const addItemHandler = (item) => {
+    props.addItem(item);
+  };
+
   return (
     <div className={Class.backgroundModal} onClick={clickHandler}>
       <div className={Class.container}>
@@ -27,13 +31,13 @@ function FoodModal(props) {
           </div>
 
           {searchTabActive ? (
-            <ModalSearchContent addItem={props.addItem} timeOfDay={props.timeOfDay} setIsActive={props.setIsActive} />
+            <ModalSearchContent addItem={addItemHandler} timeOfDay={props.timeOfDay} setIsActive={props.setIsActive} />
           ) : (
             <ModalRecentContent
               addItem={props.addItem}
               timeOfDay={props.timeOfDay}
               setIsActive={props.setIsActive}
-              item={[]}
+              recentItems={props.recentItems}
             />
           )}
         </div>

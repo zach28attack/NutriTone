@@ -16,7 +16,12 @@ function FoodModalBtn(props) {
       </div>
       {modalIsActive &&
         createPortal(
-          <FoodModal setIsActive={setModalIsActive} addItem={props.addItem} timeOfDay={props.timeOfDay} />,
+          <FoodModal
+            setIsActive={setModalIsActive}
+            addItem={props.addItem}
+            timeOfDay={props.timeOfDay}
+            recentItems={props.recentItems}
+          />,
           document.querySelector("#modal")
         )}
     </div>

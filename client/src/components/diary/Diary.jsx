@@ -9,7 +9,7 @@ function Diary(props) {
         <div>
           {props.timeOfDay}: {props.totalCalories}
         </div>
-        <AddIcon addItem={props.addItem} timeOfDay={props.timeOfDay} />
+        <AddIcon addItem={props.addItem} timeOfDay={props.timeOfDay} recentItems={props.recentItems} />
       </header>
       {props.isLoading ? (
         <main className={Class.items}>

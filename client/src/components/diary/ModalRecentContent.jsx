@@ -2,19 +2,20 @@ import Class from "./ModalRecentContent.module.css";
 import ModalSearchItem from "./ModalSearchItem";
 
 function ModalRecentContent(props) {
-  console.log(props.items);
+  console.log("RecentItems in RI comp", props.recentItems);
   return (
     <div className={Class.page}>
       <div className={Class.container}>
         <div className={Class.content}>
-          {props.items.map((item) => {
+          {props.recentItems.map((item) => {
             return (
               <ModalSearchItem
                 item={item}
-                key={item.fdcId}
+                key={item._id}
                 addItem={props.addItem}
                 timeOfDay={props.timeOfDay}
                 setIsActive={props.setIsActive}
+                isRecentContent={true}
               />
             );
           })}

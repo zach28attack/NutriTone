@@ -30,6 +30,7 @@ function ModalSearchContent(props) {
                 addItem={props.addItem}
                 timeOfDay={props.timeOfDay}
                 setIsActive={props.setIsActive}
+                isRecentContent={false}
               />
             );
           })}

@@ -22,4 +22,5 @@
   border: solid 2px #bf7d60;
   width: 90%;
   height: 90%;
+  overflow: scroll;
 }
