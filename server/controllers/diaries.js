@@ -63,7 +63,6 @@ exports.updateItem = async (req, res, next) => {
     diary.userId = req.user.id;
     diary.item = item;
     diary.date = date;
-    console.log("id", diary.item._id);
     diary.updateItem();
     res.status(200).json();
   } catch (error) {

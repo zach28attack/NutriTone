@@ -75,7 +75,6 @@ class Diary {
   }
 
   async deleteItem() {
-    console.log(this.item._id);
     const db = await connectDB();
     const result = await db.collection("diaries").updateOne(
       {

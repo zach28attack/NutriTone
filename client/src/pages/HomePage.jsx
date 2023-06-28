@@ -133,7 +133,6 @@ function HomePage() {
         items.push(...diary.items);
       }
     });
-    console.log(items);
     setRecentItems([...new Set(items.reverse())]);
   };
 

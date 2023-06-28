@@ -23,7 +23,6 @@ function ModalSearchItem(props) {
       }
     } else {
       const {calories, servingSize, name} = props.item;
-      console.log(name);
       setCalories(calories);
       setName(name);
       if (servingSize) {
