@@ -10,6 +10,10 @@
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 80%;
 }
 .itemName {
   font-size: 2rem;
