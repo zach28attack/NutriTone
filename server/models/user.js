@@ -1,4 +1,4 @@
-const {connectDB} = require("../database");
+const {connectDB, closeConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
@@ -26,6 +26,7 @@ class User {
       } catch (error) {
         console.error(error);
       }
+      closeConnection();
     }
   }
   async validateUser() {
@@ -36,11 +37,14 @@ class User {
         this.id = result._id;
         this.token = await genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
+        closeConnection();
         return true;
       } else {
+        closeConnection();
         return false;
       }
     } catch (error) {
+      closeConnection();
       console.error(error);
     }
   }
@@ -48,6 +52,7 @@ class User {
   async validateToken() {
     const db = await connectDB();
     const result = await db.collection("tokens").find({token: this.token, userId: this.id, revoked: false});
+    closeConnection();
     if (result) {
       return true;
     }
@@ -57,6 +62,8 @@ class User {
     const result = await db
       .collection("tokens")
       .updateOne({token: this.token, userId: new mongoDB.ObjectId(this.id), revoked: false}, {$set: {revoked: true}});
+
+    closeConnection();
     if (result.modifiedCount === 1) {
       return true;
     }

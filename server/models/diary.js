@@ -1,5 +1,5 @@
 const mongoDB = require("mongodb");
-const {connectDB} = require("../database");
+const {connectDB, closeConnection} = require("../database");
 
 class Diary {
   constructor(id, userId, items, date, item) {
@@ -12,8 +12,10 @@ class Diary {
   async getOneDiary() {
     const db = await connectDB();
     const result = await db.collection("diaries").findOne({userId: new mongoDB.ObjectId(this.userId), date: this.date});
+    closeConnection();
     if (result !== null) {
       this.items = result.items;
+
       return true;
     } else {
       return false;
@@ -27,6 +29,7 @@ class Diary {
       .limit(10)
       .toArray();
 
+    closeConnection();
     return result;
   }
   async saveItemToDiary() {
@@ -48,7 +51,7 @@ class Diary {
       },
       {upsert: true}
     );
-
+    closeConnection();
     if (result) {
       return id;
     } else {
@@ -72,6 +75,7 @@ class Diary {
         },
       }
     );
+    closeConnection();
   }
 
   async deleteItem() {
@@ -87,6 +91,7 @@ class Diary {
         },
       }
     );
+    closeConnection();
     if (result.modifiedCount === 1) {
       return true;
     }
