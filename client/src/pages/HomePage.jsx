@@ -61,7 +61,6 @@ function HomePage() {
     });
   };
   const updateBreakfastTotals = (prevCal, newCal) => {
-    console.log(prevCal, newCal);
     setTotalBreakfastCalories((prevCals) => {
       let total = prevCals;
       total -= prevCal;
