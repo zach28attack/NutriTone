@@ -3,6 +3,7 @@ import {Outlet, useNavigate} from "react-router-dom";
 import Navbar from "./components/navbar/Navbar.jsx";
 import {useEffect, useState} from "react";
 import Cookies from "js-cookie";
+import {DateContextProvider} from "../src/context/DateContext";
 
 function App() {
   // const userId = Cookies.get("userId");
@@ -18,14 +19,14 @@ function App() {
   }, [Cookies.get("userId")]);
 
   return (
-    <>
+    <DateContextProvider>
       {userId && (
         <div>
           <Navbar />
           <Outlet />
         </div>
       )}
-    </>
+    </DateContextProvider>
   );
 }
 
