@@ -21,7 +21,9 @@ function Navbar() {
         <FaUserFriends className={Class.icon} />
         <GiWhistle className={Class.icon} />
         <FaUser className={Class.icon} />
-        <button onClick={logoutHandler}>logout</button>
+        <button onClick={logoutHandler} className={Class.btn}>
+          logout
+        </button>
       </div>
     </div>
   );
