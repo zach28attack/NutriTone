@@ -1,6 +1,6 @@
 import Class from "./DiarySummary.module.css";
-import {useState, useEffect} from "react";
-import Cookies from "js-cookie";
+import {useState, useEffect, useContext} from "react";
+import {DateContext} from "../../context/DateContext";
 
 function DiarySummary(props) {
   const [calories, setCalories] = useState(0);
@@ -13,12 +13,13 @@ function DiarySummary(props) {
     setUnder(budget - (props.calories - caloriesBurned));
   }, [props.calories]);
 
+  const {date} = useContext(DateContext);
+
   return (
     <div className={Class.container}>
       <div className={Class.arrowLeft} onClick={props.leftArrowClick}>
         <div></div>
       </div>
-      <div></div>
       <div className={Class.summary}>
         <ul className={Class.summaryHeader}>
           <li className={Class.headerItem}>Budget</li>
@@ -40,6 +41,9 @@ function DiarySummary(props) {
             <div className={`${under >= 0 ? Class.calsUnder : Class.calsOver}`}>{under}</div> {/* total sum */}
           </li>
         </ul>
+        <div className={Class.dateContainer}>
+          <div className={Class.date}>{date}</div>
+        </div>
       </div>
       <div className={Class.arrowRight} onClick={props.rightArrowClick}>
         <div></div>
