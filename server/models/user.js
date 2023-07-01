@@ -26,8 +26,8 @@ class User {
       } catch (error) {
         console.error(error);
       }
-      closeConnection();
     }
+    closeConnection();
   }
   async validateUser() {
     try {
