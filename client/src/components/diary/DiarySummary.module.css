@@ -81,3 +81,14 @@
   clip-path: polygon(30% 30%, 60% 50%, 30% 70%);
   background-color: #fff3e6;
 }
+.dateContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+.date {
+  background-color: #bf7d60;
+  color: #fff3e6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 10px;
+  margin: 0.5rem;
+}
