@@ -4,6 +4,7 @@ import {FaUserFriends, FaUser} from "react-icons/fa";
 import {GiWhistle} from "react-icons/gi";
 import {logout} from "../../apis/userApi";
 import {useNavigate} from "react-router-dom";
+import {BsJournalBookmark} from "react-icons/bs";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -17,10 +18,21 @@ function Navbar() {
   return (
     <div className={Class.navBanner}>
       <div className={Class.border}>
-        <BiLineChartDown className={Class.icon} />
-        <FaUserFriends className={Class.icon} />
-        <GiWhistle className={Class.icon} />
-        <FaUser className={Class.icon} />
+        <a href="/">
+          <BsJournalBookmark className={Class.icon} />
+        </a>
+        <a href="/stats">
+          <BiLineChartDown className={Class.icon} />
+        </a>
+        <a href="">
+          <FaUserFriends className={Class.icon} />
+        </a>
+        <a href="">
+          <GiWhistle className={Class.icon} />
+        </a>
+        <a href="">
+          <FaUser className={Class.icon} />
+        </a>
         <button onClick={logoutHandler} className={Class.btn}>
           logout
         </button>
