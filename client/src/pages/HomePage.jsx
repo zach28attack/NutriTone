@@ -18,6 +18,7 @@ function HomePage() {
   const breakfastAddHandler = async (newItem) => {
     newItem._id = 0;
     setBreakfastItems((prevItems) => [newItem, ...prevItems]);
+    console.log(newItem);
     setTotalBreakfastCalories(
       (prevItems) => parseInt(prevItems) + parseInt(newItem.calories) * parseInt(newItem.servings)
     );
@@ -103,6 +104,9 @@ function HomePage() {
     setBreakfastItems([]);
     setLunchItems([]);
     setDinnerItems([]);
+    setTotalBreakfastCalories(0);
+    setTotalLunchCalories(0);
+    setTotalDinnerCalories(0);
     const items = await getOneDiary(); // will return all items from a given day
     if (items) {
       setIsLoading(false);
@@ -119,9 +123,6 @@ function HomePage() {
     }
   };
   const getCalorieTotals = (item) => {
-    setTotalBreakfastCalories(0);
-    setTotalLunchCalories(0);
-    setTotalDinnerCalories(0);
     item.timeOfDay === "Breakfast"
       ? setTotalBreakfastCalories(
           (prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings)
@@ -167,6 +168,9 @@ function HomePage() {
     setIsLoading(true);
   };
 
+  console.log("totalBreakfastCalories", totalBreakfastCalories);
+  console.log("totalLunchCalories", totalLunchCalories);
+  console.log("totalDinnerCalories", totalDinnerCalories);
   return (
     <>
       <DiarySummary
