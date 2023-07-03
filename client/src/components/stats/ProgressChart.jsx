@@ -21,7 +21,16 @@ function ProgressChart() {
       },
       title: {
         display: true,
-        text: "Chart.js Line Chart",
+        text: "Weight-loss Progress",
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value) {
+            return value + " lbs";
+          },
+        },
       },
     },
   };
@@ -30,8 +39,8 @@ function ProgressChart() {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "jun", "Jul"],
     datasets: [
       {
-        label: "Dataset 1",
-        data: [10, 200, 25, 150, 80, 120, 100],
+        label: "Weight",
+        data: [19, 200, 25, 150, 80, 120, 100],
         borderColor: "#bf7d60",
         backgroundColor: "#bf7d60",
       },
