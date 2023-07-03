@@ -1,0 +1,18 @@
+.chartContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 4rem;
+}
+.chartCard {
+  width: 75%;
+  min-width: 30rem;
+  background-color: white;
+  border: #bf7d60 5px solid;
+  padding: 0 4rem;
+  border-radius: 10px;
+}
+.chart {
+  height: 30rem;
+}
