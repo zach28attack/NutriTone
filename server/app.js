@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const {signup, login, logout, getLogs} = require("./controllers/users");
+const {signup, login, logout, getLogs, saveNewLog} = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
 const {verifyToken} = require("./authenticate");
 
@@ -30,5 +30,7 @@ app.post("/diary", verifyToken, getDiary); // get today's diary
 app.post("/diaries", verifyToken, getTenDiaries); // lazy load the past ten days of diaries
 
 app.get("/logs", verifyToken, getLogs);
+
+app.post("/logs", verifyToken, saveNewLog);
 
 app.listen(3000);
