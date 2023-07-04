@@ -52,3 +52,19 @@ exports.logout = async (req, res, next) => {
     res.status(500).json();
   }
 };
+
+exports.getLogs = async (req, res, next) => {
+  const user = req.user;
+  const logs = await user.getLogs();
+  if (logs && logs.length >= 1) {
+    res.status(200).json({
+      logs: logs,
+    });
+  } else if (logs && logs.length === 0) {
+    res.status(200).json({
+      logs: [],
+    });
+  } else {
+    res.status(500).json();
+  }
+};

@@ -48,7 +48,6 @@ class User {
       console.error(error);
     }
   }
-
   async validateToken() {
     const db = await connectDB();
     const result = await db.collection("tokens").find({token: this.token, userId: this.id, revoked: false});
@@ -66,6 +65,16 @@ class User {
     closeConnection();
     if (result.modifiedCount === 1) {
       return true;
+    }
+  }
+
+  async getLogs() {
+    const db = await connectDB();
+    const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
+    if (result) {
+      return result.logs ? result.logs : [];
+    } else {
+      return false;
     }
   }
 }
