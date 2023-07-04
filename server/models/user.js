@@ -2,12 +2,13 @@ const {connectDB, closeConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
-  constructor(email, username, password, token, id) {
+  constructor(email, username, password, token, id, log) {
     this.email = email;
     this.username = username;
     this.password = password;
     this.token = token;
     this.id = id;
+    this.log = log;
   }
 
   async saveNew() {
@@ -73,6 +74,20 @@ class User {
     const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
     if (result) {
       return result.logs ? result.logs : [];
+    } else {
+      return false;
+    }
+  }
+  async saveNewLog() {
+    const db = await connectDB();
+    const result = await db.collection("users").updateOne(
+      {_id: new mongoDB.ObjectId(this.id)},
+      {
+        $push: {logs: this.log},
+      }
+    );
+    if (result.modifiedCount === 1) {
+      return true;
     } else {
       return false;
     }

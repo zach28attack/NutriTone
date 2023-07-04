@@ -68,3 +68,15 @@ exports.getLogs = async (req, res, next) => {
     res.status(500).json();
   }
 };
+
+exports.saveNewLog = async (req, res, next) => {
+  const user = req.user;
+  user.log = req.body.log;
+  console.log("userLOG:", user.log);
+  const success = user.saveNewLog();
+  if (success) {
+    res.status(200).json();
+  } else {
+    res.status(500).json();
+  }
+};
