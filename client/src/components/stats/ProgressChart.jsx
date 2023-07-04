@@ -12,6 +12,7 @@ import {
 import {Line} from "react-chartjs-2";
 import {useState, useEffect} from "react";
 import {getWeightLogs} from "../../apis/weightApi";
+import ChartForm from "./ChartForm";
 
 function ProgressChart() {
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -39,18 +40,14 @@ function ProgressChart() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(300);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-  };
-
   useEffect(() => {
     getLogsAndSetData();
   }, []);
 
   const getLogsAndSetData = async () => {
     const logs = await getWeightLogs();
-    setLogs(logs);
+    const sortedLogs = logs.sort((a, b) => new Date(a.date) - new Date(b.date));
+    setLogs(sortedLogs);
     setMin(
       logs.reduce((prev, current) => {
         return prev.weight < current.weight ? prev : current;
@@ -63,7 +60,7 @@ function ProgressChart() {
       })
     );
   };
-
+  console.log(logs);
   const data = {
     labels: dateMonth,
     datasets: [
@@ -111,19 +108,7 @@ function ProgressChart() {
         <div className={Class.chart}>
           <Line options={options} datasetIdKey="id" data={data} />
         </div>
-        <form className={Class.logForm} onSubmit={submitHandler}>
-          <div>
-            <label>Weight</label>
-            <input type="number" className={Class.weightInput} placeholder="lbs" />
-          </div>
-
-          <div>
-            <label>Date</label>
-            <input type="date" className={Class.dateInput} />
-          </div>
-
-          <input type="submit" className={Class.submitBtn} />
-        </form>
+        <ChartForm />
       </div>
     </div>
   );

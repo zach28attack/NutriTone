@@ -1,0 +1,54 @@
+.logForm {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-content: center;
+  gap: 2rem;
+  padding: 0.2rem;
+  color: #bf7d60;
+  font-size: 1.5rem;
+  width: 30%;
+  margin-bottom: 1rem;
+}
+.logForm div {
+  display: flex;
+  gap: 0.6rem;
+}
+.weightInput::-webkit-inner-spin-button,
+.weightInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.weightInput {
+  padding-left: 0.3rem;
+  width: 4rem;
+  padding: 0.2rem;
+  min-width: 5%;
+  text-align: center;
+  background-color: #fff3e6;
+  border: none;
+  color: #bf7d60;
+  border-radius: 5px;
+  border: #bf7d60 1px solid;
+  font-size: 1rem;
+  padding: 0.2rem;
+}
+.dateInput {
+  width: 8rem;
+  background-color: #fff3e6;
+  border: none;
+  color: #bf7d60;
+  border-radius: 5px;
+  border: #bf7d60 1px solid;
+  font-size: 1rem;
+  padding: 0.2rem;
+}
+.submitBtn {
+  background-color: #fff3e6;
+  border: none;
+  color: #bf7d60;
+  border-radius: 5px;
+  border: #bf7d60 1px solid;
+  font-size: 1rem;
+  padding: 0 0.4rem;
+}
