@@ -72,6 +72,7 @@ class User {
   async getLogs() {
     const db = await connectDB();
     const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
+    closeConnection();
     if (result) {
       return result.logs ? result.logs : [];
     } else {
@@ -86,6 +87,7 @@ class User {
         $push: {logs: this.log},
       }
     );
+    closeConnection();
     if (result.modifiedCount === 1) {
       return true;
     } else {

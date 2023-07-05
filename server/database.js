@@ -19,7 +19,7 @@ exports.connectDB = connectDB;
 
 async function closeConnection() {
   try {
-    client.close();
+    await client.close();
   } catch (error) {
     console.error(error);
   }
