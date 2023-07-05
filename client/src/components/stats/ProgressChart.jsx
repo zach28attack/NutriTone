@@ -15,7 +15,6 @@ import {getWeightLogs} from "../../apis/weightApi";
 import ChartForm from "./ChartForm";
 
 function ProgressChart() {
-  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const [dateMonth, setDateMonth] = useState([
     "Jan",
     "Feb",
@@ -31,10 +30,9 @@ function ProgressChart() {
     "Dec",
   ]);
 
-  // const [dateYear, setDateYear] = useState([
+  // const [dateYear, setDateYear] = useState([]);
   //    start from now to a data point from 1 year ago or the
   //    oldest weightLog date to now, whatever is smaller
-  // ]);
 
   const [logs, setLogs] = useState([]);
   const [min, setMin] = useState(0);
@@ -60,7 +58,17 @@ function ProgressChart() {
       })
     );
   };
-  console.log(logs);
+
+  const addWeightLogHandler = (log) => {
+    setLogs((prevLogs) => {
+      const newLogs = [...prevLogs, log];
+      return newLogs.sort((a, b) => new Date(a.date) - new Date(b.date));
+    });
+  };
+
+  //
+  // Line chart Config
+  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
   const data = {
     labels: dateMonth,
     datasets: [
@@ -76,7 +84,6 @@ function ProgressChart() {
       },
     ],
   };
-
   // options for the line chart
   const options = {
     responsive: true,
@@ -102,13 +109,15 @@ function ProgressChart() {
       },
     },
   };
+  //
+  //
   return (
     <div className={Class.chartContainer}>
       <div className={Class.chartCard}>
         <div className={Class.chart}>
           <Line options={options} datasetIdKey="id" data={data} />
         </div>
-        <ChartForm />
+        <ChartForm addWeightLog={addWeightLogHandler} />
       </div>
     </div>
   );

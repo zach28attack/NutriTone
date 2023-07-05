@@ -2,12 +2,13 @@ import Class from "./ChartForm.module.css";
 import {saveNewWeightLog} from "../../apis/weightApi";
 import {useState} from "react";
 
-function ChartForm() {
+function ChartForm(props) {
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [weight, setWeight] = useState();
   const submitHandler = (e) => {
     e.preventDefault();
     saveNewWeightLog({date: date, weight: parseInt(weight)});
+    props.addWeightLog({date: date, weight: parseInt(weight)});
   };
   const weightHandler = (input) => {
     setWeight(input.target.value);
