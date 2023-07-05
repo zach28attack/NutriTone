@@ -7,14 +7,16 @@ function ChartForm(props) {
   const [weight, setWeight] = useState();
   const submitHandler = (e) => {
     e.preventDefault();
-    saveNewWeightLog({date: date, weight: parseInt(weight)});
-    props.addWeightLog({date: date, weight: parseInt(weight)});
+    console.log(date);
+    // saveNewWeightLog({date: date, weight: parseInt(weight)});
+    // props.addWeightLog({date: date, weight: parseInt(weight)});
   };
   const weightHandler = (input) => {
     setWeight(input.target.value);
   };
   const dateHandler = (input) => {
-    setDate(new Date(input.target.value).toLocaleDateString());
+    const date = new Date(input.target.value);
+    setDate(new Date(date.setDate(date.getDate() + 1)).toLocaleString());
   };
 
   return (
