@@ -17,3 +17,10 @@
 .chart {
   height: 28rem;
 }
+.sortBy {
+  position: absolute;
+  right: 0;
+  color: #bf7d60;
+  letter-spacing: 1px;
+  margin: 1rem;
+}
