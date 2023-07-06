@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import {Line} from "react-chartjs-2";
 import {useState, useEffect} from "react";
-import {getWeightLogs} from "../../apis/weightApi";
+import {getWeightLogs, deleteWeightLog} from "../../apis/weightApi";
 import ChartForm from "./ChartForm";
 
 function ProgressChart() {
@@ -38,6 +38,7 @@ function ProgressChart() {
     const twelveMonthFilter = new Date();
     twelveMonthFilter.setDate(twelveMonthFilter.getDate() - 30 * 12);
     const sortedLogs = logs.filter((log) => new Date(log.date) >= twelveMonthFilter);
+
     setSortedLogsByMonth(
       sortedLogs.map((log) => {
         return {x: log.date, y: log.weight};
@@ -53,7 +54,32 @@ function ProgressChart() {
   };
   //
   // Line chart Config
+
   ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+  const handleDataPointClick = (e, element) => {
+    if (element[0]) {
+      removeLog(element[0].index);
+    }
+  };
+  const removeLog = (index) => {
+    const logToDelete =
+      sortByFrame === "30 days"
+        ? sortedLogsByDay[index]
+        : sortByFrame === "12 months"
+        ? sortedLogsByMonth[index]
+        : sortedLogsAll[index];
+    deleteWeightLog({date: logToDelete.x, weight: logToDelete.y});
+    setLogs((prevLogs) => {
+      const updateLogs = prevLogs.filter((log) => {
+        return !(log.date === logToDelete.x && log.weight === logToDelete.y);
+      });
+
+      filterLogsThirtyDays(updateLogs);
+      filterLogsTwelveMonths(updateLogs);
+      sortAllLogs(updateLogs);
+      return updateLogs;
+    });
+  };
   const data = {
     labels: [],
     datasets: [
@@ -69,6 +95,7 @@ function ProgressChart() {
   // options for the line chart
   const options = {
     responsive: true,
+    onClick: handleDataPointClick,
     plugins: {
       legend: {
         position: "top",
