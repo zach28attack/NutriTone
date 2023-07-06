@@ -94,6 +94,18 @@ class User {
       return false;
     }
   }
+  async deleteLog() {
+    const db = await connectDB();
+    const result = await db
+      .collection("users")
+      .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$pull: {logs: this.log}});
+    closeConnection();
+    if (result.modifiedCount === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 module.exports = User;

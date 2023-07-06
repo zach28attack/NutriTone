@@ -73,7 +73,18 @@ exports.saveNewLog = async (req, res, next) => {
   const user = req.user;
   user.log = req.body.log;
   console.log("userLOG:", user.log);
-  const success = user.saveNewLog();
+  const success = await user.saveNewLog();
+  if (success) {
+    res.status(200).json();
+  } else {
+    res.status(500).json();
+  }
+};
+
+exports.deleteLog = async (req, res, next) => {
+  const user = req.user;
+  user.log = req.body.log;
+  const success = await user.deleteLog();
   if (success) {
     res.status(200).json();
   } else {
