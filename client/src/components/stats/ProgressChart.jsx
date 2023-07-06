@@ -23,17 +23,18 @@ function ProgressChart() {
   const [sortedLogsByMonth, setSortedLogsByMonth] = useState([]);
   const [sortedLogsAll, setSortedLogsAll] = useState([]);
 
-  const sortLogDatesByDay = (logs) => {
+  const filterLogsThirtyDays = (logs) => {
     const thirtyDayFilter = new Date();
     thirtyDayFilter.setDate(thirtyDayFilter.getDate() - 30);
     const sortedLogs = logs.filter((log) => new Date(log.date) >= thirtyDayFilter);
+
     setSortedLogsByDay(
       sortedLogs.map((log) => {
         return {x: log.date, y: log.weight};
       })
     );
   };
-  const sortLogDatesByMonth = (logs) => {
+  const filterLogsTwelveMonths = (logs) => {
     setSortedLogsByMonth(
       logs.map((log) => {
         return {x: log.date, y: log.weight};
@@ -106,8 +107,8 @@ function ProgressChart() {
         return prev.weight > current.weight ? prev : current;
       })
     );
-    sortLogDatesByDay(logs);
-    sortLogDatesByMonth(logs);
+    filterLogsThirtyDays(logs);
+    filterLogsTwelveMonths(logs);
     sortAllLogs(logs);
   };
 
@@ -115,8 +116,8 @@ function ProgressChart() {
     setLogs((prevLogs) => {
       const newLogs = [...prevLogs, log];
       const sortedLogs = newLogs.sort((a, b) => new Date(a.date) - new Date(b.date));
-      sortLogDatesByDay(sortedLogs);
-      sortLogDatesByMonth(sortedLogs);
+      filterLogsThirtyDays(sortedLogs);
+      filterLogsTwelveMonths(sortedLogs);
       sortAllLogs(sortedLogs);
       return sortedLogs;
     });
