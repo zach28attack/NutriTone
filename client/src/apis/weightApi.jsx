@@ -29,3 +29,19 @@ export async function saveNewWeightLog(log) {
     return true;
   }
 }
+
+export async function deleteWeightLog(log) {
+  const res = await fetch("http://localhost:3000/logs", {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      log: log,
+    }),
+  });
+  if (res.ok) {
+    return true;
+  }
+}
