@@ -35,14 +35,16 @@ function ProgressChart() {
     );
   };
   const filterLogsTwelveMonths = (logs) => {
+    const twelveMonthFilter = new Date();
+    twelveMonthFilter.setDate(twelveMonthFilter.getDate() - 30 * 12);
+    const sortedLogs = logs.filter((log) => new Date(log.date) >= twelveMonthFilter);
     setSortedLogsByMonth(
-      logs.map((log) => {
+      sortedLogs.map((log) => {
         return {x: log.date, y: log.weight};
       })
     );
   };
   const sortAllLogs = (logs) => {
-    const latestLog = logs[logs.length - 1];
     setSortedLogsAll(
       logs.map((log) => {
         return {x: log.date, y: log.weight};
