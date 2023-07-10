@@ -39,12 +39,11 @@ function UserProfile() {
           <div className={Class.divider}></div>
           <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="username">
             <span>@user155493</span>
-
             {usernameIsActive && <PiPencilFill className={Class.editBtn} />}
           </div>
         </div>
         <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
-        <AccountModal />
+        {accountModalIsActive && <AccountModal closeModal={accountClickHandler} />}
       </article>
     </section>
   );
