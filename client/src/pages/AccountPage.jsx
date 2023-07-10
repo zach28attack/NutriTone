@@ -1,5 +1,11 @@
+import UserProfile from "../components/user/UserProfile";
+
 function AccountPage() {
-  return;
+  return (
+    <div>
+      <UserProfile />
+    </div>
+  );
 }
 
 export default AccountPage;
