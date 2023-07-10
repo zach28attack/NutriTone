@@ -24,13 +24,13 @@ function Navbar() {
         <a href="/stats">
           <BiLineChartDown className={Class.icon} />
         </a>
-        <a href="">
+        <a href="/community">
           <FaUserFriends className={Class.icon} />
         </a>
         <a href="">
           <GiWhistle className={Class.icon} />
         </a>
-        <a href="">
+        <a href="/account">
           <FaUser className={Class.icon} />
         </a>
         <button onClick={logoutHandler} className={Class.btn}>
