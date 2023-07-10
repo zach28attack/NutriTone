@@ -28,35 +28,6 @@
   justify-content: space-around;
   align-items: center;
 }
-.modal form {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-.modal form div {
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-}
-.modal form label {
-  color: #bf7d60;
-  font-size: 1.8rem;
-}
-.modal form input {
-  color: #bf7d60;
-  border: #bf7d60 solid 2px;
-  background-color: #fff3e6;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  font-size: 1.5rem;
-}
-.submit {
-  width: 50%;
-  background-color: #bf7d60 !important;
-  color: #fff3e6 !important;
-}
+
 /* #fff3e6 */
 /* #bf7d60 */
