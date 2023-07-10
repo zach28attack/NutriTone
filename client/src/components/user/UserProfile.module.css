@@ -34,3 +34,13 @@
 .editBtn {
   cursor: pointer;
 }
+.accountEdit {
+  cursor: pointer;
+  position: absolute;
+  transform: translateX(16rem) translateY(4rem);
+  font-size: 2rem;
+  color: rgba(191, 125, 96, 0.6);
+}
+.accountEdit:hover {
+  color: #bf7d60;
+}

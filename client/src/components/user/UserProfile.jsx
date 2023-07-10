@@ -1,8 +1,14 @@
 import Class from "./UserProfile.module.css";
 import {PiPencilFill} from "react-icons/pi";
 import {useState} from "react";
+import {BiDotsVerticalRounded} from "react-icons/bi";
+import AccountModal from "../user/AccountModal";
 
 function UserProfile() {
+  const [nameIsActive, setNameIsActive] = useState();
+  const [usernameIsActive, setUsernameIsActive] = useState();
+  const [accountModalIsActive, setAccountModalIsActive] = useState();
+
   const enterHandler = (e) => {
     if (e.target.closest("#name")) {
       setNameIsActive(true);
@@ -17,8 +23,9 @@ function UserProfile() {
       setUsernameIsActive(false);
     }
   };
-  const [nameIsActive, setNameIsActive] = useState();
-  const [usernameIsActive, setUsernameIsActive] = useState();
+  const accountClickHandler = () => {
+    setAccountModalIsActive(!accountModalIsActive);
+  };
 
   return (
     <section className={Class.container}>
@@ -36,6 +43,8 @@ function UserProfile() {
             {usernameIsActive && <PiPencilFill className={Class.editBtn} />}
           </div>
         </div>
+        <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
+        <AccountModal />
       </article>
     </section>
   );
