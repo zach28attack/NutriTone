@@ -6,6 +6,8 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import HomePage from "./pages/HomePage.jsx";
 import WelcomePage from "./pages/WelcomePage.jsx";
 import StatsPage from "./pages/StatsPage.jsx";
+import CommunityPage from "./pages/CommunityPage.jsx";
+import AccountPage from "./pages/AccountPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
       {
         path: "/stats",
         element: <StatsPage />,
+      },
+      {
+        path: "/account",
+        element: <AccountPage />,
+      },
+      {
+        path: "/community",
+        element: <CommunityPage />,
       },
     ],
   },
