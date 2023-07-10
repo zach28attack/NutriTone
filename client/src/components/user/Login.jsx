@@ -27,10 +27,10 @@ function Login() {
       <h1 className={Class.title}>Login</h1>
       <form className={Class.form} onSubmit={loginHandler}>
         <label className={Class.label}>Username</label>
-        <input className={Class.input} onChange={usernameHandler}></input>
+        <input type="username" className={Class.input} onChange={usernameHandler}></input>
 
         <label className={Class.label}>Password</label>
-        <input className={Class.input} onChange={passwordHandler}></input>
+        <input type="password" className={Class.input} onChange={passwordHandler}></input>
 
         <input type="submit" className={Class.login} />
 

@@ -40,18 +40,18 @@ function Signup() {
       <h1 className={Class.title}>Sign up</h1>
       <form className={Class.form} onSubmit={formSubmitHandler}>
         <label className={Class.label}>Email</label>
-        <input className={Class.input} type="text" name="email" onChange={emailInputHandler} />
+        <input className={Class.input} type="email" name="email" onChange={emailInputHandler} />
 
         <label className={Class.label}>Username</label>
-        <input className={Class.input} type="text" name="username" onChange={usernameInputHandler} />
+        <input className={Class.input} type="username" name="username" onChange={usernameInputHandler} />
 
         <label className={Class.label}>Password</label>
-        <input className={Class.input} type="text" name="password" onChange={passwordInputHandler} />
+        <input className={Class.input} type="password" name="password" onChange={passwordInputHandler} />
 
         <label className={Class.label}>Confirm Password</label>
         <input
           className={Class.input}
-          type="text"
+          type="password"
           name="passwordConfirmation"
           onChange={passwordConfirmationInputHandler}
         />
