@@ -1,0 +1,53 @@
+.post {
+  width: 90%;
+  min-height: 14rem;
+  max-height: 28rem;
+  background-color: white;
+  border: #bf7d60 solid 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+.header {
+  width: 100%;
+  background-color: #bf7d60;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  color: #fff3e6;
+}
+.userGroup {
+  height: 7rem;
+  display: flex;
+  align-items: center;
+  width: 85%;
+  margin: 0.5rem;
+}
+.userGroup img {
+  width: 6rem;
+  border-radius: 50%;
+  padding-left: 0.5rem;
+  border: transparent 1px solid;
+}
+.userNameGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 1rem;
+  font-size: 1.4rem;
+}
+.postContent {
+  width: 95%;
+  min-height: 8rem;
+  max-height: 15rem;
+  background-color: #fff3e6;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: solid 2px #bf7d60;
+}
+
+/* fff3e6 */
+/* bf7d60 */
