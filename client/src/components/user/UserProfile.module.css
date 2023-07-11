@@ -18,7 +18,7 @@
 .nameGroup {
   position: absolute;
   color: #bf7d60;
-  transform: translateX(2rem) translateY(18rem);
+  transform: translateX(2rem) translateY(20rem);
   font-size: 1.5rem;
   width: 14rem;
 }
@@ -37,7 +37,7 @@
 .accountEdit {
   cursor: pointer;
   position: absolute;
-  transform: translateX(16rem) translateY(4rem);
+  transform: translateX(16rem) translateY(3rem);
   font-size: 2rem;
   color: rgba(191, 125, 96, 0.6);
 }
