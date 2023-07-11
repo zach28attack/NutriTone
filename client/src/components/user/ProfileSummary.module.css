@@ -1,0 +1,67 @@
+.container {
+  width: 20rem;
+  height: 12rem;
+  background-color: white;
+  position: relative;
+  transform: translateX(24rem) translateY(5rem) scale(1.2);
+  border-radius: 20px;
+  border: #bf7d60 4px solid;
+  box-shadow: 5px 5px 10px 10px rgba(0, 0, 0, 0.07);
+}
+.container span {
+  color: #bf7d60;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+.horizontalDivider1 {
+  width: 80%;
+  height: 2px;
+  background-color: #bf7d60;
+  border-radius: 10px;
+  transform: translateY(4rem);
+  margin-left: 2rem;
+}
+.horizontalDivider2 {
+  width: 80%;
+  height: 2px;
+  background-color: #bf7d60;
+  border-radius: 10px;
+  transform: translateY(7rem);
+  margin-left: 2rem;
+}
+.verticalDivider {
+  width: 8rem;
+  height: 2px;
+  background-color: #bf7d60;
+  border-radius: 10px;
+  transform: rotate(90deg) translateX(5.5rem) translateY(-4rem);
+  margin-left: 2rem;
+}
+.startWeightTitle {
+  position: absolute;
+  transform: translateX(2rem) translateY(2rem);
+}
+.currentWeightTitle {
+  position: absolute;
+  transform: translateX(2rem) translateY(5rem);
+}
+.goalWeightTitle {
+  position: absolute;
+  transform: translateX(2rem) translateY(7.5rem);
+}
+
+.startWeightData {
+  position: absolute;
+  transform: translateX(12rem) translateY(2rem);
+}
+.currentWeightData {
+  position: absolute;
+  transform: translateX(12rem) translateY(5rem);
+}
+.goalWeightData {
+  position: absolute;
+  transform: translateX(12rem) translateY(7.5rem);
+}
+
+/* #fff3e6 */
+/* #bf7d60 */

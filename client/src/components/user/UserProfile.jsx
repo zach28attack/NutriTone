@@ -3,6 +3,7 @@ import {PiPencilFill} from "react-icons/pi";
 import {useState} from "react";
 import {BiDotsVerticalRounded} from "react-icons/bi";
 import AccountModal from "../user/AccountModal";
+import ProfileSummary from "./ProfileSummary";
 
 function UserProfile() {
   const [nameIsActive, setNameIsActive] = useState();
@@ -44,6 +45,7 @@ function UserProfile() {
         </div>
         <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
         {accountModalIsActive && <AccountModal closeModal={accountClickHandler} />}
+        <ProfileSummary />
       </article>
     </section>
   );
