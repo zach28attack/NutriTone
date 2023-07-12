@@ -8,6 +8,6 @@
 .feed {
   grid-column: 2 / 3;
 }
-
-/* fff3e6 */
-/* bf7d60 */
+.menu {
+  grid-column: 3/4;
+}
