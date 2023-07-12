@@ -1,0 +1,98 @@
+.container {
+  position: fixed;
+  width: 25%;
+  min-height: 15rem;
+  max-height: 80%;
+  background-color: white;
+  border-top: #bf7d60 solid 8px;
+  border-bottom: #bf7d60 solid 8px;
+  border-left: #bf7d60 solid 2px;
+  border-right: #bf7d60 solid 2px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.container header {
+  border-bottom: #bf7d60 solid 2px;
+  height: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.container img {
+  width: 3rem;
+  border-radius: 50%;
+}
+.container h4 {
+  text-align: center;
+}
+.nameGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 60%;
+}
+.nameGroup span {
+  border-bottom: black solid 2px;
+  padding-bottom: 0.2rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.2rem;
+}
+.nameGroup sub {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1rem;
+}
+.communityList {
+  display: flex;
+  flex-direction: column;
+}
+.communityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: #bf7d60;
+}
+.communityItem span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.communityItem sub {
+  font-style: italic;
+  opacity: 0.5;
+  padding: 0.1rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.communityItem button {
+  padding: 0.2rem 0.3rem;
+  font-size: 1rem;
+}
+.form {
+  border: black 1px solid;
+  width: 90%;
+  padding: 0.2rem;
+  margin-left: 5%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+.form input {
+  width: 90%;
+  padding: 0.2rem;
+}
+.form input:focus {
+  outline: none;
+}
+.search {
+  cursor: pointer;
+}
+/* fff3e6 */
+/* bf7d60 */
