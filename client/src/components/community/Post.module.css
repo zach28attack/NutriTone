@@ -43,13 +43,11 @@
   font-size: 1rem;
 }
 .postContent {
-  width: 95%;
+  width: 98%;
   min-height: 8rem;
   max-height: 15rem;
   background-color: #fff3e6;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border: solid 2px #bf7d60;
+  margin-bottom: 0.5rem;
 }
 
 /* fff3e6 */
