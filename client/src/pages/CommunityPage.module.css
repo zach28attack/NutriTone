@@ -9,7 +9,6 @@
   grid-column: 2 / 3;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
 }
 .feed h1 {
   color: #bf7d60;

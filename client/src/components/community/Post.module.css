@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 15px;
+  margin-bottom: 3rem;
 }
 .header {
   width: 100%;
