@@ -21,6 +21,10 @@
   justify-content: space-around;
   align-items: center;
 }
+.container header img {
+  width: 3rem;
+  border-radius: 50%;
+}
 .container img {
   width: 2rem;
   border-radius: 50%;
