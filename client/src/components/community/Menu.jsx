@@ -1,7 +1,10 @@
 import Class from "./Menu.module.css";
 import {VscSearch} from "react-icons/vsc";
 
-function Menu() {
+function Menu({setActiveCommunity}) {
+  const communityClickHandler = () => {
+    setActiveCommunity(true); // replace with community ObjectId
+  };
   return (
     <aside className={Class.container}>
       <header>
@@ -14,12 +17,12 @@ function Menu() {
       <section>
         <h3>Joined Communities</h3>
         <div className={Class.communityList}>
-          <div className={Class.communityItem}>
+          <div className={Class.communityItem} onClick={communityClickHandler}>
             <img src="../../public/default-profile-picture1.jpg" />
             <span>[Group Name test]</span>
             <sub>joined</sub>
           </div>
-          <div className={Class.communityItem}>
+          <div className={Class.communityItem} onClick={communityClickHandler}>
             <img src="../../public/default-profile-picture1.jpg" />
             <span>[Group Name]</span>
             <sub>joined</sub>
@@ -33,8 +36,8 @@ function Menu() {
         </form>
         <div className={Class.communityList}>
           <div className={Class.communityItem}>
-            <img src="../../public/default-profile-picture1.jpg" />
-            <span>[Group Name test]</span>
+            <img src="../../public/default-profile-picture1.jpg" onClick={communityClickHandler} />
+            <span onClick={communityClickHandler}>[Group Name test]</span>
             <button>join</button>
           </div>
           <div className={Class.communityItem}>
