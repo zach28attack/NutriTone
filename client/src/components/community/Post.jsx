@@ -1,6 +1,6 @@
 import Class from "./Post.module.css";
 
-function Post() {
+function Post({user}) {
   return (
     <div className={Class.post}>
       <header className={Class.header}>
@@ -8,13 +8,13 @@ function Post() {
         <span>[Date]</span>
       </header>
       <div className={Class.userGroup}>
-        <img src="../../public/default-profile-picture1.jpg" className={Class.img} />
+        <img src={user.img} className={Class.img} />
         <div className={Class.userNameGroup}>
-          <span>Zachary Casares</span>
-          <sub>@user873291</sub>
+          <span>{user.name}</span>
+          <sub>{user.username}</sub>
         </div>
       </div>
-      <article className={Class.postContent}></article>
+      <article className={Class.postContent}>{user.body}</article>
     </div>
   );
 }
