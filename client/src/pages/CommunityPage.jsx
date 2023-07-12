@@ -6,6 +6,7 @@ function CommunityPage() {
   return (
     <div className={Class.page}>
       <div className={Class.feed}>
+        <h1>Feed</h1>
         <Post />
       </div>
       <div className={Class.menu}>

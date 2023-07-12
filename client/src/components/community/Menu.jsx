@@ -12,7 +12,7 @@ function Menu() {
         <img src="../../public/default-profile-picture1.jpg" />
       </header>
       <section>
-        <h4>Joined Communities</h4>
+        <h3>Joined Communities</h3>
         <div className={Class.communityList}>
           <div className={Class.communityItem}>
             <img src="../../public/default-profile-picture1.jpg" />
