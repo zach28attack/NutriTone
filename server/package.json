@@ -9,7 +9,8 @@
     "createTokenIndex": "node scripts/createJwtIndex.js",
     "createDiaryIndex": "node scripts/createDiaryIndex.js",
     "createFoodIndex": "node scripts/createFoodsIndex.js",
-    "createRecipeIndex": "node scripts/createRecipesIndex.js"
+    "createRecipeIndex": "node scripts/createRecipesIndex.js",
+    "createCommunityIndex": "node scripts/createCommunityIndex.js"
   },
   "author": "",
   "license": "ISC",
