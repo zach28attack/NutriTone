@@ -1,9 +1,12 @@
 import Class from "./Menu.module.css";
 import {VscSearch} from "react-icons/vsc";
+import {useNavigate} from "react-router-dom";
 
 function Menu({setActiveCommunity}) {
+  const navigate = useNavigate();
   const communityClickHandler = () => {
     setActiveCommunity(true); // replace with community ObjectId
+    navigate("/community/page");
   };
   return (
     <aside className={Class.container}>
