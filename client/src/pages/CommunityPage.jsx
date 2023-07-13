@@ -1,40 +1,39 @@
 import Class from "./CommunityPage.module.css";
 import Post from "../components/community/Post";
 import Menu from "../components/community/Menu";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Outlet} from "react-router-dom";
+import {getJoinedCommunities} from "../apis/communityApi";
 
 function CommunityPage() {
-  const user = {
-    name: "Zachary",
-    username: "@user112233",
-    img: "../../public/default-profile-picture1.jpg",
-    body: "Lorem ipsum and all that ya getit. We do sdmsdk mfs lkdmfsl dkm flsd mflks mdflkm sd dfksdf",
-  };
-  const user2 = {
-    name: "Casares",
-    username: "@user5507833",
-    img: "../../public/default-profile-picture1.jpg",
-    body: " Bada Bing Bada Bang Bada Boom. YA DIGG",
-  };
+  const [joinedCommunities, setJoinedCommunities] = useState(true);
   const [activeCommunity, setActiveCommunity] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
+  const getAndSetCommunites = async () => {
+    const joinedCommunities = await getJoinedCommunities();
+    setJoinedCommunities(joinedCommunities);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getAndSetCommunites();
+  }, []);
   return (
     <div className={Class.page}>
       {!activeCommunity ? (
         <div className={Class.feed}>
           <h1>Feed</h1>
-          <Post user={user} />
-          <Post user={user2} />
-          <Post user={user} />
-          <Post user={user2} />
-          <Post user={user} />
+          {!isLoading &&
+            joinedCommunities.map((community) => {
+              return community.posts.map((post) => <Post post={post} groupName={community.name} />);
+            })}
         </div>
       ) : (
         <Outlet />
       )}
       <div className={Class.menu}>
-        <Menu setActiveCommunity={setActiveCommunity} />
+        <Menu setActiveCommunity={setActiveCommunity} joinedCommunities={joinedCommunities} isLoading={isLoading} />
       </div>
     </div>
   );
