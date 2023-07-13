@@ -2,7 +2,7 @@ import Class from "./CommunityPage.module.css";
 import Post from "../components/community/Post";
 import Menu from "../components/community/Menu";
 import {useState} from "react";
-import CommunityGroupPage from "./CommunityGroupPage";
+import {Outlet} from "react-router-dom";
 
 function CommunityPage() {
   const user = {
@@ -31,7 +31,7 @@ function CommunityPage() {
           <Post user={user} />
         </div>
       ) : (
-        <CommunityGroupPage />
+        <Outlet />
       )}
       <div className={Class.menu}>
         <Menu setActiveCommunity={setActiveCommunity} />
