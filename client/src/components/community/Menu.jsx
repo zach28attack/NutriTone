@@ -1,13 +1,17 @@
 import Class from "./Menu.module.css";
 import {VscSearch} from "react-icons/vsc";
 import {useNavigate} from "react-router-dom";
+import {getJoinedCommunities} from "../../apis/communityApi";
+import {useEffect, useState} from "react";
+import CommunityItem from "./CommunityItem";
 
-function Menu({setActiveCommunity}) {
+function Menu({setActiveCommunity, joinedCommunities, isLoading}) {
   const navigate = useNavigate();
   const communityClickHandler = () => {
     setActiveCommunity(true); // replace with community ObjectId
     navigate("/community/page");
   };
+
   return (
     <aside className={Class.container}>
       <header>
@@ -20,16 +24,10 @@ function Menu({setActiveCommunity}) {
       <section>
         <h3>Joined Communities</h3>
         <div className={Class.communityList}>
-          <div className={Class.communityItem} onClick={communityClickHandler}>
-            <img src="../../public/default-profile-picture1.jpg" />
-            <span>[Group Name test]</span>
-            <sub>joined</sub>
-          </div>
-          <div className={Class.communityItem} onClick={communityClickHandler}>
-            <img src="../../public/default-profile-picture1.jpg" />
-            <span>[Group Name]</span>
-            <sub>joined</sub>
-          </div>
+          {!isLoading &&
+            joinedCommunities.map((community) => {
+              return <CommunityItem onClick={communityClickHandler} name={community.name} key={community._id} />;
+            })}
         </div>
       </section>
       <section>
@@ -38,16 +36,9 @@ function Menu({setActiveCommunity}) {
           <input type="text" />
         </form>
         <div className={Class.communityList}>
-          <div className={Class.communityItem}>
-            <img src="../../public/default-profile-picture1.jpg" onClick={communityClickHandler} />
-            <span onClick={communityClickHandler}>[Group Name test]</span>
-            <button>join</button>
-          </div>
-          <div className={Class.communityItem}>
-            <img src="../../public/default-profile-picture1.jpg" />
-            <span>[Group Name]</span>
-            <button>join</button>
-          </div>
+          {/* {joinedCommunities.map((community) => {
+            <CommunityItem onClick={communityClickHandler} community={community} />;
+          })} */}
         </div>
       </section>
     </aside>
