@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const {signup, login, logout, getLogs, saveNewLog, deleteLog} = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
-const {getCommunity} = require("./controllers/communities");
+const {getJoinedCommunities} = require("./controllers/communities");
 const {verifyToken} = require("./authenticate");
 
 app.use((req, res, next) => {
@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 
-app.get("/community", verifyToken, getCommunity);
+app.get("/communities", verifyToken, getJoinedCommunities);
 
 app.post("/user/signup", signup);
 
