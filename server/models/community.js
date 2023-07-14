@@ -25,6 +25,20 @@ class Community {
     closeConnection();
     return false;
   }
+  async saveNewPost() {
+    const db = await connectDB();
+    const result = await db.collection("communities").updateOne(
+      {_id: new mongoDB.ObjectId(this.id)},
+      {
+        $push: {
+          posts: this.post,
+        },
+      }
+    );
+    if (result.modifiedCount === 1) {
+      return true;
+    }
+  }
 }
 
 module.exports = Community;

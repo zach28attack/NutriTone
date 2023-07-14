@@ -22,7 +22,14 @@ exports.getJoinedCommunities = async (req, res, next) => {
 
 exports.saveNewPost = async (req, res, next) => {
   const community = new Community();
-  const {post} = req.body;
-  console.log(post);
-  // community.post = post;
+  const {post, id} = req.body;
+  community.id = id;
+  post.userId = req.user.id;
+  community.post = post;
+  const success = await community.saveNewPost();
+  if (success) {
+    res.status(200).json();
+  } else {
+    res.status(400).json();
+  }
 };

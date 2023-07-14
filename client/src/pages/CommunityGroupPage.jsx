@@ -17,6 +17,7 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
   const navClickHandler = () => {
     setGroupPageIsActive(false);
   };
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -25,7 +26,7 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
     <div className={Class.container}>
       <button onClick={navClickHandler}>go back</button>
       <h1>{community.name}</h1>
-      <CommunityForm />
+      <CommunityForm communityId={community._id} />
       {community &&
         community.posts.map((post) => (
           <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />

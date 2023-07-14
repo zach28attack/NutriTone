@@ -15,7 +15,7 @@ export async function getJoinedCommunities() {
   }
 }
 
-export async function saveNewPost(post) {
+export async function saveNewPost(post, communityId) {
   try {
     const res = await fetch("http://localhost:3000/post", {
       method: "POST",
@@ -25,12 +25,14 @@ export async function saveNewPost(post) {
       },
       body: JSON.stringify({
         post: post,
+        id: communityId,
       }),
     });
 
     if (res.ok) {
-      const data = await res.json();
-      console.log("data:", data);
+      return true;
+    } else {
+      return false;
     }
   } catch (error) {
     console.error(error);

@@ -2,11 +2,20 @@ import Class from "./CommunityForm.module.css";
 import {useState} from "react";
 import {saveNewPost} from "../../apis/communityApi";
 
-function CommunityForm() {
+function CommunityForm({communityId}) {
+  console.log(communityId);
   const submitClickHandler = (e) => {
     e.preventDefault();
     setActiveClass(!activeClass);
-    saveNewPost({userId: Cookies.get("userId"), body: input, date: new Date()});
+    saveNewPost(
+      {
+        body: input,
+        date: new Date(),
+        name: "Johnathan Testing",
+        username: "@user88888888",
+      },
+      communityId
+    );
   };
   const [activeClass, setActiveClass] = useState();
   const [input, setInput] = useState();
