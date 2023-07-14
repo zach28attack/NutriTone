@@ -9,9 +9,12 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
   // when user scrolls to bottom of page get more posts from db
 
   const [community, setCommunity] = useState(false);
+  const [posts, setPosts] = useState();
+
   const getPosts = () => {
     const [community] = communities.filter((community) => community._id === activeCommunityId);
     setCommunity(community);
+    setPosts([...community.posts].reverse());
   };
 
   const navClickHandler = () => {
@@ -26,11 +29,9 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
     <div className={Class.container}>
       <button onClick={navClickHandler}>go back</button>
       <h1>{community.name}</h1>
-      <CommunityForm communityId={community._id} />
+      <CommunityForm communityId={community._id} setPosts={setPosts} />
       {community &&
-        community.posts.map((post) => (
-          <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />
-        ))}
+        posts.map((post) => <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />)}
     </div>
   );
 }
