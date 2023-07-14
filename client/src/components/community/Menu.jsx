@@ -26,7 +26,13 @@ function Menu({setActiveCommunity, joinedCommunities, isLoading}) {
         <div className={Class.communityList}>
           {!isLoading &&
             joinedCommunities.map((community) => {
-              return <CommunityItem onClick={communityClickHandler} name={community.name} key={community._id} />;
+              return (
+                <CommunityItem
+                  communityClickHandler={communityClickHandler}
+                  name={community.name}
+                  key={community._id}
+                />
+              );
             })}
         </div>
       </section>
