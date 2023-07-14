@@ -10,7 +10,7 @@ export async function getJoinedCommunities() {
   });
   if (res.ok) {
     const data = await res.json();
-    console.log(data.communities);
+    console.log("Api returned:", data.communities);
     return data.communities;
   }
 }
