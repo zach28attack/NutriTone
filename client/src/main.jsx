@@ -30,12 +30,6 @@ const router = createBrowserRouter([
       {
         path: "/community",
         element: <CommunityPage />,
-        children: [
-          {
-            path: "/community/page",
-            element: <CommunityGroupPage />,
-          },
-        ],
       },
     ],
   },
