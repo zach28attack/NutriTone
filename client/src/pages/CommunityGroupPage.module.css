@@ -11,3 +11,10 @@
   padding: 1rem;
   font-size: 4rem;
 }
+.container button {
+  width: 4rem;
+  color: #bf7d60;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}

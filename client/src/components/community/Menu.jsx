@@ -1,15 +1,12 @@
 import Class from "./Menu.module.css";
 import {VscSearch} from "react-icons/vsc";
-import {useNavigate} from "react-router-dom";
-import {getJoinedCommunities} from "../../apis/communityApi";
 import {useEffect, useState} from "react";
 import CommunityItem from "./CommunityItem";
 
-function Menu({setActiveCommunity, joinedCommunities, isLoading}) {
-  const navigate = useNavigate();
-  const communityClickHandler = () => {
-    setActiveCommunity(true); // replace with community ObjectId
-    navigate("/community/page");
+function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveCommunityId}) {
+  const communityClickHandler = (id) => {
+    setGroupPageIsActive(true);
+    setActiveCommunityId(id);
   };
 
   return (
@@ -31,6 +28,7 @@ function Menu({setActiveCommunity, joinedCommunities, isLoading}) {
                   communityClickHandler={communityClickHandler}
                   name={community.name}
                   key={community._id}
+                  id={community._id}
                 />
               );
             })}
@@ -42,6 +40,7 @@ function Menu({setActiveCommunity, joinedCommunities, isLoading}) {
           <input type="text" />
         </form>
         <div className={Class.communityList}>
+          {/* list of featured communities / search results */}
           {/* {joinedCommunities.map((community) => {
             <CommunityItem onClick={communityClickHandler} community={community} />;
           })} */}
