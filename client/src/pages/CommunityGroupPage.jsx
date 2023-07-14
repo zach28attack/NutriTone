@@ -2,6 +2,7 @@ import Class from "./CommunityGroupPage.module.css";
 import Post from "../components/community/Post";
 import {useEffect} from "react";
 import {useState} from "react";
+import CommunityForm from "../components/community/CommunityForm";
 
 function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityId}) {
   // when communityItems are clicked in the menu call getCommunityPosts, get 10-20 posts
@@ -24,6 +25,7 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
     <div className={Class.container}>
       <button onClick={navClickHandler}>go back</button>
       <h1>{community.name}</h1>
+      <CommunityForm />
       {community &&
         community.posts.map((post) => (
           <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />
