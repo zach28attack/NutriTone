@@ -19,3 +19,10 @@ exports.getJoinedCommunities = async (req, res, next) => {
     console.error(error);
   }
 };
+
+exports.saveNewPost = async (req, res, next) => {
+  const community = new Community();
+  const {post} = req.body;
+  console.log(post);
+  // community.post = post;
+};

@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
+const {verifyToken} = require("./authenticate");
+
 const {signup, login, logout, getLogs, saveNewLog, deleteLog} = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
-const {getJoinedCommunities} = require("./controllers/communities");
-const {verifyToken} = require("./authenticate");
+const {getJoinedCommunities, saveNewPost} = require("./controllers/communities");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
@@ -15,6 +16,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.get("/communities", verifyToken, getJoinedCommunities);
+
+app.post("/post", verifyToken, saveNewPost);
 
 app.post("/user/signup", signup);
 
