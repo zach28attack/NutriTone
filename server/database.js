@@ -18,10 +18,12 @@ async function connectDB() {
 exports.connectDB = connectDB;
 
 async function closeConnection() {
-  try {
-    await client.close();
-  } catch (error) {
-    console.error(error);
+  if (client) {
+    try {
+      await client.close();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

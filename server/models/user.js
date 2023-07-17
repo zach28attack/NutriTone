@@ -36,9 +36,13 @@ class User {
       const result = await db.collection("users").findOne({username: this.username, password: this.password});
       if (result !== null) {
         this.id = result._id;
+        this.username = result.username;
+        result.name ? (this.name = result.name) : undefined;
+
         this.token = await genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
         closeConnection();
+        console.log(result);
         return true;
       } else {
         closeConnection();

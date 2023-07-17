@@ -10,6 +10,7 @@ exports.signup = async (req, res, next) => {
     try {
       await user.saveNew();
       res.status(200).json({
+        username: user.username,
         id: user.id,
         token: user.token,
       });
@@ -31,6 +32,8 @@ exports.login = async (req, res, next) => {
     const success = await user.validateUser();
     if (success) {
       res.status(200).json({
+        username: user.username,
+        name: user.name,
         id: user.id,
         token: user.token,
       });
