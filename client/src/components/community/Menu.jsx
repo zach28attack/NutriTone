@@ -2,6 +2,7 @@ import Class from "./Menu.module.css";
 import {VscSearch} from "react-icons/vsc";
 import {useEffect, useState} from "react";
 import CommunityItem from "./CommunityItem";
+import Cookies from "js-cookie";
 
 function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveCommunityId}) {
   const communityClickHandler = (id) => {
@@ -12,11 +13,11 @@ function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveComm
   return (
     <aside className={Class.container}>
       <header>
-        <div className={Class.nameGroup}>
-          <span>Zachary Casares</span>
-          <sub>@user2323432</sub>
-        </div>
         <img src="../../public/default-profile-picture1.jpg" />
+        <div className={Class.nameGroup}>
+          {Cookies.get("name") && <span>{Cookies.get("name")}</span>}
+          <sub>@{Cookies.get("username")}</sub>
+        </div>
       </header>
       <section>
         <h3>Joined Communities</h3>
