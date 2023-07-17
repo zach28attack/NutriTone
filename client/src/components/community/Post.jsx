@@ -12,7 +12,7 @@ function Post({post, groupName}) {
       <div className={Class.userGroup}>
         <img src="../../public/default-profile-picture1.jpg" className={Class.img} />
         <div className={Class.userNameGroup}>
-          <span>{post.name}</span>
+          {post.name && <span>{post.name}</span>}
           <sub>{post.username}</sub>
         </div>
         <div className={Class.iconGroup}>
