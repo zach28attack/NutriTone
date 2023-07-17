@@ -5,6 +5,7 @@ import {useState} from "react";
 import CommunityForm from "../components/community/CommunityForm";
 
 function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityId}) {
+  // TODO:
   // when communityItems are clicked in the menu call getCommunityPosts, get 10-20 posts
   // when user scrolls to bottom of page get more posts from db
 
