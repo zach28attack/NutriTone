@@ -1,6 +1,7 @@
 import Class from "./CommunityForm.module.css";
 import {useState} from "react";
 import {saveNewPost} from "../../apis/communityApi";
+import Cookies from "js-cookie";
 
 function CommunityForm({communityId, setPosts}) {
   console.log(communityId);
@@ -8,8 +9,8 @@ function CommunityForm({communityId, setPosts}) {
     const post = {
       body: input,
       date: new Date(),
-      name: "Johnathan Testing",
-      username: "@user88888888",
+      name: Cookies.get("name"),
+      username: Cookies.get("username"),
     };
     e.preventDefault();
     setActiveClass(!activeClass);
