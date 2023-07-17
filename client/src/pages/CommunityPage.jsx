@@ -2,7 +2,6 @@ import Class from "./CommunityPage.module.css";
 import Post from "../components/community/Post";
 import Menu from "../components/community/Menu";
 import {useState, useEffect} from "react";
-import {Outlet} from "react-router-dom";
 import {getJoinedCommunities} from "../apis/communityApi";
 import CommunityGroupPage from "./CommunityGroupPage";
 
@@ -29,7 +28,9 @@ function CommunityPage() {
           <h1>Feed</h1>
           {!isLoading &&
             joinedCommunities.map((community) => {
-              return community.posts.map((post) => <Post post={post} groupName={community.name} key={community._id} />);
+              return community.posts
+                .map((post) => <Post post={post} groupName={community.name} key={community._id} />)
+                .reverse();
             })}
         </div>
       ) : (
