@@ -4,7 +4,8 @@ import {saveNewPost} from "../../apis/communityApi";
 import Cookies from "js-cookie";
 
 function CommunityForm({communityId, setPosts}) {
-  console.log(communityId);
+  const [activeClass, setActiveClass] = useState();
+  const [input, setInput] = useState();
   const submitClickHandler = (e) => {
     const post = {
       body: input,
@@ -17,11 +18,10 @@ function CommunityForm({communityId, setPosts}) {
     saveNewPost(post, communityId);
     setPosts((prevPosts) => [post, ...prevPosts]);
   };
-  const [activeClass, setActiveClass] = useState();
-  const [input, setInput] = useState();
   const inputHandler = (input) => {
     setInput(input.target.value);
   };
+
   return (
     <form className={Class.form}>
       <article className={Class.postContent}>
