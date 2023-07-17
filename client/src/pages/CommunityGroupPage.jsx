@@ -24,7 +24,7 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [activeCommunityId]);
 
   return (
     <div className={Class.container}>
