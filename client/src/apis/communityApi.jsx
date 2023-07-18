@@ -15,6 +15,21 @@ export async function getJoinedCommunities() {
   }
 }
 
+export async function saveNewCommunity() {
+  const res = await fetch("http://localhost:3000/communities", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  });
+  if (res.ok) {
+    const data = await res.json();
+    console.log(data);
+  }
+}
+
 export async function saveNewPost(post, communityId) {
   try {
     const res = await fetch("http://localhost:3000/post", {
