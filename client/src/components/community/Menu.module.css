@@ -48,7 +48,6 @@
   flex-direction: column;
   gap: 0.2rem;
   width: 90%;
-  /* color: #bf7d60; */
 }
 .nameGroup span {
   border-bottom: #bf7d60 solid 1px;
