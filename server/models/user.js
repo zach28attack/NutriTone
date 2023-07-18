@@ -42,7 +42,6 @@ class User {
         this.token = await genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
         closeConnection();
-        console.log(result);
         return true;
       } else {
         closeConnection();
