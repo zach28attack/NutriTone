@@ -1,4 +1,4 @@
-import Class from "./CommunityForm.module.css";
+import Class from "./PostForm.module.css";
 import {useState} from "react";
 import {saveNewPost} from "../../apis/communityApi";
 import Cookies from "js-cookie";

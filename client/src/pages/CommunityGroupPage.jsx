@@ -2,7 +2,7 @@ import Class from "./CommunityGroupPage.module.css";
 import Post from "../components/community/Post";
 import {useEffect} from "react";
 import {useState} from "react";
-import CommunityForm from "../components/community/CommunityForm";
+import PostForm from "../components/community/PostForm";
 
 function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityId, updateCommunityPosts}) {
   // TODO:
@@ -30,7 +30,7 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
     <div className={Class.container}>
       <button onClick={navClickHandler}>go back</button>
       <h1>{community.name}</h1>
-      <CommunityForm communityId={community._id} setPosts={setPosts} updateCommunityPosts={updateCommunityPosts} />
+      <PostForm communityId={community._id} setPosts={setPosts} updateCommunityPosts={updateCommunityPosts} />
       {community &&
         posts.map((post) => <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />)}
     </div>
