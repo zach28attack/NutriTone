@@ -3,7 +3,7 @@ import {useState} from "react";
 import {saveNewPost} from "../../apis/communityApi";
 import Cookies from "js-cookie";
 
-function CommunityForm({communityId, setPosts}) {
+function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
   const [activeClass, setActiveClass] = useState();
   const [input, setInput] = useState();
   const submitClickHandler = (e) => {
@@ -17,6 +17,7 @@ function CommunityForm({communityId, setPosts}) {
     setActiveClass(!activeClass);
     saveNewPost(post, communityId);
     setPosts((prevPosts) => [post, ...prevPosts]);
+    updateCommunityPosts(post, communityId);
   };
   const inputHandler = (input) => {
     setInput(input.target.value);

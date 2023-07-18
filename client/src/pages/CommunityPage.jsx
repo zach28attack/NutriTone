@@ -17,6 +17,15 @@ function CommunityPage() {
     setIsLoading(false);
   };
 
+  const updateCommunityPosts = (post, communityId) => {
+    setJoinedCommunities((communities) => {
+      const updatedCommunities = communities.map((community) => {
+        return community._id === communityId ? {...community, posts: [...community.posts, post]} : community;
+      });
+      return updatedCommunities;
+    });
+  };
+
   useEffect(() => {
     getAndSetCommunites();
   }, []);
@@ -38,6 +47,7 @@ function CommunityPage() {
           setGroupPageIsActive={setGroupPageIsActive}
           activeCommunityId={activeCommunityId}
           communities={joinedCommunities}
+          updateCommunityPosts={updateCommunityPosts}
         />
       )}
       <div className={Class.menu}>

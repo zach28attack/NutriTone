@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import {useState} from "react";
 import CommunityForm from "../components/community/CommunityForm";
 
-function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityId}) {
+function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityId, updateCommunityPosts}) {
   // TODO:
   // when communityItems are clicked in the menu call getCommunityPosts, get 10-20 posts
   // when user scrolls to bottom of page get more posts from db
@@ -30,7 +30,7 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
     <div className={Class.container}>
       <button onClick={navClickHandler}>go back</button>
       <h1>{community.name}</h1>
-      <CommunityForm communityId={community._id} setPosts={setPosts} />
+      <CommunityForm communityId={community._id} setPosts={setPosts} updateCommunityPosts={updateCommunityPosts} />
       {community &&
         posts.map((post) => <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />)}
     </div>
