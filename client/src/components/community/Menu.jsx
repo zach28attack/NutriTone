@@ -3,6 +3,7 @@ import {VscSearch} from "react-icons/vsc";
 import {useEffect, useState} from "react";
 import CommunityItem from "./CommunityItem";
 import Cookies from "js-cookie";
+import {PiListPlusLight} from "react-icons/pi";
 
 function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveCommunityId}) {
   const communityClickHandler = (id) => {
@@ -20,7 +21,9 @@ function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveComm
         </div>
       </header>
       <section>
-        <h3>Joined Communities</h3>
+        <h3>
+          Joined Communities <PiListPlusLight className={Class.addCommunityBtn} />
+        </h3>
         <div className={Class.communityList}>
           {!isLoading &&
             joinedCommunities.map((community) => {

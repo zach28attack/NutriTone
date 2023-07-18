@@ -32,8 +32,16 @@
   border-radius: 50%;
 }
 .container h3 {
-  text-align: center;
   padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addCommunityBtn {
+  right: 0;
+  position: absolute;
+  margin-right: 5px;
+  cursor: pointer;
 }
 .nameGroup {
   display: flex;
