@@ -1,6 +1,5 @@
 import Class from "./Post.module.css";
 import {BsHeart} from "react-icons/bs";
-import {CiBookmarkCheck, CiBookmarkPlus} from "react-icons/ci";
 
 function Post({post, groupName}) {
   return (
@@ -17,7 +16,6 @@ function Post({post, groupName}) {
         </div>
         <div className={Class.iconGroup}>
           <BsHeart className={Class.icon} />
-          <CiBookmarkPlus className={Class.icon} />
         </div>
       </div>
       <article className={Class.postContent}>{post.body}</article>
