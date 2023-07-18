@@ -1,20 +1,12 @@
 import Class from "./Menu.module.css";
-import {VscSearch} from "react-icons/vsc";
 import {useEffect, useState} from "react";
 import CommunityItem from "./CommunityItem";
 import Cookies from "js-cookie";
-import {PiListPlusLight} from "react-icons/pi";
-import MenuForm from "./MenuForm";
 
 function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveCommunityId}) {
-  const [formIsActive, setFormIsActive] = useState(false);
-
   const communityClickHandler = (id) => {
     setGroupPageIsActive(true);
     setActiveCommunityId(id);
-  };
-  const addCommunityClickHandler = () => {
-    setFormIsActive(!formIsActive);
   };
 
   return (
