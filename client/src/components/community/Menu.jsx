@@ -27,11 +27,8 @@ function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveComm
         </div>
       </header>
       <section>
-        <h3>
-          Joined Communities <PiListPlusLight className={Class.addCommunityBtn} onClick={addCommunityClickHandler} />
-        </h3>
+        <h3>Joined Communities </h3>
         <div className={Class.communityList}>
-          {!formIsActive && <MenuForm />}
           {!isLoading &&
             joinedCommunities.map((community) => {
               return (
@@ -46,16 +43,7 @@ function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveComm
         </div>
       </section>
       <section>
-        <form className={Class.form}>
-          <VscSearch className={Class.search} />
-          <input type="text" />
-        </form>
-        <div className={Class.communityList}>
-          {/* list of featured communities / search results */}
-          {/* {joinedCommunities.map((community) => {
-            <CommunityItem onClick={communityClickHandler} community={community} />;
-          })} */}
-        </div>
+        <h3>Official Communities</h3>
       </section>
     </aside>
   );
