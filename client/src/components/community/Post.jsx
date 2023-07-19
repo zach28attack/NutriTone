@@ -2,6 +2,7 @@ import Class from "./Post.module.css";
 import {BsHeart} from "react-icons/bs";
 import {useState} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
+import Cookies from "js-cookie";
 
 function Post({post, groupName, id, communityId, deleteCommunityPosts}) {
   return (
@@ -18,7 +19,9 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts}) {
         </div>
         <div className={Class.iconGroup}>
           <BsHeart className={Class.icon} />
-          <PostOptionsBtn id={id} communityId={communityId} deleteCommunityPosts={deleteCommunityPosts} />
+          {post.userId === Cookies.get("userId") && (
+            <PostOptionsBtn id={id} communityId={communityId} deleteCommunityPosts={deleteCommunityPosts} />
+          )}
         </div>
       </div>
       <article className={Class.postContent}>{post.body}</article>
