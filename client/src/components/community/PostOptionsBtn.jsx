@@ -2,13 +2,14 @@ import Class from "./PostOptionsBtn.module.css";
 import {useState} from "react";
 import {deletePost} from "../../apis/communityApi";
 
-function PostOptionsBtn({id, communityId}) {
+function PostOptionsBtn({id, communityId, deleteCommunityPosts}) {
   const [activeOptions, setActiveOptions] = useState(false);
   const optionsClickHandler = () => {
     setActiveOptions(!activeOptions);
   };
   const deleteClickHandler = () => {
     deletePost(communityId, id);
+    deleteCommunityPosts(communityId, id);
   };
 
   return (

@@ -4,7 +4,13 @@ import {useEffect} from "react";
 import {useState} from "react";
 import PostForm from "../components/community/PostForm";
 
-function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityId, updateCommunityPosts}) {
+function CommunityGroupPage({
+  setGroupPageIsActive,
+  communities,
+  activeCommunityId,
+  updateCommunityPosts,
+  deleteCommunityPosts,
+}) {
   // TODO:
   // when communityItems are clicked in the menu call getCommunityPosts, get 10-20 posts
   // when user scrolls to bottom of page get more posts from db
@@ -21,6 +27,10 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
   const navClickHandler = () => {
     setGroupPageIsActive(false);
   };
+  const deleteClickHandler = (comunityId, id) => {
+    deleteCommunityPosts(comunityId, id);
+    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
+  };
 
   useEffect(() => {
     getPosts();
@@ -33,7 +43,14 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
       <PostForm communityId={community._id} setPosts={setPosts} updateCommunityPosts={updateCommunityPosts} />
       {community &&
         posts.map((post) => (
-          <Post post={post} groupName={community.name} key={post._id} communityId={community._id} id={post._id} />
+          <Post
+            post={post}
+            groupName={community.name}
+            key={post._id}
+            communityId={community._id}
+            id={post._id}
+            deleteCommunityPosts={deleteClickHandler}
+          />
         ))}
     </div>
   );

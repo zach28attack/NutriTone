@@ -17,10 +17,21 @@ function CommunityPage() {
     setIsLoading(false);
   };
 
-  const updateCommunityPosts = (post, communityId) => {
+  const addCommunityPosts = (post, communityId) => {
     setJoinedCommunities((communities) => {
       const updatedCommunities = communities.map((community) => {
         return community._id === communityId ? {...community, posts: [...community.posts, post]} : community;
+      });
+      return updatedCommunities;
+    });
+  };
+
+  const deleteCommunityPosts = (communityId, postId) => {
+    setJoinedCommunities((communities) => {
+      const updatedCommunities = communities.map((community) => {
+        return community._id === communityId
+          ? {...community, posts: community.posts.filter((post) => post._id !== postId)}
+          : community;
       });
       return updatedCommunities;
     });
@@ -45,6 +56,7 @@ function CommunityPage() {
                     key={post._id}
                     id={post._id}
                     communityId={community._id}
+                    deleteCommunityPosts={deleteCommunityPosts}
                   />
                 ))
                 .reverse();
@@ -55,7 +67,8 @@ function CommunityPage() {
           setGroupPageIsActive={setGroupPageIsActive}
           activeCommunityId={activeCommunityId}
           communities={joinedCommunities}
-          updateCommunityPosts={updateCommunityPosts}
+          updateCommunityPosts={addCommunityPosts}
+          deleteCommunityPosts={deleteCommunityPosts}
         />
       )}
       <div className={Class.menu}>

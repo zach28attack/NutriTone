@@ -3,7 +3,7 @@ import {BsHeart} from "react-icons/bs";
 import {useState} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 
-function Post({post, groupName, id, communityId}) {
+function Post({post, groupName, id, communityId, deleteCommunityPosts}) {
   return (
     <div className={Class.post}>
       <header className={Class.header}>
@@ -18,7 +18,7 @@ function Post({post, groupName, id, communityId}) {
         </div>
         <div className={Class.iconGroup}>
           <BsHeart className={Class.icon} />
-          <PostOptionsBtn id={id} communityId={communityId} />
+          <PostOptionsBtn id={id} communityId={communityId} deleteCommunityPosts={deleteCommunityPosts} />
         </div>
       </div>
       <article className={Class.postContent}>{post.body}</article>

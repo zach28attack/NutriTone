@@ -12,6 +12,7 @@ function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
       date: new Date(),
       name: Cookies.get("name"),
       username: Cookies.get("username"),
+      _id: new Date(), // temp id value to be used as key
     };
     e.preventDefault();
     setActiveClass(!activeClass);
