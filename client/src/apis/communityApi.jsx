@@ -57,7 +57,6 @@ export async function saveNewPost(post, communityId) {
 }
 
 export async function deletePost(communityId, postId) {
-  console.log(communityId, postId);
   const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}`, {
     method: "DELETE",
     headers: {
@@ -66,7 +65,6 @@ export async function deletePost(communityId, postId) {
     },
   });
   if (res.ok) {
-    const data = await res.json();
-    console.log(data);
+    console.log(res);
   }
 }
