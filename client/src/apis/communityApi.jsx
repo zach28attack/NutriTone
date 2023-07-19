@@ -15,14 +15,16 @@ export async function getJoinedCommunities() {
   }
 }
 
-export async function saveNewCommunity() {
+export async function editPost(post) {
   const res = await fetch("http://localhost:3000/communities", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({}),
+    body: JSON.stringify({
+      post: post,
+    }),
   });
   if (res.ok) {
     const data = await res.json();
@@ -51,5 +53,20 @@ export async function saveNewPost(post, communityId) {
     }
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function deletePost(communityId, postId) {
+  console.log(communityId, postId);
+  const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    const data = await res.json();
+    console.log(data);
   }
 }

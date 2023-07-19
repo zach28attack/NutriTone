@@ -39,6 +39,20 @@ class Community {
       return true;
     }
   }
+  async deletePost() {
+    const db = await connectDB();
+    const result = await db.collection("communities").updateOne(
+      {_id: new mongoDB.ObjectId(this.id)},
+      {
+        $pull: {
+          posts: {_id: new mongoDB.ObjectId(this.post.id)},
+        },
+      }
+    );
+    if (result.modifiedCount === 1) {
+      return true;
+    }
+  }
 }
 
 module.exports = Community;

@@ -32,7 +32,9 @@ function CommunityGroupPage({setGroupPageIsActive, communities, activeCommunityI
       <h1>{community.name}</h1>
       <PostForm communityId={community._id} setPosts={setPosts} updateCommunityPosts={updateCommunityPosts} />
       {community &&
-        posts.map((post) => <Post post={post} groupName={community.name} key={`${post.userId} ${post.date}`} />)}
+        posts.map((post) => (
+          <Post post={post} groupName={community.name} key={post._id} communityId={community._id} id={post._id} />
+        ))}
     </div>
   );
 }

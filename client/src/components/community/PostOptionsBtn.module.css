@@ -1,0 +1,39 @@
+.optionsBtn {
+  width: 1rem;
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  position: relative;
+}
+.active {
+  background-color: #bf7d60;
+}
+.dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  border: #bf7d60 2px solid;
+  cursor: pointer;
+}
+.menu {
+  position: absolute;
+  transform: translateY(2.8rem) translateX(0.6rem);
+  border: #bf7d60 solid 1px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+.menu button {
+  border: none;
+  background-color: transparent;
+  width: 4.5rem;
+  font-size: 1rem;
+  color: #bf7d60;
+  font-weight: 600;
+}
+.menu button:active {
+  background-color: rgb(238, 238, 238);
+}

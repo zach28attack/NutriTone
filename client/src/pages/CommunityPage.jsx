@@ -38,7 +38,15 @@ function CommunityPage() {
           {!isLoading &&
             joinedCommunities.map((community) => {
               return community.posts
-                .map((post) => <Post post={post} groupName={community.name} key={post._id} />)
+                .map((post) => (
+                  <Post
+                    post={post}
+                    groupName={community.name}
+                    key={post._id}
+                    id={post._id}
+                    communityId={community._id}
+                  />
+                ))
                 .reverse();
             })}
         </div>

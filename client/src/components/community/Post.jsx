@@ -1,7 +1,9 @@
 import Class from "./Post.module.css";
 import {BsHeart} from "react-icons/bs";
+import {useState} from "react";
+import PostOptionsBtn from "./PostOptionsBtn";
 
-function Post({post, groupName}) {
+function Post({post, groupName, id, communityId}) {
   return (
     <div className={Class.post}>
       <header className={Class.header}>
@@ -16,6 +18,7 @@ function Post({post, groupName}) {
         </div>
         <div className={Class.iconGroup}>
           <BsHeart className={Class.icon} />
+          <PostOptionsBtn id={id} communityId={communityId} />
         </div>
       </div>
       <article className={Class.postContent}>{post.body}</article>
