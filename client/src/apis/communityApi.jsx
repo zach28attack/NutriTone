@@ -47,7 +47,8 @@ export async function saveNewPost(post, communityId) {
     });
 
     if (res.ok) {
-      return true;
+      const data = await res.json();
+      return data.postId;
     } else {
       return false;
     }

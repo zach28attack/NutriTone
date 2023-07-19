@@ -6,17 +6,18 @@ import Cookies from "js-cookie";
 function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
   const [activeClass, setActiveClass] = useState();
   const [input, setInput] = useState();
-  const submitClickHandler = (e) => {
+  const submitClickHandler = async (e) => {
     const post = {
       body: input,
       date: new Date(),
       name: Cookies.get("name"),
       username: Cookies.get("username"),
-      _id: new Date(), // temp id value to be used as key
+      userId: Cookies.get("userId"),
+      _id: "",
     };
     e.preventDefault();
     setActiveClass(!activeClass);
-    saveNewPost(post, communityId);
+    post._id = await saveNewPost(post, communityId);
     setPosts((prevPosts) => [post, ...prevPosts]);
     updateCommunityPosts(post, communityId);
   };
