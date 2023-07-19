@@ -31,7 +31,9 @@ exports.saveNewPost = async (req, res, next) => {
 
   const success = await community.saveNewPost();
   if (success) {
-    res.status(200).json();
+    res.status(200).json({
+      postId: post._id,
+    });
   } else {
     res.status(400).json();
   }
@@ -42,6 +44,7 @@ exports.deletePost = async (req, res, next) => {
   const post = {id: req.params.postId};
   community.post = post;
   community.id = req.params.communityId;
+  console.log(community);
   const success = await community.deletePost();
   if (success) {
     res.status(200).json();
