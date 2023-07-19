@@ -16,6 +16,7 @@ function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
       _id: "",
     };
     e.preventDefault();
+    setInput("");
     setActiveClass(!activeClass);
     post._id = await saveNewPost(post, communityId);
     setPosts((prevPosts) => [post, ...prevPosts]);
@@ -28,7 +29,7 @@ function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
   return (
     <form className={Class.form}>
       <article className={Class.postContent}>
-        <textarea type="text" className={Class.input} onChange={inputHandler} />
+        <textarea type="text" className={Class.input} onChange={inputHandler} value={input} />
         <input type="submit" value="Post" className={Class.submit} onClick={submitClickHandler} />
       </article>
     </form>
