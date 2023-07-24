@@ -2,14 +2,19 @@ import Class from "./PostOptionsBtn.module.css";
 import {useState} from "react";
 import {deletePost} from "../../apis/communityApi";
 
-function PostOptionsBtn({id, communityId, deleteCommunityPosts}) {
+function PostOptionsBtn({id, communityId, deleteCommunityPosts, setIsEditing, isEditing}) {
   const [activeOptions, setActiveOptions] = useState(false);
+
   const optionsClickHandler = () => {
     setActiveOptions(!activeOptions);
   };
   const deleteClickHandler = () => {
     deletePost(communityId, id);
     deleteCommunityPosts(communityId, id);
+  };
+  const editClickHandler = () => {
+    setIsEditing(true);
+    setActiveOptions(!activeOptions);
   };
 
   return (
@@ -21,7 +26,7 @@ function PostOptionsBtn({id, communityId, deleteCommunityPosts}) {
       </div>
       {activeOptions && (
         <div className={Class.menu}>
-          <button>Edit</button>
+          <button onClick={editClickHandler}>Edit</button>
           <button onClick={deleteClickHandler}>Delete</button>
         </div>
       )}

@@ -20,7 +20,7 @@
 }
 .menu {
   position: absolute;
-  transform: translateY(2.8rem) translateX(0.6rem);
+  transform: translateY(2.8rem) translateX(2.5rem);
   border: #bf7d60 solid 1px;
   background-color: white;
   display: flex;
