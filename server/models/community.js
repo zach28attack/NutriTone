@@ -53,6 +53,20 @@ class Community {
       return true;
     }
   }
+  async updatePost() {
+    const db = await connectDB();
+    const result = await db.collection("communities").updateOne(
+      {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post.id)},
+      {
+        $set: {
+          "posts.$.body": this.post.body,
+        },
+      }
+    );
+    if (result.modifiedCount > 0) {
+      return true;
+    }
+  }
 }
 
 module.exports = Community;
