@@ -3,8 +3,24 @@ import {BsHeart} from "react-icons/bs";
 import {useState} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 import Cookies from "js-cookie";
+import {editPost} from "../../apis/communityApi";
 
-function Post({post, groupName, id, communityId, deleteCommunityPosts}) {
+function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePosts}) {
+  const [isEditing, setIsEditing] = useState();
+  const cancelEditHandler = () => {
+    setIsEditing(false);
+  };
+  const [input, setInput] = useState();
+  const inputHandler = (e) => {
+    setInput(e.target.value);
+  };
+  const editSubmitHandler = (e) => {
+    e.preventDefault();
+    editPost(communityId, id, input);
+    updatePosts(communityId, id, input);
+    setIsEditing(false);
+  };
+
   return (
     <div className={Class.post}>
       <header className={Class.header}>
@@ -14,17 +30,42 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts}) {
       <div className={Class.userGroup}>
         <img src="../../public/default-profile-picture1.jpg" className={Class.img} />
         <div className={Class.userNameGroup}>
-          {post.name && <span>{post.name}</span>}
-          <sub>@{post.username}</sub>
+          {post.name !== "undefined" ? (
+            <>
+              <span>{post.name}</span>
+              <sub>@{post.username}</sub>
+            </>
+          ) : (
+            <span>@{post.username}</span>
+          )}
         </div>
         <div className={Class.iconGroup}>
           <BsHeart className={Class.icon} />
           {post.userId === Cookies.get("userId") && (
-            <PostOptionsBtn id={id} communityId={communityId} deleteCommunityPosts={deleteCommunityPosts} />
+            <PostOptionsBtn
+              id={id}
+              communityId={communityId}
+              deleteCommunityPosts={deleteCommunityPosts}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+            />
           )}
         </div>
       </div>
-      <article className={Class.postContent}>{post.body}</article>
+
+      <article className={Class.postContent}>
+        {!isEditing ? (
+          post.body
+        ) : (
+          <form className={Class.editForm} onSubmit={editSubmitHandler}>
+            <textarea type="text" onChange={inputHandler} />
+            <button onClick={cancelEditHandler} className={Class.cancelBtn}>
+              Cancel
+            </button>
+            <input type="submit" />
+          </form>
+        )}
+      </article>
     </div>
   );
 }

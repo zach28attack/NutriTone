@@ -56,6 +56,8 @@
   margin-bottom: 0.5rem;
   padding: 1rem;
   border-radius: 5px;
+  color: #bf7d60;
+  letter-spacing: 1px;
 }
 .iconGroup {
   display: flex;
@@ -70,6 +72,46 @@
 .icon {
   cursor: pointer;
   color: #bf7d60;
+}
+.editForm {
+  width: 100%;
+  height: 100%;
+}
+.editForm textarea {
+  width: 100%;
+  min-height: 5rem;
+  max-height: 12rem;
+  resize: vertical;
+  font-size: 1rem;
+  background-color: #fff3e6;
+  color: #bf7d60;
+  border: none;
+  padding: 0.5rem;
+}
+.cancelBtn {
+  border: #bf7d60 solid 1px !important;
+  padding: 0.2rem 0;
+  border-radius: 10px;
+  background-color: #fff3e6;
+  color: #bf7d60;
+  font-size: 0.6rem;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+}
+
+.editForm input[type="submit"] {
+  cursor: pointer;
+  margin: 0.5rem 1rem;
+  background-color: #bf7d60;
+  border: none;
+  color: #fff3e6;
+  font-size: 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 25px;
+  box-shadow: 3px 3px 5px 1px rgb(191, 125, 96, 0.5);
+}
+.editForm input[type="submit"]:active {
+  box-shadow: 1px 1px 5px 1px rgb(191, 125, 96, 0.5) !important;
 }
 
 /* fff3e6 */
