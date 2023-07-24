@@ -73,6 +73,9 @@
   cursor: pointer;
   color: #bf7d60;
 }
+.activeHeart {
+  background-color: rgb(252, 48, 48);
+}
 .editForm {
   width: 100%;
   height: 100%;

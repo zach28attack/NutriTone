@@ -4,13 +4,14 @@ import {useState} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 import Cookies from "js-cookie";
 import {updatePost} from "../../apis/communityApi";
+import HeartIcon from "./HeartIcon";
 
 function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePosts}) {
   const [isEditing, setIsEditing] = useState();
+  const [input, setInput] = useState();
   const cancelEditHandler = () => {
     setIsEditing(false);
   };
-  const [input, setInput] = useState();
   const inputHandler = (e) => {
     setInput(e.target.value);
   };
@@ -40,7 +41,7 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePos
           )}
         </div>
         <div className={Class.iconGroup}>
-          <BsHeart className={Class.icon} />
+          <HeartIcon />
           {post.userId === Cookies.get("userId") && (
             <PostOptionsBtn
               id={id}

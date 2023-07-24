@@ -1,0 +1,135 @@
+.container {
+  width: 2.5rem;
+  height: 2.5rem;
+  position: relative;
+  cursor: pointer;
+}
+.heartLeftContainer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform: translateX(-14%);
+}
+.heartRightContainer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform: translateX(14%);
+}
+
+.heartTopLeft {
+  height: 100%;
+  width: 60%;
+  transform: rotate(-45deg);
+  background-color: #fff3e6;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-top: solid #bf7d60 2px;
+  border-left: solid #bf7d60 2px;
+  border-right: solid #bf7d60 1px;
+}
+.heartTopRight {
+  height: 100%;
+  width: 60%;
+  transform: rotate(45deg);
+  background-color: #fff3e6;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top: solid #bf7d60 2px;
+  border-left: solid #bf7d60 1px;
+  border-right: solid #bf7d60 2px;
+  border-bottom: solid #bf7d60 2px;
+}
+.squareContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateY(35%) translateX(-8%);
+}
+.square {
+  position: absolute;
+  background-color: #fff3e6;
+  width: 52%;
+  height: 30%;
+  transform: rotate(-45deg);
+}
+.active {
+  border: none;
+  background-color: rgb(254, 56, 56);
+}
+
+/* 
+
+*/
+.sparksContainer {
+  width: 100%;
+  height: 100%;
+  transform: translateY(60%) translateX(20%);
+}
+.spark1Container {
+  transform: rotate(45deg);
+}
+.sparks1 {
+  position: absolute;
+  width: 4px;
+  background-color: rgb(254, 56, 56);
+  height: 10px;
+  border-radius: 30%;
+}
+.activeSpark1 {
+  animation: spark 1.2s;
+}
+
+.spark2Container {
+  transform: rotate(90deg) translateX(20%) translateY(15px);
+}
+.sparks2 {
+  position: absolute;
+  width: 4px;
+  background-color: rgb(254, 56, 56);
+  height: 10px;
+  border-radius: 30%;
+}
+.activeSpark2 {
+  animation: spark 1.2s;
+}
+
+.spark3Container {
+  transform: rotate(-45deg) translateX(20%) translateY(-23px);
+}
+.sparks3 {
+  position: absolute;
+  width: 4px;
+  background-color: rgb(254, 56, 56);
+  height: 10px;
+  border-radius: 30%;
+}
+.activeSpark3 {
+  animation: spark 1.2s;
+}
+
+.spark4Container {
+  transform: rotate(-90deg) translateX(60%) translateY(-20px);
+}
+.sparks4 {
+  position: absolute;
+  width: 4px;
+  background-color: rgb(254, 56, 56);
+  height: 10px;
+  border-radius: 30%;
+}
+.activeSpark4 {
+  animation: spark 1.2s;
+}
+@keyframes spark {
+  0% {
+  }
+  66% {
+    transform: translateY(35px);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
