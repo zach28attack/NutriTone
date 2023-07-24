@@ -52,3 +52,21 @@ exports.deletePost = async (req, res, next) => {
     res.status(400).json();
   }
 };
+
+exports.updatePost = async (req, res, next) => {
+  const community = new Community();
+  const body = req.body.updatedBody;
+  const post = {body: body, id: req.params.postId};
+  community.post = post;
+  community.id = req.params.communityId;
+  try {
+    const success = await community.updatePost();
+    if (success) {
+      res.status(200).json();
+    } else {
+      res.status(400).json();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
