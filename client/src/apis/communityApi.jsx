@@ -15,23 +15,6 @@ export async function getJoinedCommunities() {
   }
 }
 
-export async function editPost(post) {
-  const res = await fetch("http://localhost:3000/communities", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${Cookies.get("token")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      post: post,
-    }),
-  });
-  if (res.ok) {
-    const data = await res.json();
-    console.log(data);
-  }
-}
-
 export async function saveNewPost(post, communityId) {
   try {
     const res = await fetch("http://localhost:3000/post", {
@@ -58,14 +41,38 @@ export async function saveNewPost(post, communityId) {
 }
 
 export async function deletePost(communityId, postId) {
-  const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${Cookies.get("token")}`,
-      "Content-Type": "application/json",
-    },
-  });
-  if (res.ok) {
-    console.log(res);
+  try {
+    const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      console.log(res);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function editPost(communityId, postId, body) {
+  try {
+    const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        updatedBody: body,
+      }),
+    });
+    if (res.ok) {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
