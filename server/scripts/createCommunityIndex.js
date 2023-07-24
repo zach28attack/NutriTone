@@ -4,6 +4,7 @@ async function createIndex() {
   const db = await connectDB();
   await db.collection("communities").createIndex({"users.userId": 1});
   await db.collection("communities").createIndex({posts: 1});
+  await db.collection("communities").createIndex({likes: 1});
   console.log("Community index created");
   process.exit(0);
 }
