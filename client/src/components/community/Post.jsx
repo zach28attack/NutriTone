@@ -3,7 +3,7 @@ import {BsHeart} from "react-icons/bs";
 import {useState} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 import Cookies from "js-cookie";
-import {editPost} from "../../apis/communityApi";
+import {updatePost} from "../../apis/communityApi";
 
 function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePosts}) {
   const [isEditing, setIsEditing] = useState();
@@ -16,7 +16,7 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePos
   };
   const editSubmitHandler = (e) => {
     e.preventDefault();
-    editPost(communityId, id, input);
+    updatePost(communityId, id, input);
     updatePosts(communityId, id, input);
     setIsEditing(false);
   };

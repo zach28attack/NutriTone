@@ -36,6 +36,18 @@ function CommunityPage() {
       return updatedCommunities;
     });
   };
+  const updatePosts = (communityId, postId, updatedBody) => {
+    setJoinedCommunities((communities) => {
+      return communities.map((community) => {
+        return community._id === communityId
+          ? {
+              ...community,
+              posts: community.posts.map((post) => (post._id !== postId ? post : {...post, body: updatedBody})),
+            }
+          : community;
+      });
+    });
+  };
 
   useEffect(() => {
     getAndSetCommunites();
@@ -57,6 +69,7 @@ function CommunityPage() {
                     id={post._id}
                     communityId={community._id}
                     deleteCommunityPosts={deleteCommunityPosts}
+                    updatePosts={updatePosts}
                   />
                 ))
                 .reverse();
@@ -67,8 +80,9 @@ function CommunityPage() {
           setGroupPageIsActive={setGroupPageIsActive}
           activeCommunityId={activeCommunityId}
           communities={joinedCommunities}
-          updateCommunityPosts={addCommunityPosts}
+          addCommunityPosts={addCommunityPosts}
           deleteCommunityPosts={deleteCommunityPosts}
+          updatePosts={updatePosts}
         />
       )}
       <div className={Class.menu}>

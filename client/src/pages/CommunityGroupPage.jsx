@@ -8,8 +8,9 @@ function CommunityGroupPage({
   setGroupPageIsActive,
   communities,
   activeCommunityId,
-  updateCommunityPosts,
+  addCommunityPosts,
   deleteCommunityPosts,
+  updatePosts,
 }) {
   // TODO:
   // when communityItems are clicked in the menu call getCommunityPosts, get 10-20 posts
@@ -31,6 +32,10 @@ function CommunityGroupPage({
     deleteCommunityPosts(comunityId, id);
     setPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
   };
+  const updateHandler = (communityId, postId, updatedBody) => {
+    updatePosts(communityId, postId, updatedBody);
+    setPosts(community.posts.map((post) => (post._id !== postId ? post : {...post, body: updatedBody})).reverse());
+  };
 
   useEffect(() => {
     getPosts();
@@ -38,9 +43,11 @@ function CommunityGroupPage({
 
   return (
     <div className={Class.container}>
-      <button onClick={navClickHandler}>go back</button>
+      <button onClick={navClickHandler} className={Class.returnBtn}>
+        go back
+      </button>
       <h1>{community.name}</h1>
-      <PostForm communityId={community._id} setPosts={setPosts} updateCommunityPosts={updateCommunityPosts} />
+      <PostForm communityId={community._id} setPosts={setPosts} addCommunityPosts={addCommunityPosts} />
       {community &&
         posts.map((post) => (
           <Post
@@ -50,6 +57,7 @@ function CommunityGroupPage({
             communityId={community._id}
             id={post._id}
             deleteCommunityPosts={deleteClickHandler}
+            updatePosts={updateHandler}
           />
         ))}
     </div>
