@@ -20,6 +20,7 @@
   background-color: #fff3e6;
   border: none;
   outline: none;
+  resize: none;
 }
 .submit {
   position: absolute;
