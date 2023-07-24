@@ -57,7 +57,7 @@ export async function deletePost(communityId, postId) {
   }
 }
 
-export async function editPost(communityId, postId, body) {
+export async function updatePost(communityId, postId, body) {
   try {
     const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}`, {
       method: "PATCH",
