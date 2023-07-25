@@ -79,7 +79,7 @@
   border-radius: 30%;
 }
 .activeSpark1 {
-  animation: spark 1.2s;
+  animation: spark 1s;
 }
 
 .spark2Container {
@@ -93,7 +93,7 @@
   border-radius: 30%;
 }
 .activeSpark2 {
-  animation: spark 1.2s;
+  animation: spark 1s;
 }
 
 .spark3Container {
@@ -107,7 +107,7 @@
   border-radius: 30%;
 }
 .activeSpark3 {
-  animation: spark 1.2s;
+  animation: spark 1s;
 }
 
 .spark4Container {
@@ -121,7 +121,7 @@
   border-radius: 30%;
 }
 .activeSpark4 {
-  animation: spark 1.2s;
+  animation: spark 1s;
 }
 @keyframes spark {
   0% {
