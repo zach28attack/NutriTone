@@ -93,3 +93,7 @@ exports.deleteLog = async (req, res, next) => {
     res.status(500).json();
   }
 };
+
+exports.saveLikedPostId = async (req, res, next) => {
+  res.status(200).json();
+};
