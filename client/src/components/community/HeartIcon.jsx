@@ -1,11 +1,21 @@
 import Class from "./HeartIcon.module.css";
 import {useState} from "react";
+import {likePost, unlikePost} from "../../apis/communityApi";
+import Cookies from "js-cookie";
+import {useEffect} from "react";
 
-function HeartIcon() {
+function HeartIcon({communityId, postId}) {
   const [likedPost, setLikedPost] = useState(false);
+
   const heartClickHandler = () => {
     setLikedPost(!likedPost);
+    likePost(communityId, postId);
   };
+  const setActiveIfLiked = () => {};
+  useEffect(() => {
+    setActiveIfLiked();
+  }, []);
+
   return (
     <div className={Class.container} onClick={heartClickHandler}>
       <div className={Class.heartLeftContainer}>
