@@ -76,3 +76,24 @@ export async function updatePost(communityId, postId, body) {
     console.error(error);
   }
 }
+
+export async function likePost(communityId, postId) {
+  console.log("calling api");
+  try {
+    const res = await fetch(`http://localhost:3000/community/post/like`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        communityId: communityId,
+        postId: postId,
+      }),
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function unlikePost() {}
