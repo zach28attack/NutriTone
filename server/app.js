@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const {verifyToken} = require("./authenticate");
 
-const {signup, login, logout, getLogs, saveNewLog, deleteLog} = require("./controllers/users");
+const {signup, login, logout, getLogs, saveNewLog, deleteLog, saveLikedPostId} = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
-const {getJoinedCommunities, saveNewPost, deletePost, updatePost} = require("./controllers/communities");
+const {getJoinedCommunities, saveNewPost, deletePost, updatePost, addLike} = require("./controllers/communities");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
@@ -20,6 +20,8 @@ app.get("/communities", verifyToken, getJoinedCommunities);
 app.delete("/community/:communityId/post/:postId", verifyToken, deletePost);
 
 app.patch("/community/:communityId/post/:postId", verifyToken, updatePost);
+
+app.post("/community/post/like", verifyToken, addLike);
 
 app.post("/post", verifyToken, saveNewPost);
 
