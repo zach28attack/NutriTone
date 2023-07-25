@@ -70,3 +70,11 @@ exports.updatePost = async (req, res, next) => {
     console.error(error);
   }
 };
+
+exports.addLike = async (req, res, next) => {
+  const community = new Community();
+  community.id = req.body.communityId;
+  const post = {id: req.body.postId};
+  community.post = post;
+  community.addLike();
+};
