@@ -41,7 +41,7 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePos
           )}
         </div>
         <div className={Class.iconGroup}>
-          <HeartIcon />
+          <HeartIcon communityId={communityId} postId={id} />
           {post.userId === Cookies.get("userId") && (
             <PostOptionsBtn
               id={id}
