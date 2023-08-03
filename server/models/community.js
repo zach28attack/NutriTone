@@ -75,14 +75,13 @@ class Community {
     const findOneResult = await db.collection("communities").findOne({_id: new mongoDB.ObjectId(this.id)});
     if (findOneResult) {
       const post = findOneResult.posts.find((post) => post._id.toString() === this.post.id);
-      const likes = post.likes ? post.likes : 0;
       const addLikeResult = await db
         .collection("communities")
         .updateOne(
           {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(post._id)},
-          {$set: {"posts.$.likes": likes + 1}}
+          {$inc: {"posts.$.likes": 1}}
         );
-      // TODO: save post id to user's likedPostsIds document
+      // TODO: save post id to user's likedPostsIds
     }
   }
 }
