@@ -1,5 +1,4 @@
 import Class from "./Post.module.css";
-import {BsHeart} from "react-icons/bs";
 import {useState} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 import Cookies from "js-cookie";
