@@ -77,4 +77,14 @@ exports.addLike = async (req, res, next) => {
   const post = {id: req.body.postId};
   community.post = post;
   community.addLike();
+  next();
+};
+
+exports.removeLike = async (req, res, next) => {
+  const community = new Community();
+  community.id = req.body.communityId;
+  const post = {id: req.body.postId};
+  community.post = post;
+  community.removeLike();
+  next();
 };
