@@ -21,7 +21,7 @@ app.delete("/community/:communityId/post/:postId", verifyToken, deletePost);
 
 app.patch("/community/:communityId/post/:postId", verifyToken, updatePost);
 
-app.post("/community/post/like", verifyToken, addLike);
+app.post("/community/post/like", verifyToken, addLike, saveLikedPostId);
 
 app.post("/post", verifyToken, saveNewPost);
 
