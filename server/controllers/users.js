@@ -95,5 +95,19 @@ exports.deleteLog = async (req, res, next) => {
 };
 
 exports.saveLikedPostId = async (req, res, next) => {
-  res.status(200).json();
+  const user = req.user;
+  user.likedPostId = req.body.postId;
+  const success = await user.saveLikedPostId();
+  if (success) {
+    res.status(200).json();
+  }
+};
+
+exports.removeLikedPostId = async (req, res, next) => {
+  const user = req.user;
+  user.likedPostId = req.body.postId;
+  const success = await user.saveLikedPostId();
+  if (success) {
+    res.status(200).json();
+  }
 };
