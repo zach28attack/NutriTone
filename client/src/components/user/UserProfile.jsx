@@ -31,7 +31,7 @@ function UserProfile() {
   return (
     <section className={Class.container}>
       <article className={Class.profile}>
-        <img src="../../public/default-profile-picture1.jpg" alt="" />
+        <img src="/default-profile-picture1.jpg" alt="" />
         <div className={Class.nameGroup}>
           <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="name">
             <h4>Zachary Casares</h4>
