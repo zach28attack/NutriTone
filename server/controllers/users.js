@@ -126,8 +126,8 @@ exports.saveLikedPostId = async (req, res, next) => {
 exports.removeLikedPostId = async (req, res, next) => {
   try {
     const user = req.user;
-    user.likedPostId = req.body.postId;
-    const success = await user.saveLikedPostId();
+    user.likedPostId = req.params.postId;
+    const success = await user.removeLikedPostId();
     if (success) {
       res.status(200).json();
     }

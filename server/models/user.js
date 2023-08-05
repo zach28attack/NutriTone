@@ -160,6 +160,17 @@ class User {
       console.error(error);
     }
   }
+  async removeLikedPostId() {
+    try {
+      const db = await connectDB();
+      const result = await db
+        .collection("users")
+        .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$pull: {likedPosts: new mongoDB.ObjectId(this.likedPostId)}});
+      closeConnection();
+    } catch (error) {
+      console.error(error);
+    }
+  }
   async getLikedPostIds() {
     try {
       const db = await connectDB();
