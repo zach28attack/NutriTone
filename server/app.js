@@ -2,7 +2,16 @@ const express = require("express");
 const app = express();
 const {verifyToken} = require("./authenticate");
 
-const {signup, login, logout, getLogs, saveNewLog, deleteLog, saveLikedPostId} = require("./controllers/users");
+const {
+  signup,
+  login,
+  logout,
+  getLogs,
+  saveNewLog,
+  deleteLog,
+  saveLikedPostId,
+  getLikedPostIds,
+} = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
 const {getJoinedCommunities, saveNewPost, deletePost, updatePost, addLike} = require("./controllers/communities");
 
@@ -30,6 +39,8 @@ app.post("/user/signup", signup);
 app.post("/user/login", login);
 
 app.get("/user/logout", verifyToken, logout);
+
+app.get("/user/likedPostIds", verifyToken, getLikedPostIds);
 
 app.post("/diary/item", verifyToken, saveItemToDiary); // new item route
 
