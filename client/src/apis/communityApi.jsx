@@ -78,7 +78,6 @@ export async function updatePost(communityId, postId, body) {
 }
 
 export async function likePost(communityId, postId) {
-  console.log("calling api");
   try {
     const res = await fetch(`http://localhost:3000/community/post/like`, {
       method: "POST",
@@ -96,4 +95,16 @@ export async function likePost(communityId, postId) {
   }
 }
 
-export async function unlikePost() {}
+export async function unlikePost(communityId, postId) {
+  try {
+    const res = await fetch(`http://localhost:3000/community/${communityId}/post/${postId}/like`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
