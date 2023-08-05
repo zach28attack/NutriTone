@@ -1,7 +1,6 @@
 import Class from "./HeartIcon.module.css";
 import {useState} from "react";
 import {likePost, unlikePost} from "../../apis/communityApi";
-import Cookies from "js-cookie";
 import {useEffect} from "react";
 
 function HeartIcon({communityId, postId, likedPostIds}) {
@@ -9,7 +8,7 @@ function HeartIcon({communityId, postId, likedPostIds}) {
 
   const heartClickHandler = () => {
     setLikedPost(!likedPost);
-    !likedPost ? likePost(communityId, postId) : console.log("call removeLike()");
+    !likedPost ? likePost(communityId, postId) : unlikePost(communityId, postId);
   };
   const setActiveIfLiked = () => {
     if (likedPostIds.includes(postId)) {
