@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import {updatePost} from "../../apis/communityApi";
 import HeartIcon from "./HeartIcon";
 
-function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePosts}) {
+function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePosts, likedPostIds}) {
   const [isEditing, setIsEditing] = useState();
   const [input, setInput] = useState();
   const cancelEditHandler = () => {
@@ -40,7 +40,7 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePos
           )}
         </div>
         <div className={Class.iconGroup}>
-          <HeartIcon communityId={communityId} postId={id} />
+          <HeartIcon communityId={communityId} postId={id} likedPostIds={likedPostIds} />
           {post.userId === Cookies.get("userId") && (
             <PostOptionsBtn
               id={id}

@@ -4,12 +4,14 @@ import Menu from "../components/community/Menu";
 import {useState, useEffect} from "react";
 import {getJoinedCommunities} from "../apis/communityApi";
 import CommunityGroupPage from "./CommunityGroupPage";
+import {getLikedPostIds} from "../apis/userApi";
 
 function CommunityPage() {
   const [joinedCommunities, setJoinedCommunities] = useState(true);
   const [groupPageIsActive, setGroupPageIsActive] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [activeCommunityId, setActiveCommunityId] = useState();
+  const [likedPostIds, setLikedPostIds] = useState();
 
   const getAndSetCommunites = async () => {
     const joinedCommunities = await getJoinedCommunities();
@@ -49,6 +51,13 @@ function CommunityPage() {
     });
   };
 
+  const getAndSetLikedPostIds = async () => {
+    setLikedPostIds(await getLikedPostIds());
+  };
+
+  // gets list of liked post ids
+  getAndSetLikedPostIds();
+
   useEffect(() => {
     getAndSetCommunites();
   }, []);
@@ -70,6 +79,7 @@ function CommunityPage() {
                     communityId={community._id}
                     deleteCommunityPosts={deleteCommunityPosts}
                     updatePosts={updatePosts}
+                    likedPostIds={likedPostIds}
                   />
                 ))
                 .reverse();

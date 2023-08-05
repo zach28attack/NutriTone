@@ -82,3 +82,23 @@ export async function login(username, password) {
     console.error(error);
   }
 }
+
+export async function getLikedPostIds() {
+  try {
+    const res = await fetch("http://localhost:3000/user/likedPostIds", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.likedPostIds;
+    } else {
+      console.error("server error");
+    }
+  } catch (error) {
+    console.error("getLikedPostIds() error:", error);
+  }
+}
