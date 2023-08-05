@@ -10,7 +10,6 @@ export async function getJoinedCommunities() {
   });
   if (res.ok) {
     const data = await res.json();
-    console.log("getJoinedCommunities() returned:", data.communities);
     return data.communities;
   }
 }
