@@ -89,19 +89,31 @@ class Community {
   async addLike() {
     const db = await connectDB();
     try {
-      const findOneResult = await db.collection("communities").findOne({_id: new mongoDB.ObjectId(this.id)});
-      if (findOneResult) {
-        const post = findOneResult.posts.find((post) => post._id.toString() === this.post.id);
-        const addLikeResult = await db
-          .collection("communities")
-          .updateOne(
-            {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(post._id)},
-            {$inc: {"posts.$.likes": 1}}
-          );
-        closeConnection();
+      const result = await db
+        .collection("communities")
+        .updateOne(
+          {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post._id)},
+          {$inc: {"posts.$.likes": 1}}
+        );
+      closeConnection();
+      if (result.modifiedCount === 1) {
+        return true;
       }
     } catch (error) {
       console.error("addLike() error:", error);
+    }
+  }
+  async removeLike() {
+    const db = await connectDB();
+    const result = await db
+      .collection("communities")
+      .updateOne(
+        {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post.id)},
+        {$inc: {"posts.$.likes": -1}}
+      );
+    closeConnection();
+    if (result.modifiedCount === 1) {
+      return true;
     }
   }
 }

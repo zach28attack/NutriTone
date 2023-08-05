@@ -44,7 +44,6 @@ exports.deletePost = async (req, res, next) => {
   const post = {id: req.params.postId};
   community.post = post;
   community.id = req.params.communityId;
-  console.log(community);
   const success = await community.deletePost();
   if (success) {
     res.status(200).json();
@@ -82,8 +81,8 @@ exports.addLike = async (req, res, next) => {
 
 exports.removeLike = async (req, res, next) => {
   const community = new Community();
-  community.id = req.body.communityId;
-  const post = {id: req.body.postId};
+  community.id = req.params.communityId;
+  const post = {id: req.params.postId};
   community.post = post;
   community.removeLike();
   next();
