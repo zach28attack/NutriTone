@@ -11,9 +11,17 @@ const {
   deleteLog,
   saveLikedPostId,
   getLikedPostIds,
+  removeLikedPostId,
 } = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
-const {getJoinedCommunities, saveNewPost, deletePost, updatePost, addLike} = require("./controllers/communities");
+const {
+  getJoinedCommunities,
+  saveNewPost,
+  deletePost,
+  updatePost,
+  addLike,
+  removeLike,
+} = require("./controllers/communities");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5173");
@@ -25,6 +33,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 app.get("/communities", verifyToken, getJoinedCommunities);
+
+app.delete("/community/:communityId/post/:postId/like", verifyToken, removeLike, removeLikedPostId);
 
 app.delete("/community/:communityId/post/:postId", verifyToken, deletePost);
 
