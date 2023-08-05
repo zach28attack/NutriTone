@@ -4,14 +4,18 @@ import {likePost, unlikePost} from "../../apis/communityApi";
 import Cookies from "js-cookie";
 import {useEffect} from "react";
 
-function HeartIcon({communityId, postId}) {
+function HeartIcon({communityId, postId, likedPostIds}) {
   const [likedPost, setLikedPost] = useState(false);
 
   const heartClickHandler = () => {
     setLikedPost(!likedPost);
-    likePost(communityId, postId);
+    !likedPost ? likePost(communityId, postId) : console.log("call removeLike()");
   };
-  const setActiveIfLiked = () => {};
+  const setActiveIfLiked = () => {
+    if (likedPostIds.includes(postId)) {
+      setLikedPost(true);
+    }
+  };
   useEffect(() => {
     setActiveIfLiked();
   }, []);
