@@ -11,7 +11,7 @@ function CommunityPage() {
   const [groupPageIsActive, setGroupPageIsActive] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [activeCommunityId, setActiveCommunityId] = useState();
-  const [likedPostIds, setLikedPostIds] = useState();
+  const [likedPostIds, setLikedPostIds] = useState([]);
 
   const getAndSetCommunites = async () => {
     const joinedCommunities = await getJoinedCommunities();
@@ -51,15 +51,13 @@ function CommunityPage() {
     });
   };
 
+  // gets list of liked post ids
   const getAndSetLikedPostIds = async () => {
     setLikedPostIds(await getLikedPostIds());
   };
-
-  // gets list of liked post ids
-  getAndSetLikedPostIds();
-
   useEffect(() => {
     getAndSetCommunites();
+    getAndSetLikedPostIds();
   }, []);
 
   return (
