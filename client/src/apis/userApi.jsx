@@ -84,6 +84,7 @@ export async function login(username, password) {
 }
 
 export async function getLikedPostIds() {
+  console.log("runnunn");
   try {
     const res = await fetch("http://localhost:3000/user/likedPostIds", {
       method: "GET",
@@ -94,7 +95,7 @@ export async function getLikedPostIds() {
     });
     if (res.ok) {
       const data = await res.json();
-      return data.likedPostIds;
+      return data.likedPostIds || [];
     } else {
       console.error("server error");
     }
