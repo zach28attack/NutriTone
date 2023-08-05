@@ -150,10 +150,22 @@ class User {
             {_id: new mongoDB.ObjectId(this.id)},
             {$push: {likedPosts: new mongoDB.ObjectId(this.likedPostId)}}
           );
+        closeConnection();
         if (result.modifiedCount === 1) {
           return true;
         }
       }
+    } catch (error) {
+      closeConnection();
+      console.error(error);
+    }
+  }
+  async getLikedPostIds() {
+    try {
+      const db = await connectDB();
+      const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
+      closeConnection();
+      return result.likedPosts;
     } catch (error) {
       closeConnection();
       console.error(error);

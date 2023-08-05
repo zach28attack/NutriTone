@@ -47,67 +47,98 @@ exports.login = async (req, res, next) => {
 };
 
 exports.logout = async (req, res, next) => {
-  const user = req.user;
-  const success = await user.revokeToken();
-  if (success) {
-    res.status(200).json();
-  } else {
-    res.status(500).json();
+  try {
+    const user = req.user;
+    const success = await user.revokeToken();
+    if (success) {
+      res.status(200).json();
+    } else {
+      res.status(500).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 exports.getLogs = async (req, res, next) => {
-  const user = req.user;
-  const logs = await user.getLogs();
-  if (logs && logs.length >= 1) {
-    res.status(200).json({
-      logs: logs,
-    });
-  } else if (logs && logs.length === 0) {
-    res.status(200).json({
-      logs: [],
-    });
-  } else {
-    res.status(500).json();
+  try {
+    const user = req.user;
+    const logs = await user.getLogs();
+    if (logs && logs.length >= 1) {
+      res.status(200).json({
+        logs: logs,
+      });
+    } else if (logs && logs.length === 0) {
+      res.status(200).json({
+        logs: [],
+      });
+    } else {
+      res.status(500).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 exports.saveNewLog = async (req, res, next) => {
-  const user = req.user;
-  user.log = req.body.log;
-  const success = await user.saveNewLog();
-  if (success) {
-    res.status(200).json();
-  } else {
-    res.status(500).json();
+  try {
+    const user = req.user;
+    user.log = req.body.log;
+    const success = await user.saveNewLog();
+    if (success) {
+      res.status(200).json();
+    } else {
+      res.status(500).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 exports.deleteLog = async (req, res, next) => {
-  const user = req.user;
-  user.log = req.body.log;
-  const success = await user.deleteLog();
-  if (success) {
-    res.status(200).json();
-  } else {
-    res.status(500).json();
+  try {
+    const user = req.user;
+    user.log = req.body.log;
+    const success = await user.deleteLog();
+    if (success) {
+      res.status(200).json();
+    } else {
+      res.status(500).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 exports.saveLikedPostId = async (req, res, next) => {
-  const user = req.user;
-  user.likedPostId = req.body.postId;
-  const success = await user.saveLikedPostId();
-  if (success) {
-    res.status(200).json();
+  try {
+    const user = req.user;
+    user.likedPostId = req.body.postId;
+    const success = await user.saveLikedPostId();
+    if (success) {
+      res.status(200).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 exports.removeLikedPostId = async (req, res, next) => {
-  const user = req.user;
-  user.likedPostId = req.body.postId;
-  const success = await user.saveLikedPostId();
-  if (success) {
-    res.status(200).json();
+  try {
+    const user = req.user;
+    user.likedPostId = req.body.postId;
+    const success = await user.saveLikedPostId();
+    if (success) {
+      res.status(200).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
+};
+
+exports.getLikedPostIds = async (req, res, next) => {
+  const ids = await req.user.getLikedPostIds();
+  res.status(200).json({
+    likedPostIds: ids,
+  });
 };
