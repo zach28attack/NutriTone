@@ -1,8 +1,8 @@
 const mongoDB = require("mongodb");
 const mongoClient = mongoDB.MongoClient;
 
-let db;
-let client;
+let db = null;
+let client = null;
 
 async function connectDB() {
   const uri = "mongodb+srv://zach28attack:MongoDBPassword@cluster0.im0uft8.mongodb.net/?retryWrites=true&w=majority";
@@ -20,9 +20,11 @@ exports.connectDB = connectDB;
 async function closeConnection() {
   if (client) {
     try {
-      await client.close();
+      client.close();
+      db = null;
+      client = null;
     } catch (error) {
-      console.error(error);
+      console.error("DB ERROR:", error);
     }
   }
 }
