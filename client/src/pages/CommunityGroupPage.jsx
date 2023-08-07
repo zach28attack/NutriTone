@@ -11,10 +11,11 @@ function CommunityGroupPage({
   addCommunityPosts,
   deleteCommunityPosts,
   updatePosts,
+  likedPostIds,
+  setLikedPostIds,
 }) {
   // TODO:
   // when communityItems are clicked in the menu call getCommunityPosts, get 10-20 posts
-  // when user scrolls to bottom of page get more posts from db
 
   const [community, setCommunity] = useState(false);
   const [posts, setPosts] = useState();
@@ -58,6 +59,8 @@ function CommunityGroupPage({
             id={post._id}
             deleteCommunityPosts={deleteClickHandler}
             updatePosts={updateHandler}
+            likedPostIds={likedPostIds}
+            setLikedPostIds={setLikedPostIds}
           />
         ))}
     </div>
