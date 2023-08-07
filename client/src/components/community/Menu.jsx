@@ -1,9 +1,17 @@
 import Class from "./Menu.module.css";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import CommunityItem from "./CommunityItem";
 import Cookies from "js-cookie";
 
-function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveCommunityId}) {
+function Menu({
+  setGroupPageIsActive,
+  communities,
+  isLoading,
+  setActiveCommunityId,
+  joinedCommunities,
+  joinCommunity,
+  leaveCommunity,
+}) {
   const communityClickHandler = (id) => {
     setGroupPageIsActive(true);
     setActiveCommunityId(id);
@@ -29,6 +37,8 @@ function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveComm
                   name={community.name}
                   key={community._id}
                   id={community._id}
+                  joinedList={true}
+                  leaveCommunity={leaveCommunity}
                 />
               );
             })}
@@ -36,6 +46,20 @@ function Menu({setGroupPageIsActive, joinedCommunities, isLoading, setActiveComm
       </section>
       <section>
         <h3>Official Communities</h3>
+        {!isLoading &&
+          communities.map((community) => {
+            return (
+              <CommunityItem
+                communityClickHandler={communityClickHandler}
+                name={community.name}
+                key={community._id}
+                id={community._id}
+                joinedList={false}
+                joined={community.joined}
+                joinCommunity={joinCommunity}
+              />
+            );
+          })}
       </section>
     </aside>
   );
