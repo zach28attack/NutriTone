@@ -2,34 +2,49 @@ import Class from "./CommunityPage.module.css";
 import Post from "../components/community/Post";
 import Menu from "../components/community/Menu";
 import {useState, useEffect} from "react";
-import {getJoinedCommunities} from "../apis/communityApi";
+import {getCommunities} from "../apis/communityApi";
 import CommunityGroupPage from "./CommunityGroupPage";
 import {getLikedPostIds} from "../apis/userApi";
 
 function CommunityPage() {
-  const [joinedCommunities, setJoinedCommunities] = useState(true);
+  const [communities, setCommunities] = useState([]);
+  const [joinedCommunities, setJoinedCommunities] = useState([]);
   const [groupPageIsActive, setGroupPageIsActive] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [activeCommunityId, setActiveCommunityId] = useState();
   const [likedPostIds, setLikedPostIds] = useState([]);
 
   const getAndSetCommunites = async () => {
-    const joinedCommunities = await getJoinedCommunities();
-    setJoinedCommunities(joinedCommunities);
+    const res = await getCommunities();
+
+    // find joined communities with a time complexity of O(n)
+    let joinedArr = [];
+    let communitiesObj = {};
+    res.communities.forEach((community) => {
+      communitiesObj[community._id] = community;
+    });
+    for (let i = 0; i < res.joinedCommunities.length; i++) {
+      joinedArr.push(communitiesObj[res.joinedCommunities[i].communityId]);
+    }
+    setJoinedCommunities(joinedArr);
+
+    // add a joined field to each community obj, set true if joined
+    const joinedIds = res.joinedCommunities.map((community) => community.communityId);
+    setCommunities(res.communities.map((community) => ({...community, joined: joinedIds.includes(community._id)})));
+
     setIsLoading(false);
   };
 
   const addCommunityPosts = (post, communityId) => {
-    setJoinedCommunities((communities) => {
+    setCommunities((communities) => {
       const updatedCommunities = communities.map((community) => {
         return community._id === communityId ? {...community, posts: [...community.posts, post]} : community;
       });
       return updatedCommunities;
     });
   };
-
   const deleteCommunityPosts = (communityId, postId) => {
-    setJoinedCommunities((communities) => {
+    setCommunities((communities) => {
       const updatedCommunities = communities.map((community) => {
         return community._id === communityId
           ? {...community, posts: community.posts.filter((post) => post._id !== postId)}
@@ -39,7 +54,7 @@ function CommunityPage() {
     });
   };
   const updatePosts = (communityId, postId, updatedBody) => {
-    setJoinedCommunities((communities) => {
+    setCommunities((communities) => {
       return communities.map((community) => {
         return community._id === communityId
           ? {
@@ -55,10 +70,36 @@ function CommunityPage() {
   const getAndSetLikedPostIds = async () => {
     setLikedPostIds(await getLikedPostIds());
   };
+
   useEffect(() => {
     getAndSetCommunites();
     getAndSetLikedPostIds();
   }, []);
+
+  const joinCommunityHandler = (id) => {
+    setCommunities(
+      communities.map((community) => {
+        if (community._id === id) {
+          setJoinedCommunities((prevCommunities) => [...prevCommunities, community]);
+          return {...community, joined: true};
+        } else {
+          return community;
+        }
+      })
+    );
+  };
+  const leaveCommunityHandler = (id) => {
+    setCommunities(
+      communities.map((community) => {
+        if (community._id === id) {
+          setJoinedCommunities((prevCommunities) => prevCommunities.filter((community) => community._id !== id));
+          return {...community, joined: false};
+        } else {
+          return community;
+        }
+      })
+    );
+  };
 
   return (
     <div className={Class.page}>
@@ -78,6 +119,7 @@ function CommunityPage() {
                     deleteCommunityPosts={deleteCommunityPosts}
                     updatePosts={updatePosts}
                     likedPostIds={likedPostIds}
+                    setLikedPostIds={setLikedPostIds}
                   />
                 ))
                 .reverse();
@@ -87,18 +129,23 @@ function CommunityPage() {
         <CommunityGroupPage
           setGroupPageIsActive={setGroupPageIsActive}
           activeCommunityId={activeCommunityId}
-          communities={joinedCommunities}
+          communities={communities}
           addCommunityPosts={addCommunityPosts}
           deleteCommunityPosts={deleteCommunityPosts}
           updatePosts={updatePosts}
+          likedPostIds={likedPostIds}
+          setLikedPostIds={setLikedPostIds}
         />
       )}
       <div className={Class.menu}>
         <Menu
           setGroupPageIsActive={setGroupPageIsActive}
           joinedCommunities={joinedCommunities}
+          communities={communities}
           isLoading={isLoading}
           setActiveCommunityId={setActiveCommunityId}
+          joinCommunity={joinCommunityHandler}
+          leaveCommunity={leaveCommunityHandler}
         />
       </div>
     </div>
