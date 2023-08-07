@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-export async function getJoinedCommunities() {
+export async function getCommunities() {
   const res = await fetch("http://localhost:3000/communities", {
     method: "GET",
     headers: {
@@ -10,7 +10,7 @@ export async function getJoinedCommunities() {
   });
   if (res.ok) {
     const data = await res.json();
-    return data.communities;
+    return data;
   }
 }
 
