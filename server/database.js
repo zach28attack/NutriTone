@@ -18,9 +18,11 @@ async function connectDB() {
 exports.connectDB = connectDB;
 
 async function closeConnection() {
-  if (client) {
-    await client.close();
-
+  try {
+    if (client) {
+      await client.close();
+    }
+  } catch (error) {
     // if the error is thrown because the client obj gets called before it can  get initialized
     // it will run after 100 ms
     setTimeout(async () => {
