@@ -1,17 +1,18 @@
 const Community = require("../models/community");
 const mongoDB = require("mongodb");
 
-exports.getJoinedCommunities = async (req, res, next) => {
+exports.getCommunities = async (req, res, next) => {
   //TODO: limit joinedCommunities array to the most recent 10-20 posts and get more as user scrolls down page
 
   const community = new Community();
   const user = req.user;
   community.userId = user.id;
   try {
-    const joinedCommunities = await community.getJoinedCommunities();
-    if (joinedCommunities) {
+    const [user, result] = await community.getCommunities();
+    if (result) {
       res.status(200).json({
-        communities: joinedCommunities,
+        joinedCommunities: user.joinedCommunities,
+        communities: result,
       });
     } else {
       res.status(400).json();

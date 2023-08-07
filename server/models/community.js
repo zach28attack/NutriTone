@@ -8,23 +8,13 @@ class Community {
     this.post = post;
     this.posts = posts;
   }
-  async getJoinedCommunities() {
+  async getCommunities() {
     const db = await connectDB();
     try {
-      const userResult = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.userId)});
-      if (userResult) {
-        const communityIds = userResult.joinedCommunities.map(
-          (communitiy) => new mongoDB.ObjectId(communitiy.communityId)
-        );
-        const communitiesResult = await db
-          .collection("communities")
-          .find({_id: {$in: communityIds}})
-          .toArray();
-        closeConnection();
-        return communitiesResult;
-      }
+      const user = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.userId)});
+      const result = await db.collection("communities").find().toArray();
       closeConnection();
-      return false;
+      return [user, result];
     } catch (error) {
       console.error("getJoinedCommunities() error:", error);
     }
