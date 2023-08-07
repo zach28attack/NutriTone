@@ -3,12 +3,21 @@ import {useState} from "react";
 import {likePost, unlikePost} from "../../apis/communityApi";
 import {useEffect} from "react";
 
-function HeartIcon({communityId, postId, likedPostIds}) {
+function HeartIcon({communityId, postId, likedPostIds, setLikedPostIds}) {
   const [likedPost, setLikedPost] = useState(false);
 
   const heartClickHandler = () => {
     setLikedPost(!likedPost);
-    !likedPost ? likePost(communityId, postId) : unlikePost(communityId, postId);
+    if (!likedPost) {
+      likePost(communityId, postId);
+      setLikedPostIds((prevIds) => [postId, ...prevIds]);
+    } else {
+      unlikePost(communityId, postId);
+      setLikedPostIds((prevIds) => {
+        const filteredIds = prevIds.filter((id) => id !== postId);
+        return filteredIds;
+      });
+    }
   };
   const setActiveIfLiked = () => {
     if (likedPostIds.includes(postId)) {
