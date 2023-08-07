@@ -4,13 +4,13 @@
   align-items: center;
   padding: 1rem;
   color: #bf7d60;
-  cursor: pointer;
 }
 .communityItem span {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .communityItem sub {
@@ -24,4 +24,5 @@
 .communityItem button {
   padding: 0.2rem 0.3rem;
   font-size: 1rem;
+  cursor: pointer;
 }
