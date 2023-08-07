@@ -1,8 +1,8 @@
 const mongoDB = require("mongodb");
 const mongoClient = mongoDB.MongoClient;
 
-let db = null;
-let client = null;
+let db;
+let client;
 
 async function connectDB() {
   const uri = "mongodb+srv://zach28attack:MongoDBPassword@cluster0.im0uft8.mongodb.net/?retryWrites=true&w=majority";
@@ -19,13 +19,19 @@ exports.connectDB = connectDB;
 
 async function closeConnection() {
   if (client) {
-    try {
-      client.close();
-      db = null;
-      client = null;
-    } catch (error) {
-      console.error("DB ERROR:", error);
-    }
+    await client.close();
+
+    // if the error is thrown because the client obj gets called before it can  get initialized
+    // it will run after 100 ms
+    setTimeout(async () => {
+      console.log("running close in timeout");
+      try {
+        await client.close();
+      } catch (error) {
+        console.error("Error after timout:", error);
+      }
+      console.log("close executed");
+    }, 100);
   }
 }
 
