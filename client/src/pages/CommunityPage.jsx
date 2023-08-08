@@ -64,6 +64,14 @@ function CommunityPage() {
           : community;
       })
     );
+
+    setJoinedCommunities((communities) =>
+      communities.map((community) => {
+        return community._id === communityId
+          ? {...community, posts: community.posts.filter((post) => post._id !== postId)}
+          : community;
+      })
+    );
   };
   const updatePosts = (communityId, postId, updatedBody) => {
     setCommunities((communities) =>
