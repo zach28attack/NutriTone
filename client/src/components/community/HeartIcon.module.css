@@ -133,3 +133,11 @@
     transform: scale(0);
   }
 }
+.likeCounter {
+  position: absolute;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+  transform: translateX(-0.5rem) translateY(-1rem);
+  color: #bf7d60;
+}

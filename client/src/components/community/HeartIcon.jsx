@@ -3,20 +3,20 @@ import {useState} from "react";
 import {likePost, unlikePost} from "../../apis/communityApi";
 import {useEffect} from "react";
 
-function HeartIcon({communityId, postId, likedPostIds, setLikedPostIds}) {
+function HeartIcon({communityId, postId, likedPostIds, setLikedPostIds, likesData}) {
   const [likedPost, setLikedPost] = useState(false);
+  const [likes, setLikes] = useState(likesData);
 
   const heartClickHandler = () => {
     setLikedPost(!likedPost);
     if (!likedPost) {
       likePost(communityId, postId);
       setLikedPostIds((prevIds) => [postId, ...prevIds]);
+      setLikes((prevLikes) => prevLikes + 1);
     } else {
       unlikePost(communityId, postId);
-      setLikedPostIds((prevIds) => {
-        const filteredIds = prevIds.filter((id) => id !== postId);
-        return filteredIds;
-      });
+      setLikedPostIds((prevIds) => prevIds.filter((id) => id !== postId));
+      setLikes((prevLikes) => prevLikes - 1);
     }
   };
   const setActiveIfLiked = () => {
@@ -40,6 +40,7 @@ function HeartIcon({communityId, postId, likedPostIds, setLikedPostIds}) {
         <div className={`${Class.square} ${likedPost && Class.active}`}></div>
       </div>
       <div className={Class.heartBottom}></div>
+      <div className={Class.likeCounter}>{likes}</div>
 
       {likedPost && (
         <div className={Class.sparksContainer}>
