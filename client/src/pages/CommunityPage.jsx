@@ -1,10 +1,11 @@
+import {useState, useEffect} from "react";
+import {getCommunities} from "../apis/communityApi";
+import {getLikedPostIds, saveCommunityId, removeCommunityId} from "../apis/userApi";
+
+import CommunityGroupPage from "./CommunityGroupPage";
 import Class from "./CommunityPage.module.css";
 import Post from "../components/community/Post";
 import Menu from "../components/community/Menu";
-import {useState, useEffect} from "react";
-import {getCommunities} from "../apis/communityApi";
-import CommunityGroupPage from "./CommunityGroupPage";
-import {getLikedPostIds, saveCommunityId, removeCommunityId} from "../apis/userApi";
 
 function CommunityPage() {
   const [communities, setCommunities] = useState([]);
@@ -14,56 +15,67 @@ function CommunityPage() {
   const [activeCommunityId, setActiveCommunityId] = useState();
   const [likedPostIds, setLikedPostIds] = useState([]);
 
-  const getAndSetCommunites = async () => {
-    const res = await getCommunities();
+  //
+  // Fetches community data, processes joined communities, and updates state.
+  //
+  const getAndSetCommunities = async () => {
+    try {
+      // Fetch communities data
+      const res = await getCommunities();
 
-    // find joined communities with a time complexity of O(n)
-    let joinedArr = [];
-    let communitiesObj = {};
-    res.communities.forEach((community) => {
-      communitiesObj[community._id] = community;
-    });
-    for (let i = 0; i < res.joinedCommunities.length; i++) {
-      joinedArr.push(communitiesObj[res.joinedCommunities[i].communityId]);
+      // Create an object of communities with their IDs as keys for faster access
+      const communitiesObj = res.communities.reduce((obj, community) => {
+        obj[community._id] = community;
+        return obj;
+      }, {});
+
+      // Find joined communities based on their IDs and set the state in reverse order
+      let joinedArr = [];
+      for (let i = 0; i < res.joinedCommunities.length; i++) {
+        joinedArr.push(communitiesObj[res.joinedCommunities[i].communityId]);
+      }
+      setJoinedCommunities(joinedArr.reverse());
+
+      // Add a 'joined' field to each community object, indicating if the user has joined
+      const joinedIds = res.joinedCommunities.map((community) => community.communityId);
+      setCommunities(res.communities.map((community) => ({...community, joined: joinedIds.includes(community._id)})));
+
+      // Set loading state to false after processing
+      setIsLoading(false);
+    } catch (error) {
+      // Handle errors and set loading state to false
+      console.error("An error occurred:", error);
+      setIsLoading(false);
     }
-    setJoinedCommunities(joinedArr.reverse());
-
-    // add a joined field to each community obj, set true if joined
-    const joinedIds = res.joinedCommunities.map((community) => community.communityId);
-    setCommunities(res.communities.map((community) => ({...community, joined: joinedIds.includes(community._id)})));
-
-    setIsLoading(false);
   };
 
   const addCommunityPosts = (post, communityId) => {
-    setCommunities((communities) => {
-      const updatedCommunities = communities.map((community) => {
-        return community._id === communityId ? {...community, posts: [...community.posts, post]} : community;
-      });
-      return updatedCommunities;
-    });
+    setCommunities((communities) =>
+      communities.map((community) =>
+        community._id === communityId ? {...community, posts: [...community.posts, post]} : community
+      )
+    );
   };
   const deleteCommunityPosts = (communityId, postId) => {
-    setCommunities((communities) => {
-      const updatedCommunities = communities.map((community) => {
+    setCommunities((communities) =>
+      communities.map((community) => {
         return community._id === communityId
           ? {...community, posts: community.posts.filter((post) => post._id !== postId)}
           : community;
-      });
-      return updatedCommunities;
-    });
+      })
+    );
   };
   const updatePosts = (communityId, postId, updatedBody) => {
-    setCommunities((communities) => {
-      return communities.map((community) => {
-        return community._id === communityId
+    setCommunities((communities) =>
+      communities.map((community) =>
+        community._id === communityId
           ? {
               ...community,
               posts: community.posts.map((post) => (post._id !== postId ? post : {...post, body: updatedBody})),
             }
-          : community;
-      });
-    });
+          : community
+      )
+    );
   };
 
   // gets list of liked post ids
@@ -72,7 +84,7 @@ function CommunityPage() {
   };
 
   useEffect(() => {
-    getAndSetCommunites();
+    getAndSetCommunities();
     getAndSetLikedPostIds();
   }, []);
 
