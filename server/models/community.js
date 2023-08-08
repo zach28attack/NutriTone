@@ -13,10 +13,13 @@ class Community {
     try {
       const user = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.userId)});
       const result = await db.collection("communities").find().toArray();
-      closeConnection();
-      return [user, result];
+      if (result) {
+        return [user, result];
+      }
     } catch (error) {
       console.error("getJoinedCommunities() error:", error);
+    } finally {
+      closeConnection();
     }
   }
   async saveNewPost() {
@@ -30,12 +33,14 @@ class Community {
           },
         }
       );
-      closeConnection();
+
       if (result.modifiedCount === 1) {
         return true;
       }
     } catch (error) {
       console.error("saveNewPost() error:", error);
+    } finally {
+      closeConnection();
     }
   }
   async deletePost() {
@@ -49,12 +54,14 @@ class Community {
           },
         }
       );
-      closeConnection();
+
       if (result.modifiedCount === 1) {
         return true;
       }
     } catch (error) {
       console.error("deletePost() error:", error);
+    } finally {
+      closeConnection();
     }
   }
   async updatePost() {
@@ -68,12 +75,17 @@ class Community {
           },
         }
       );
-      closeConnection();
+
       if (result.modifiedCount > 0) {
+        closeConnection();
         return true;
+      } else {
+        closeConnection();
       }
     } catch (error) {
       console.error("updatePost() error:", error);
+    } finally {
+      closeConnection();
     }
   }
   async addLike() {
@@ -85,25 +97,33 @@ class Community {
           {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post._id)},
           {$inc: {"posts.$.likes": 1}}
         );
-      closeConnection();
+
       if (result.modifiedCount === 1) {
         return true;
       }
     } catch (error) {
       console.error("addLike() error:", error);
+    } finally {
+      closeConnection();
     }
   }
   async removeLike() {
-    const db = await connectDB();
-    const result = await db
-      .collection("communities")
-      .updateOne(
-        {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post.id)},
-        {$inc: {"posts.$.likes": -1}}
-      );
-    closeConnection();
-    if (result.modifiedCount === 1) {
-      return true;
+    try {
+      const db = await connectDB();
+      const result = await db
+        .collection("communities")
+        .updateOne(
+          {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post.id)},
+          {$inc: {"posts.$.likes": -1}}
+        );
+
+      if (result.modifiedCount === 1) {
+        return true;
+      }
+    } catch (error) {
+      console.error("removeLike() error:", error);
+    } finally {
+      closeConnection();
     }
   }
 }

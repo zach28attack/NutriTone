@@ -29,9 +29,9 @@ class User {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      closeConnection();
     }
-
-    closeConnection();
   }
   async validateUser() {
     try {
@@ -41,31 +41,30 @@ class User {
         this.id = result._id;
         this.username = result.username;
         result.name ? (this.name = result.name) : undefined;
-
         this.token = await genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
-        closeConnection();
         return true;
       } else {
-        closeConnection();
         return false;
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async validateToken() {
     try {
       const db = await connectDB();
       const result = await db.collection("tokens").find({token: this.token, userId: this.id, revoked: false});
-      closeConnection();
+
       if (result) {
         return true;
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async revokeToken() {
@@ -75,13 +74,13 @@ class User {
         .collection("tokens")
         .updateOne({token: this.token, userId: new mongoDB.ObjectId(this.id), revoked: false}, {$set: {revoked: true}});
 
-      closeConnection();
       if (result.modifiedCount === 1) {
         return true;
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
 
@@ -89,15 +88,15 @@ class User {
     try {
       const db = await connectDB();
       const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
-      closeConnection();
       if (result) {
         return result.logs ? result.logs : [];
       } else {
         return false;
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async saveNewLog() {
@@ -109,15 +108,15 @@ class User {
           $push: {logs: this.log},
         }
       );
-      closeConnection();
       if (result.modifiedCount === 1) {
         return true;
       } else {
         return false;
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async deleteLog() {
@@ -126,15 +125,15 @@ class User {
       const result = await db
         .collection("users")
         .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$pull: {logs: this.log}});
-      closeConnection();
       if (result.modifiedCount === 1) {
         return true;
       } else {
         return false;
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async saveLikedPostId() {
@@ -151,14 +150,14 @@ class User {
             {_id: new mongoDB.ObjectId(this.id)},
             {$push: {likedPosts: new mongoDB.ObjectId(this.likedPostId)}}
           );
-        closeConnection();
         if (result.modifiedCount === 1) {
           return true;
         }
       }
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async removeLikedPostId() {
@@ -167,47 +166,57 @@ class User {
       const result = await db
         .collection("users")
         .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$pull: {likedPosts: new mongoDB.ObjectId(this.likedPostId)}});
-      closeConnection();
     } catch (error) {
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async getLikedPostIds() {
     try {
       const db = await connectDB();
       const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
-      closeConnection();
       return result.likedPosts;
     } catch (error) {
-      closeConnection();
       console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async saveCommunityId() {
-    const db = await connectDB();
-    const result = await db
-      .collection("users")
-      .updateOne(
-        {_id: new mongoDB.ObjectId(this.id)},
-        {$push: {joinedCommunities: {communityId: new mongoDB.ObjectId(this.communityId)}}}
-      );
-
-    console.log(result);
-    if (result.modifiedCount === 1) {
-      return true;
+    try {
+      const db = await connectDB();
+      const result = await db
+        .collection("users")
+        .updateOne(
+          {_id: new mongoDB.ObjectId(this.id)},
+          {$push: {joinedCommunities: {communityId: new mongoDB.ObjectId(this.communityId)}}}
+        );
+      if (result.modifiedCount === 1) {
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
     }
   }
   async removeCommunityId() {
-    const db = await connectDB();
-    const result = await db
-      .collection("users")
-      .updateOne(
-        {_id: new mongoDB.ObjectId(this.id)},
-        {$pull: {joinedCommunities: {communityId: new mongoDB.ObjectId(this.communityId)}}}
-      );
-    console.log(result);
-    if (result.modifiedCount === 1) {
-      return true;
+    try {
+      const db = await connectDB();
+      const result = await db
+        .collection("users")
+        .updateOne(
+          {_id: new mongoDB.ObjectId(this.id)},
+          {$pull: {joinedCommunities: {communityId: new mongoDB.ObjectId(this.communityId)}}}
+        );
+      if (result.modifiedCount === 1) {
+        return true;
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
     }
   }
 }

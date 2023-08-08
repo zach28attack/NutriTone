@@ -10,90 +10,118 @@ class Diary {
     this.item = item;
   }
   async getOneDiary() {
-    const db = await connectDB();
-    const result = await db.collection("diaries").findOne({userId: new mongoDB.ObjectId(this.userId), date: this.date});
-    closeConnection();
-    if (result !== null) {
-      this.items = result.items;
-
-      return true;
-    } else {
-      return false;
+    try {
+      const db = await connectDB();
+      const result = await db
+        .collection("diaries")
+        .findOne({userId: new mongoDB.ObjectId(this.userId), date: this.date});
+      if (result !== null) {
+        this.items = result.items;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
     }
   }
-  async getTenDiaries() {
-    const db = await connectDB();
-    const result = await db
-      .collection("diaries")
-      .find({userId: new mongoDB.ObjectId(this.userId)})
-      .limit(10)
-      .toArray();
 
-    closeConnection();
-    return result;
+  async getTenDiaries() {
+    try {
+      const db = await connectDB();
+      const result = await db
+        .collection("diaries")
+        .find({userId: new mongoDB.ObjectId(this.userId)})
+        .limit(10)
+        .toArray();
+      return result;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
+    }
   }
+
   async saveItemToDiary() {
-    const db = await connectDB();
-    const id = new mongoDB.ObjectId();
-    const result = await db.collection("diaries").updateOne(
-      {userId: new mongoDB.ObjectId(this.userId), date: this.date},
-      {
-        $push: {
-          items: {
-            _id: id,
-            name: this.item.name,
-            calories: this.item.calories,
-            servings: this.item.servings,
-            timeOfDay: this.item.timeOfDay,
-            servingSize: this.item.servingSize,
+    try {
+      const db = await connectDB();
+      const id = new mongoDB.ObjectId();
+      const result = await db.collection("diaries").updateOne(
+        {userId: new mongoDB.ObjectId(this.userId), date: this.date},
+        {
+          $push: {
+            items: {
+              _id: id,
+              name: this.item.name,
+              calories: this.item.calories,
+              servings: this.item.servings,
+              timeOfDay: this.item.timeOfDay,
+              servingSize: this.item.servingSize,
+            },
           },
         },
-      },
-      {upsert: true}
-    );
-    closeConnection();
-    if (result) {
-      return id;
-    } else {
-      return false;
+        {upsert: true}
+      );
+      if (result) {
+        return id;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
     }
   }
+
   async updateItem() {
-    const db = await connectDB();
-    const result = await db.collection("diaries").updateOne(
-      {
-        userId: new mongoDB.ObjectId(this.userId),
-        date: this.date,
-        "items._id": new mongoDB.ObjectId(this.item._id),
-      },
-      {
-        $set: {
-          "items.$.name": this.item.name,
-          "items.$.calories": this.item.calories,
-          "items.$.servings": this.item.servings,
-          "items.$._id": new mongoDB.ObjectId(this.item._id),
+    try {
+      const db = await connectDB();
+      const result = await db.collection("diaries").updateOne(
+        {
+          userId: new mongoDB.ObjectId(this.userId),
+          date: this.date,
+          "items._id": new mongoDB.ObjectId(this.item._id),
         },
-      }
-    );
-    closeConnection();
+        {
+          $set: {
+            "items.$.name": this.item.name,
+            "items.$.calories": this.item.calories,
+            "items.$.servings": this.item.servings,
+            "items.$._id": new mongoDB.ObjectId(this.item._id),
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
+    }
   }
 
   async deleteItem() {
-    const db = await connectDB();
-    const result = await db.collection("diaries").updateOne(
-      {
-        userId: new mongoDB.ObjectId(this.userId),
-        date: this.date,
-      },
-      {
-        $pull: {
-          items: {_id: new mongoDB.ObjectId(this.item._id)},
+    try {
+      const db = await connectDB();
+      const result = await db.collection("diaries").updateOne(
+        {
+          userId: new mongoDB.ObjectId(this.userId),
+          date: this.date,
         },
+        {
+          $pull: {
+            items: {_id: new mongoDB.ObjectId(this.item._id)},
+          },
+        }
+      );
+      if (result.modifiedCount === 1) {
+        return true;
       }
-    );
-    closeConnection();
-    if (result.modifiedCount === 1) {
-      return true;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      closeConnection();
     }
   }
 }

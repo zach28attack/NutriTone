@@ -23,17 +23,9 @@ async function closeConnection() {
       await client.close();
     }
   } catch (error) {
-    // if the error is thrown because the client obj gets called before it can  get initialized
-    // it will run after 100 ms
-    setTimeout(async () => {
-      console.log("running close in timeout");
-      try {
-        await client.close();
-      } catch (error) {
-        console.error("Error after timout:", error);
-      }
-      console.log("close executed");
-    }, 100);
+  } finally {
+    client = null;
+    db = null;
   }
 }
 
