@@ -50,7 +50,8 @@ export async function logout() {
       Cookies.remove("username");
       return true;
     } else {
-      console.error("Issue done happened");
+      console.error("Server error on logout");
+      return false;
     }
   } catch (error) {
     console.error(error);
@@ -77,6 +78,8 @@ export async function login(username, password) {
       Cookies.set("name", data.name, {expires: 1});
       Cookies.set("username", data.username, {expires: 1});
       return true;
+    } else {
+      return false;
     }
   } catch (error) {
     console.error(error);
@@ -115,6 +118,11 @@ export async function saveCommunityId(id) {
         communityId: id,
       }),
     });
+    if (res.ok) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     console.error("saveCommunityId() error:", error);
   }
@@ -132,6 +140,11 @@ export async function removeCommunityId(id) {
         communityId: id,
       }),
     });
+    if (res.ok) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     console.error("saveCommunityId() error:", error);
   }
