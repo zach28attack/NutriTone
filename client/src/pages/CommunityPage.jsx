@@ -4,7 +4,7 @@ import Menu from "../components/community/Menu";
 import {useState, useEffect} from "react";
 import {getCommunities} from "../apis/communityApi";
 import CommunityGroupPage from "./CommunityGroupPage";
-import {getLikedPostIds} from "../apis/userApi";
+import {getLikedPostIds, saveCommunityId, removeCommunityId} from "../apis/userApi";
 
 function CommunityPage() {
   const [communities, setCommunities] = useState([]);
@@ -26,7 +26,7 @@ function CommunityPage() {
     for (let i = 0; i < res.joinedCommunities.length; i++) {
       joinedArr.push(communitiesObj[res.joinedCommunities[i].communityId]);
     }
-    setJoinedCommunities(joinedArr);
+    setJoinedCommunities(joinedArr.reverse());
 
     // add a joined field to each community obj, set true if joined
     const joinedIds = res.joinedCommunities.map((community) => community.communityId);
@@ -77,6 +77,7 @@ function CommunityPage() {
   }, []);
 
   const joinCommunityHandler = (id) => {
+    saveCommunityId(id);
     setCommunities(
       communities.map((community) => {
         if (community._id === id) {
@@ -89,6 +90,7 @@ function CommunityPage() {
     );
   };
   const leaveCommunityHandler = (id) => {
+    removeCommunityId(id);
     setCommunities(
       communities.map((community) => {
         if (community._id === id) {
@@ -108,21 +110,19 @@ function CommunityPage() {
           <h1>Feed</h1>
           {!isLoading &&
             joinedCommunities.map((community) => {
-              return community.posts
-                .map((post) => (
-                  <Post
-                    post={post}
-                    groupName={community.name}
-                    key={post._id}
-                    id={post._id}
-                    communityId={community._id}
-                    deleteCommunityPosts={deleteCommunityPosts}
-                    updatePosts={updatePosts}
-                    likedPostIds={likedPostIds}
-                    setLikedPostIds={setLikedPostIds}
-                  />
-                ))
-                .reverse();
+              return community.posts.map((post) => (
+                <Post
+                  post={post}
+                  groupName={community.name}
+                  key={post._id}
+                  id={post._id}
+                  communityId={community._id}
+                  deleteCommunityPosts={deleteCommunityPosts}
+                  updatePosts={updatePosts}
+                  likedPostIds={likedPostIds}
+                  setLikedPostIds={setLikedPostIds}
+                />
+              ));
             })}
         </div>
       ) : (
