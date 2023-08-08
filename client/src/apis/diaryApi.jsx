@@ -13,6 +13,8 @@ export async function getOneDiary() {
     if (res.ok) {
       const data = await res.json();
       return data.items;
+    } else {
+      return false;
     }
   } catch (error) {
     console.error(error);
@@ -33,6 +35,8 @@ export async function getTenDiaries() {
     if (res.ok) {
       const data = await res.json();
       return data.diaries;
+    } else {
+      return false;
     }
   } catch (error) {
     console.error(error);
@@ -53,6 +57,8 @@ export async function saveNewItem(item) {
     if (res.ok) {
       const data = await res.json();
       return data._id;
+    } else {
+      return false;
     }
   } catch (error) {
     console.error(error);
@@ -69,8 +75,11 @@ export async function updateItem(item) {
       },
       body: JSON.stringify({item: item, date: `${Cookies.get("dayDate")}/${new Date().getFullYear()}`}),
     });
-
-    //TODO: give user feedback through small notification banner at top of screen for api requests responsees such as this
+    if (res.ok) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     console.error(error);
   }
@@ -87,6 +96,8 @@ export async function deleteItem(_id) {
     });
     if (res.ok) {
       return true;
+    } else {
+      return false;
     }
   } catch (error) {
     console.error(error);
