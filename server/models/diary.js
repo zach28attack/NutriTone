@@ -1,5 +1,5 @@
 const mongoDB = require("mongodb");
-const {connectDB, closeConnection} = require("../database");
+const {dbConnection} = require("../database");
 
 class Diary {
   constructor(id, userId, items, date, item) {
@@ -11,7 +11,7 @@ class Diary {
   }
   async getOneDiary() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("diaries")
         .findOne({userId: new mongoDB.ObjectId(this.userId), date: this.date});
@@ -23,14 +23,12 @@ class Diary {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 
   async getTenDiaries() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("diaries")
         .find({userId: new mongoDB.ObjectId(this.userId)})
@@ -39,14 +37,12 @@ class Diary {
       return result;
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 
   async saveItemToDiary() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const id = new mongoDB.ObjectId();
       const result = await db.collection("diaries").updateOne(
         {userId: new mongoDB.ObjectId(this.userId), date: this.date},
@@ -71,14 +67,12 @@ class Diary {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 
   async updateItem() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("diaries").updateOne(
         {
           userId: new mongoDB.ObjectId(this.userId),
@@ -96,14 +90,12 @@ class Diary {
       );
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 
   async deleteItem() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("diaries").updateOne(
         {
           userId: new mongoDB.ObjectId(this.userId),
@@ -120,8 +112,6 @@ class Diary {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 }

@@ -1,4 +1,4 @@
-const {connectDB, closeConnection} = require("../database");
+const {dbConnection} = require("../database");
 const mongoDB = require("mongodb");
 class Community {
   constructor(id, name, userId, post, posts) {
@@ -9,7 +9,7 @@ class Community {
     this.posts = posts;
   }
   async getCommunities() {
-    const db = await connectDB();
+    const db = await dbConnection();
     try {
       const user = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.userId)});
       const result = await db.collection("communities").find().toArray();
@@ -18,12 +18,10 @@ class Community {
       }
     } catch (error) {
       console.error("getJoinedCommunities() error:", error);
-    } finally {
-      closeConnection();
     }
   }
   async saveNewPost() {
-    const db = await connectDB();
+    const db = await dbConnection();
     try {
       const result = await db.collection("communities").updateOne(
         {_id: new mongoDB.ObjectId(this.id)},
@@ -39,12 +37,10 @@ class Community {
       }
     } catch (error) {
       console.error("saveNewPost() error:", error);
-    } finally {
-      closeConnection();
     }
   }
   async deletePost() {
-    const db = await connectDB();
+    const db = await dbConnection();
     try {
       const result = await db.collection("communities").updateOne(
         {_id: new mongoDB.ObjectId(this.id)},
@@ -60,12 +56,10 @@ class Community {
       }
     } catch (error) {
       console.error("deletePost() error:", error);
-    } finally {
-      closeConnection();
     }
   }
   async updatePost() {
-    const db = await connectDB();
+    const db = await dbConnection();
     try {
       const result = await db.collection("communities").updateOne(
         {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post.id)},
@@ -84,12 +78,10 @@ class Community {
       }
     } catch (error) {
       console.error("updatePost() error:", error);
-    } finally {
-      closeConnection();
     }
   }
   async addLike() {
-    const db = await connectDB();
+    const db = await dbConnection();
     try {
       const result = await db
         .collection("communities")
@@ -103,13 +95,11 @@ class Community {
       }
     } catch (error) {
       console.error("addLike() error:", error);
-    } finally {
-      closeConnection();
     }
   }
   async removeLike() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("communities")
         .updateOne(
@@ -122,8 +112,6 @@ class Community {
       }
     } catch (error) {
       console.error("removeLike() error:", error);
-    } finally {
-      closeConnection();
     }
   }
 }

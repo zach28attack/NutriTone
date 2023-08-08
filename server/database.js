@@ -1,23 +1,33 @@
 const mongoDB = require("mongodb");
 const mongoClient = mongoDB.MongoClient;
 
-let db;
-let client;
+let db = null;
+let client = null;
 
+// if db is already connected return db, else connect then return db
+async function dbConnection() {
+  if (db !== null) {
+    return db;
+  } else {
+    await connectDB();
+    return db;
+  }
+}
+exports.dbConnection = dbConnection;
+
+// connect and return db
 async function connectDB() {
   const uri = "mongodb+srv://zach28attack:MongoDBPassword@cluster0.im0uft8.mongodb.net/?retryWrites=true&w=majority";
   try {
     client = new mongoClient(uri);
-    client = await client.connect();
-    db = client.db();
-    return db;
+    const clientConnection = await client.connect();
+    db = clientConnection.db();
   } catch (error) {
     console.error(error);
   }
 }
 
-exports.connectDB = connectDB;
-
+// close db connection
 async function closeConnection() {
   try {
     if (client) {

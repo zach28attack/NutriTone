@@ -1,4 +1,4 @@
-const {connectDB, closeConnection} = require("../database");
+const {dbConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
@@ -15,7 +15,7 @@ class User {
 
   async saveNew() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const emailIsTaken = await db.collection("users").findOne({email: this.email});
       const usernameIsTaken = await db.collection("users").findOne({username: this.username});
       if (!emailIsTaken && !usernameIsTaken) {
@@ -29,13 +29,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async validateUser() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("users").findOne({username: this.username, password: this.password});
       if (result !== null) {
         this.id = result._id;
@@ -49,13 +47,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async validateToken() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("tokens").find({token: this.token, userId: this.id, revoked: false});
 
       if (result) {
@@ -63,13 +59,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async revokeToken() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("tokens")
         .updateOne({token: this.token, userId: new mongoDB.ObjectId(this.id), revoked: false}, {$set: {revoked: true}});
@@ -79,14 +73,12 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 
   async getLogs() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
       if (result) {
         return result.logs ? result.logs : [];
@@ -95,13 +87,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async saveNewLog() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("users").updateOne(
         {_id: new mongoDB.ObjectId(this.id)},
         {
@@ -115,13 +105,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async deleteLog() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("users")
         .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$pull: {logs: this.log}});
@@ -132,13 +120,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async saveLikedPostId() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const likedPost = await db
         .collection("users")
         .findOne({_id: new mongoDB.ObjectId(this.id), likedPosts: new mongoDB.ObjectId(this.likedPostId)});
@@ -156,36 +142,30 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async removeLikedPostId() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("users")
         .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$pull: {likedPosts: new mongoDB.ObjectId(this.likedPostId)}});
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async getLikedPostIds() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
       return result.likedPosts;
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async saveCommunityId() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("users")
         .updateOne(
@@ -197,13 +177,11 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
   async removeCommunityId() {
     try {
-      const db = await connectDB();
+      const db = await dbConnection();
       const result = await db
         .collection("users")
         .updateOne(
@@ -215,8 +193,6 @@ class User {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      closeConnection();
     }
   }
 }
