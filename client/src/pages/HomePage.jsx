@@ -14,70 +14,47 @@ function HomePage() {
   const [totalLunchCalories, setTotalLunchCalories] = useState(0);
   const [totalDinnerCalories, setTotalDinnerCalories] = useState(0);
   const {date, setDate} = useContext(DateContext);
+  const [recentItems, setRecentItems] = useState([]);
 
   const breakfastAddHandler = async (newItem) => {
-    newItem._id = 0;
+    newItem._id = "temp id";
     setBreakfastItems((prevItems) => [newItem, ...prevItems]);
-    console.log(newItem);
     setTotalBreakfastCalories(
       (prevItems) => parseInt(prevItems) + parseInt(newItem.calories) * parseInt(newItem.servings)
     );
-
+    // update new items id
     newItem._id = await saveNewItem(newItem);
-    setBreakfastItems((prevItems) => {
-      const arr = [...prevItems];
-      arr[-1] = newItem;
-      return arr;
-    });
-  };
-  const updateBreakfastTotals = (prevCal, newCal) => {
-    setTotalBreakfastCalories((prevCals) => {
-      let total = prevCals;
-      total -= prevCal;
-      return total + parseInt(newCal);
-    });
+    setBreakfastItems((prevItems) => [newItem, ...prevItems.slice(1)]);
   };
 
   const lunchAddHandler = async (newItem) => {
-    newItem._id = 0;
+    newItem._id = "temp id";
     setLunchItems((prevItems) => [newItem, ...prevItems]);
     setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(newItem.calories) * parseInt(newItem.servings));
-
+    // update new items id
     newItem._id = await saveNewItem(newItem);
-    setLunchItems((prevItems) => {
-      const arr = [...prevItems];
-      arr[-1] = newItem;
-      return arr;
-    });
-  };
-  const updateLunchTotals = (prevCal, newCal) => {
-    setTotalLunchCalories((prevCals) => {
-      let total = prevCals;
-      total -= prevCal;
-      return total + parseInt(newCal);
-    });
+    setLunchItems((prevItems) => [newItem, ...prevItems.slice(1)]);
   };
 
   const DinnerAddHandler = async (newItem) => {
-    newItem._id = 0;
+    newItem._id = "temp id";
     setDinnerItems((prevItems) => [newItem, ...prevItems]);
     setTotalDinnerCalories(
       (prevItems) => parseInt(prevItems) + parseInt(newItem.calories) * parseInt(newItem.servings)
     );
-
+    // update new items id
     newItem._id = await saveNewItem(newItem);
-    setDinnerItems((prevItems) => {
-      const arr = [...prevItems];
-      arr[-1] = newItem;
-      return arr;
-    });
+    setDinnerItems((prevItems) => [newItem, ...prevItems.slice(1)]);
   };
-  const updateDinnerTotals = (prevCal, newCal) => {
-    setTotalDinnerCalories((prevCals) => {
-      let total = prevCals;
-      total -= prevCal;
-      return total + parseInt(newCal);
-    });
+
+  const updateBreakfastTotals = (calories, newCal) => {
+    setTotalBreakfastCalories((prevCals) => prevCals - calories + parseInt(newCal));
+  };
+  const updateLunchTotals = (calories, newCal) => {
+    setTotalLunchCalories((prevCals) => prevCals - calories + parseInt(newCal));
+  };
+  const updateDinnerTotals = (calories, newCal) => {
+    setTotalDinnerCalories((prevCals) => prevCals - calories + parseInt(newCal));
   };
 
   const deleteItemHandler = (_id, removedCal, timeOfDay) => {
@@ -100,40 +77,62 @@ function HomePage() {
     }
   };
 
+  // Retrieves and updates items from the diary for a given day.
+  // Resets displayed data for different time-of-day sections.
   const getItemsFromDiary = async () => {
-    setBreakfastItems([]);
-    setLunchItems([]);
-    setDinnerItems([]);
-    setTotalBreakfastCalories(0);
-    setTotalLunchCalories(0);
-    setTotalDinnerCalories(0);
-    const items = await getOneDiary(); // will return all items from a given day
-    if (items) {
+    try {
+      // Reset displayed data when date is changed
+      setBreakfastItems([]);
+      setLunchItems([]);
+      setDinnerItems([]);
+      setTotalBreakfastCalories(0);
+      setTotalLunchCalories(0);
+      setTotalDinnerCalories(0);
+
+      // Fetch items from the diary for the given day
+      const items = await getOneDiary();
+
+      if (items) {
+        setIsLoading(false);
+
+        // Update state for each item based on its time of day
+        items.forEach((item) => {
+          if (item.timeOfDay === "Breakfast") {
+            setBreakfastItems((prevItems) => [item, ...prevItems]);
+          } else if (item.timeOfDay === "Lunch") {
+            setLunchItems((prevItems) => [item, ...prevItems]);
+          } else if (item.timeOfDay === "Dinner") {
+            setDinnerItems((prevItems) => [item, ...prevItems]);
+          }
+
+          // Calculate calorie totals for each item
+          getCalorieTotals(item);
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
       setIsLoading(false);
-      items.forEach((item) => {
-        item.timeOfDay === "Breakfast"
-          ? setBreakfastItems((prevItems) => [item, ...prevItems])
-          : item.timeOfDay === "Lunch"
-          ? setLunchItems((prevItems) => [item, ...prevItems])
-          : item.timeOfDay === "Dinner"
-          ? setDinnerItems((prevItems) => [item, ...prevItems])
-          : undefined;
-        getCalorieTotals(item);
-      });
     }
   };
+
+  //  Calculates and updates the total calorie count based on the provided item's details.
+  //  Updates the calorie total based on the item's time of day.
   const getCalorieTotals = (item) => {
-    item.timeOfDay === "Breakfast"
-      ? setTotalBreakfastCalories(
+    try {
+      if (item.timeOfDay === "Breakfast") {
+        setTotalBreakfastCalories(
           (prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings)
-        )
-      : item.timeOfDay === "Lunch"
-      ? setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings))
-      : item.timeOfDay === "Dinner"
-      ? setTotalDinnerCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings))
-      : undefined;
+        );
+      } else if (item.timeOfDay === "Lunch") {
+        setTotalLunchCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings));
+      } else if (item.timeOfDay === "Dinner") {
+        setTotalDinnerCalories((prevItems) => parseInt(prevItems) + parseInt(item.calories) * parseInt(item.servings));
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
-  const [recentItems, setRecentItems] = useState([]);
+
   const getItemsFromDiaries = async () => {
     const diaries = await getTenDiaries();
     let items = [];
@@ -146,11 +145,22 @@ function HomePage() {
   };
 
   useEffect(() => {
-    getItemsFromDiary();
-    getItemsFromDiaries(); // calls getTenDiaries and extracts items into array
-    return;
+    try {
+      // Retrieve and update items from the diary for the given day
+      getItemsFromDiary();
+
+      // Fetch items from diaries and extract items into an array
+      getItemsFromDiaries();
+
+      // Clean-up function (no specific actions needed)
+      return;
+    } catch (error) {
+      // Handle errors appropriately
+      console.error("An error occurred:", error);
+    }
   }, [date]);
 
+  // increments date by -1 day and updates displayed data
   const leftArrowClickHandler = () => {
     const year = new Date().getFullYear();
     const dayDate = Cookies.get("dayDate");
@@ -159,6 +169,8 @@ function HomePage() {
     Cookies.set("dayDate", parseInt(dayDate) - 1, {expires: 1});
     setIsLoading(true);
   };
+
+  // increments date by +1 day and updates displayed data
   const rightArrowClickHandler = () => {
     const year = new Date().getFullYear();
     const dayDate = Cookies.get("dayDate");
@@ -168,9 +180,6 @@ function HomePage() {
     setIsLoading(true);
   };
 
-  console.log("totalBreakfastCalories", totalBreakfastCalories);
-  console.log("totalLunchCalories", totalLunchCalories);
-  console.log("totalDinnerCalories", totalDinnerCalories);
   return (
     <>
       <DiarySummary
