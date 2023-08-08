@@ -7,7 +7,8 @@ let client;
 async function connectDB() {
   const uri = "mongodb+srv://zach28attack:MongoDBPassword@cluster0.im0uft8.mongodb.net/?retryWrites=true&w=majority";
   try {
-    client = await mongoClient.connect(uri);
+    client = new mongoClient(uri);
+    client = await client.connect();
     db = client.db();
     return db;
   } catch (error) {
