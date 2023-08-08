@@ -23,6 +23,7 @@ async function closeConnection() {
       await client.close();
     }
   } catch (error) {
+    console.error("DB ERROR:", error);
   } finally {
     client = null;
     db = null;
