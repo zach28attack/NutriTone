@@ -20,7 +20,7 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePos
     updatePosts(communityId, id, input);
     setIsEditing(false);
   };
-  console.log(post);
+
   return (
     <div className={Class.post}>
       <header className={Class.header}>
