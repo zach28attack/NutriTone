@@ -1,4 +1,3 @@
-import {useState} from "react";
 import Class from "./CommunityItem.module.css";
 
 function CommunityItem({name, communityClickHandler, id, joinedList, joined, joinCommunity, leaveCommunity}) {
