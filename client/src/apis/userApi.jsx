@@ -102,3 +102,37 @@ export async function getLikedPostIds() {
     console.error("getLikedPostIds() error:", error);
   }
 }
+
+export async function saveCommunityId(id) {
+  try {
+    const res = await fetch("http://localhost:3000/user/community", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        communityId: id,
+      }),
+    });
+  } catch (error) {
+    console.error("saveCommunityId() error:", error);
+  }
+}
+
+export async function removeCommunityId(id) {
+  try {
+    const res = await fetch("http://localhost:3000/user/community/", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        communityId: id,
+      }),
+    });
+  } catch (error) {
+    console.error("saveCommunityId() error:", error);
+  }
+}
