@@ -2,7 +2,7 @@ const {connectDB, closeConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
-  constructor(email, username, password, token, id, log, likedPostId) {
+  constructor(email, username, password, token, id, log, likedPostId, communityId) {
     this.email = email;
     this.username = username;
     this.password = password;
@@ -10,6 +10,7 @@ class User {
     this.id = id;
     this.log = log;
     this.likedPostId = likedPostId;
+    this.communityId = communityId;
   }
 
   async saveNew() {
@@ -180,6 +181,33 @@ class User {
     } catch (error) {
       closeConnection();
       console.error(error);
+    }
+  }
+  async saveCommunityId() {
+    const db = await connectDB();
+    const result = await db
+      .collection("users")
+      .updateOne(
+        {_id: new mongoDB.ObjectId(this.id)},
+        {$push: {joinedCommunities: {communityId: new mongoDB.ObjectId(this.communityId)}}}
+      );
+
+    console.log(result);
+    if (result.modifiedCount === 1) {
+      return true;
+    }
+  }
+  async removeCommunityId() {
+    const db = await connectDB();
+    const result = await db
+      .collection("users")
+      .updateOne(
+        {_id: new mongoDB.ObjectId(this.id)},
+        {$pull: {joinedCommunities: {communityId: new mongoDB.ObjectId(this.communityId)}}}
+      );
+    console.log(result);
+    if (result.modifiedCount === 1) {
+      return true;
     }
   }
 }

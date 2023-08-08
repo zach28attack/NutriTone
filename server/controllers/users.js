@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-exports.signup = async (req, res, next) => {
+exports.signup = async (req, res) => {
   const user = new User();
   user.email = req.body.email;
   user.username = req.body.username;
@@ -23,7 +23,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   const user = new User();
   user.email = req.body.email;
   user.username = req.body.username;
@@ -46,7 +46,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.logout = async (req, res, next) => {
+exports.logout = async (req, res) => {
   try {
     const user = req.user;
     const success = await user.revokeToken();
@@ -60,7 +60,7 @@ exports.logout = async (req, res, next) => {
   }
 };
 
-exports.getLogs = async (req, res, next) => {
+exports.getLogs = async (req, res) => {
   try {
     const user = req.user;
     const logs = await user.getLogs();
@@ -80,7 +80,7 @@ exports.getLogs = async (req, res, next) => {
   }
 };
 
-exports.saveNewLog = async (req, res, next) => {
+exports.saveNewLog = async (req, res) => {
   try {
     const user = req.user;
     user.log = req.body.log;
@@ -95,7 +95,7 @@ exports.saveNewLog = async (req, res, next) => {
   }
 };
 
-exports.deleteLog = async (req, res, next) => {
+exports.deleteLog = async (req, res) => {
   try {
     const user = req.user;
     user.log = req.body.log;
@@ -110,7 +110,7 @@ exports.deleteLog = async (req, res, next) => {
   }
 };
 
-exports.saveLikedPostId = async (req, res, next) => {
+exports.saveLikedPostId = async (req, res) => {
   try {
     const user = req.user;
     user.likedPostId = req.body.postId;
@@ -123,7 +123,7 @@ exports.saveLikedPostId = async (req, res, next) => {
   }
 };
 
-exports.removeLikedPostId = async (req, res, next) => {
+exports.removeLikedPostId = async (req, res) => {
   try {
     const user = req.user;
     user.likedPostId = req.params.postId;
@@ -136,9 +136,33 @@ exports.removeLikedPostId = async (req, res, next) => {
   }
 };
 
-exports.getLikedPostIds = async (req, res, next) => {
+exports.getLikedPostIds = async (req, res) => {
   const ids = await req.user.getLikedPostIds();
   res.status(200).json({
     likedPostIds: ids,
   });
+};
+
+exports.saveCommunityId = async (req, res) => {
+  try {
+    req.user.communityId = req.body.communityId;
+    const success = await req.user.saveCommunityId();
+    if (success) {
+      res.status(200).json();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.removeCommunityId = async (req, res) => {
+  try {
+    req.user.communityId = req.body.communityId;
+    const success = await req.user.removeCommunityId();
+    if (success) {
+      res.status(200).json();
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
