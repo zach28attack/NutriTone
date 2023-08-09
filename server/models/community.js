@@ -71,10 +71,9 @@ class Community {
       );
 
       if (result.modifiedCount > 0) {
-        closeConnection();
         return true;
       } else {
-        closeConnection();
+        return true;
       }
     } catch (error) {
       console.error("updatePost() error:", error);
@@ -86,12 +85,14 @@ class Community {
       const result = await db
         .collection("communities")
         .updateOne(
-          {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post._id)},
+          {_id: new mongoDB.ObjectId(this.id), "posts._id": new mongoDB.ObjectId(this.post.id)},
           {$inc: {"posts.$.likes": 1}}
         );
 
       if (result.modifiedCount === 1) {
         return true;
+      } else {
+        return false;
       }
     } catch (error) {
       console.error("addLike() error:", error);
@@ -109,6 +110,8 @@ class Community {
 
       if (result.modifiedCount === 1) {
         return true;
+      } else {
+        return false;
       }
     } catch (error) {
       console.error("removeLike() error:", error);
