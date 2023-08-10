@@ -3,7 +3,7 @@ import Diary from "../components/diary/Diary";
 import {getOneDiary, getTenDiaries, saveNewItem, deleteItem} from "../apis/diaryApi";
 import {useState, useEffect, useContext} from "react";
 import Cookies from "js-cookie";
-import {DateContext} from "../context/DateContext";
+import {GlobalContext} from "../context/GlobalContext";
 
 function HomePage() {
   const [breakfastItems, setBreakfastItems] = useState([]);
@@ -13,7 +13,7 @@ function HomePage() {
   const [totalBreakfastCalories, setTotalBreakfastCalories] = useState(0);
   const [totalLunchCalories, setTotalLunchCalories] = useState(0);
   const [totalDinnerCalories, setTotalDinnerCalories] = useState(0);
-  const {date, setDate} = useContext(DateContext);
+  const {date, setDate} = useContext(GlobalContext);
   const [recentItems, setRecentItems] = useState([]);
 
   const breakfastAddHandler = async (newItem) => {

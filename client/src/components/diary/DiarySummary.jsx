@@ -1,6 +1,6 @@
 import Class from "./DiarySummary.module.css";
 import {useState, useEffect, useContext} from "react";
-import {DateContext} from "../../context/DateContext";
+import {GlobalContext} from "../../context/GlobalContext";
 
 function DiarySummary(props) {
   const [calories, setCalories] = useState(0);
@@ -13,7 +13,7 @@ function DiarySummary(props) {
     setUnder(budget - (props.calories - caloriesBurned));
   }, [props.calories]);
 
-  const {date} = useContext(DateContext);
+  const {date} = useContext(GlobalContext);
 
   return (
     <div className={Class.container}>

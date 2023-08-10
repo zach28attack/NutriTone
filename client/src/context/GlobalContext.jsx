@@ -1,9 +1,9 @@
 import {createContext, useState, useEffect} from "react";
 import Cookies from "js-cookie";
 
-export const DateContext = createContext();
+export const GlobalContext = createContext();
 
-export function DateContextProvider(props) {
+export function GlobalContextProvider(props) {
   const [date, setDate] = useState("...");
   useEffect(() => {
     const dayDate = Cookies.get("dayDate");
@@ -14,5 +14,5 @@ export function DateContextProvider(props) {
       setDate(date);
     }
   }, []);
-  return <DateContext.Provider value={{date, setDate}}>{props.children}</DateContext.Provider>;
+  return <GlobalContext.Provider value={{date, setDate}}>{props.children}</GlobalContext.Provider>;
 }
