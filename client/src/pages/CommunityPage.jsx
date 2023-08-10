@@ -16,7 +16,6 @@ function CommunityPage() {
   const [postsArr, setPostsArr] = useState([]);
   useEffect(() => {
     setPostsArr(posts);
-    console.log("loggin yeehhhh");
   }, [posts]);
   return (
     <div className={Class.page}>
