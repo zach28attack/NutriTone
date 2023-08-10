@@ -23,33 +23,41 @@ exports.getCommunities = async (req, res, next) => {
 };
 
 exports.saveNewPost = async (req, res, next) => {
-  const community = new Community();
-  const {post, id} = req.body;
-  community.id = id;
-  post.userId = req.user.id;
-  post._id = new mongoDB.ObjectId();
-  community.post = post;
+  try {
+    const community = new Community();
+    const {post, id} = req.body;
+    community.id = id;
+    post.userId = req.user.id;
+    post._id = new mongoDB.ObjectId();
+    community.post = post;
 
-  const success = await community.saveNewPost();
-  if (success) {
-    res.status(200).json({
-      postId: post._id,
-    });
-  } else {
-    res.status(400).json();
+    const success = await community.saveNewPost();
+    if (success) {
+      res.status(200).json({
+        postId: post._id,
+      });
+    } else {
+      res.status(400).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
 exports.deletePost = async (req, res, next) => {
-  const community = new Community();
-  const post = {id: req.params.postId};
-  community.post = post;
-  community.id = req.params.communityId;
-  const success = await community.deletePost();
-  if (success) {
-    res.status(200).json();
-  } else {
-    res.status(400).json();
+  try {
+    const community = new Community();
+    const post = {id: req.params.postId};
+    community.post = post;
+    community.id = req.params.communityId;
+    const success = await community.deletePost();
+    if (success) {
+      res.status(200).json();
+    } else {
+      res.status(400).json();
+    }
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -71,7 +79,7 @@ exports.updatePost = async (req, res, next) => {
   }
 };
 
-exports.addLike = async (req, res, next) => {
+exports.addLike = (req, res, next) => {
   const community = new Community();
   community.id = req.body.communityId;
   const post = {id: req.body.postId};
@@ -80,7 +88,7 @@ exports.addLike = async (req, res, next) => {
   next();
 };
 
-exports.removeLike = async (req, res, next) => {
+exports.removeLike = (req, res, next) => {
   const community = new Community();
   community.id = req.params.communityId;
   const post = {id: req.params.postId};
