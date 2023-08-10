@@ -30,26 +30,28 @@ function UserProfile() {
   };
 
   return (
-    <section className={Class.container}>
-      <article className={Class.profile}>
-        <img src="/default-profile-picture1.jpg" alt="" />
-        <div className={Class.nameGroup}>
-          <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="name">
-            <h4>Zachary Casares</h4>
-            {nameIsActive && <PiPencilFill className={Class.editBtn} />}
+    <>
+      <section className={Class.container}>
+        <article className={Class.profile}>
+          <img src="/default-profile-picture1.jpg" alt="" />
+          <div className={Class.nameGroup}>
+            <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="name">
+              <h4>Zachary Casares</h4>
+              {nameIsActive && <PiPencilFill className={Class.editBtn} />}
+            </div>
+            <div className={Class.divider}></div>
+            <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="username">
+              <span>@user155493</span>
+              {usernameIsActive && <PiPencilFill className={Class.editBtn} />}
+            </div>
           </div>
-          <div className={Class.divider}></div>
-          <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="username">
-            <span>@user155493</span>
-            {usernameIsActive && <PiPencilFill className={Class.editBtn} />}
-          </div>
-        </div>
-        <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
-        {accountModalIsActive && <AccountModal closeModal={accountClickHandler} />}
-        <ProfileSummary />
-      </article>
+          <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
+          {accountModalIsActive && <AccountModal closeModal={accountClickHandler} />}
+          <ProfileSummary />
+        </article>
+      </section>
       <UserPosts />
-    </section>
+    </>
   );
 }
 
