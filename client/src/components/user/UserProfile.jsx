@@ -4,6 +4,7 @@ import {useState} from "react";
 import {BiDotsVerticalRounded} from "react-icons/bi";
 import AccountModal from "../user/AccountModal";
 import ProfileSummary from "./ProfileSummary";
+import UserPosts from "./UserPosts";
 
 function UserProfile() {
   const [nameIsActive, setNameIsActive] = useState();
@@ -47,6 +48,7 @@ function UserProfile() {
         {accountModalIsActive && <AccountModal closeModal={accountClickHandler} />}
         <ProfileSummary />
       </article>
+      <UserPosts />
     </section>
   );
 }
