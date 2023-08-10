@@ -1,13 +1,16 @@
 import Class from "./Post.module.css";
-import {useState} from "react";
+import {useState, useContext} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 import Cookies from "js-cookie";
 import {updatePost} from "../../apis/communityApi";
 import HeartIcon from "./HeartIcon";
+import {GlobalContext} from "../../context/GlobalContext";
 
-function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePosts, likedPostIds, setLikedPostIds}) {
+function Post({post, groupName, id, communityId, likedPostIds, setLikedPostIds}) {
   const [isEditing, setIsEditing] = useState();
   const [input, setInput] = useState();
+  const {updatePosts} = useContext(GlobalContext);
+
   const cancelEditHandler = () => {
     setIsEditing(false);
   };
@@ -48,13 +51,7 @@ function Post({post, groupName, id, communityId, deleteCommunityPosts, updatePos
             likesData={post.likes || 0}
           />
           {post.userId === Cookies.get("userId") && (
-            <PostOptionsBtn
-              id={id}
-              communityId={communityId}
-              deleteCommunityPosts={deleteCommunityPosts}
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-            />
+            <PostOptionsBtn id={id} communityId={communityId} setIsEditing={setIsEditing} />
           )}
         </div>
       </div>

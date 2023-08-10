@@ -53,7 +53,7 @@ export async function deletePost(communityId, postId) {
       },
     });
     if (res.ok) {
-      console.log(res);
+      return true;
     }
   } catch (error) {
     console.error(error);

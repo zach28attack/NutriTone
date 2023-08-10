@@ -1,11 +1,13 @@
 import Class from "./PostForm.module.css";
-import {useState} from "react";
+import {useState, useContext} from "react";
 import {saveNewPost} from "../../apis/communityApi";
 import Cookies from "js-cookie";
+import {GlobalContext} from "../../context/GlobalContext";
 
-function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
+function CommunityForm({community, setPosts}) {
   const [activeClass, setActiveClass] = useState();
   const [input, setInput] = useState();
+  const {addCommunityPosts} = useContext(GlobalContext);
 
   const submitClickHandler = async (e) => {
     const post = {
@@ -15,21 +17,25 @@ function CommunityForm({communityId, setPosts, updateCommunityPosts}) {
       username: Cookies.get("username"),
       userId: Cookies.get("userId"),
       _id: `temp key ${new Date()}`,
+      communityName: community.name,
+      communityId: community._id,
     };
+
     e.preventDefault();
     setInput("");
+    // removes options menu
     setActiveClass(!activeClass);
 
     // immediately update page with new post
     setPosts((prevPosts) => [post, ...prevPosts]);
     try {
-      post._id = await saveNewPost(post, communityId);
+      post._id = await saveNewPost(post, community._id);
       // after new post is saved an id is returned and then the posts are updated
       setPosts((prevPosts) => {
         const filteredPosts = prevPosts.slice(1);
         return [post, ...filteredPosts];
       });
-      updateCommunityPosts(post, communityId);
+      addCommunityPosts(post, community._id);
     } catch (error) {
       console.error(error);
     }

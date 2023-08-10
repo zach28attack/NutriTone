@@ -3,15 +3,7 @@ import {useState} from "react";
 import CommunityItem from "./CommunityItem";
 import Cookies from "js-cookie";
 
-function Menu({
-  setGroupPageIsActive,
-  communities,
-  isLoading,
-  setActiveCommunityId,
-  joinedCommunities,
-  joinCommunity,
-  leaveCommunity,
-}) {
+function Menu({setGroupPageIsActive, communities, isLoading, setActiveCommunityId, joinedCommunities}) {
   const communityClickHandler = (id) => {
     setGroupPageIsActive(true);
     setActiveCommunityId(id);
@@ -38,7 +30,6 @@ function Menu({
                   key={community._id}
                   id={community._id}
                   joinedList={true}
-                  leaveCommunity={leaveCommunity}
                 />
               );
             })}
@@ -56,7 +47,6 @@ function Menu({
                 id={community._id}
                 joinedList={false}
                 joined={community.joined}
-                joinCommunity={joinCommunity}
               />
             );
           })}

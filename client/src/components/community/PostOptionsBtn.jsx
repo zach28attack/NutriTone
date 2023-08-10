@@ -1,9 +1,11 @@
 import Class from "./PostOptionsBtn.module.css";
-import {useState} from "react";
+import {useState, useContext} from "react";
 import {deletePost} from "../../apis/communityApi";
+import {GlobalContext} from "../../context/GlobalContext";
 
-function PostOptionsBtn({id, communityId, deleteCommunityPosts, setIsEditing, isEditing}) {
+function PostOptionsBtn({id, communityId, setIsEditing}) {
   const [activeOptions, setActiveOptions] = useState(false);
+  const {deleteCommunityPosts} = useContext(GlobalContext);
 
   const optionsClickHandler = () => {
     setActiveOptions(!activeOptions);
