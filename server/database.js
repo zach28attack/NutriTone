@@ -8,7 +8,8 @@ let client = null;
 async function dbConnection() {
   if (db !== null) {
     return db;
-  } else {
+  } else if (db === null) {
+    console.log("NEW CONNECTION");
     await connectDB();
     return db;
   }
