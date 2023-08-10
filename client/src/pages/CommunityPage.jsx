@@ -1,5 +1,4 @@
 import {useState, useEffect, useContext} from "react";
-import {getLikedPostIds} from "../apis/userApi";
 import {GlobalContext} from "../context/GlobalContext";
 
 import CommunityGroupPage from "./CommunityGroupPage";
@@ -10,18 +9,12 @@ import Menu from "../components/community/Menu";
 function CommunityPage() {
   const [groupPageIsActive, setGroupPageIsActive] = useState();
   const [activeCommunityId, setActiveCommunityId] = useState();
-  const [likedPostIds, setLikedPostIds] = useState([]);
 
   const {joinCommunityHandler, leaveCommunityHandler, communities, joinedCommunities, isLoading, posts} =
     useContext(GlobalContext);
-  // gets list of liked post ids
-  const getAndSetLikedPostIds = async () => {
-    setLikedPostIds(await getLikedPostIds());
-  };
 
   const [postsArr, setPostsArr] = useState([]);
   useEffect(() => {
-    getAndSetLikedPostIds();
     setPostsArr(posts);
     console.log("loggin yeehhhh");
   }, [posts]);
@@ -38,8 +31,6 @@ function CommunityPage() {
                 key={post._id}
                 id={post._id}
                 communityId={post.communityId}
-                likedPostIds={likedPostIds}
-                setLikedPostIds={setLikedPostIds}
               />
             ))}
         </div>

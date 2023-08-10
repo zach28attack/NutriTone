@@ -1,7 +1,7 @@
 import {createContext, useState, useEffect} from "react";
 import Cookies from "js-cookie";
 import {getCommunities} from "../apis/communityApi";
-import {saveCommunityId, removeCommunityId} from "../apis/userApi";
+import {saveCommunityId, removeCommunityId, getLikedPostIds} from "../apis/userApi";
 
 export const GlobalContext = createContext();
 
@@ -11,6 +11,7 @@ export function GlobalContextProvider(props) {
   const [joinedCommunities, setJoinedCommunities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
+  const [likedPostIds, setLikedPostIds] = useState([]);
 
   const sortPosts = (joinedCommunities) => {
     // sort Posts from newest from the joinedCommunities instance var.
@@ -139,6 +140,11 @@ export function GlobalContextProvider(props) {
     );
   };
 
+  // gets list of liked post ids
+  const getAndSetLikedPostIds = async () => {
+    setLikedPostIds(await getLikedPostIds());
+  };
+
   useEffect(() => {
     const dayDate = Cookies.get("dayDate");
     if (dayDate) {
@@ -147,6 +153,9 @@ export function GlobalContextProvider(props) {
       setDate(date);
     }
     getAndSetCommunities();
+
+    // get list of users liked posts
+    getAndSetLikedPostIds();
   }, []);
   return (
     <GlobalContext.Provider
@@ -163,6 +172,8 @@ export function GlobalContextProvider(props) {
         isLoading,
         getAndSetCommunities,
         posts,
+        likedPostIds,
+        setLikedPostIds,
       }}
     >
       {props.children}

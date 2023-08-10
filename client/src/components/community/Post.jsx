@@ -6,10 +6,10 @@ import {updatePost} from "../../apis/communityApi";
 import HeartIcon from "./HeartIcon";
 import {GlobalContext} from "../../context/GlobalContext";
 
-function Post({post, groupName, id, communityId, likedPostIds, setLikedPostIds}) {
+function Post({post, groupName, id, communityId}) {
   const [isEditing, setIsEditing] = useState();
   const [input, setInput] = useState();
-  const {updatePosts} = useContext(GlobalContext);
+  const {updatePosts, likedPostIds, setLikedPostIds} = useContext(GlobalContext);
 
   const cancelEditHandler = () => {
     setIsEditing(false);
