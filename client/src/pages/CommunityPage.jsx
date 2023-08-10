@@ -35,12 +35,7 @@ function CommunityPage() {
             ))}
         </div>
       ) : (
-        <CommunityGroupPage
-          setGroupPageIsActive={setGroupPageIsActive}
-          activeCommunityId={activeCommunityId}
-          likedPostIds={likedPostIds}
-          setLikedPostIds={setLikedPostIds}
-        />
+        <CommunityGroupPage setGroupPageIsActive={setGroupPageIsActive} activeCommunityId={activeCommunityId} />
       )}
       <div className={Class.menu}>
         <Menu

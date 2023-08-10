@@ -5,7 +5,7 @@ import {useState, useContext} from "react";
 import PostForm from "../components/community/PostForm";
 import {GlobalContext} from "../context/GlobalContext";
 
-function CommunityGroupPage({setGroupPageIsActive, activeCommunityId, likedPostIds, setLikedPostIds}) {
+function CommunityGroupPage({setGroupPageIsActive, activeCommunityId}) {
   const {communities} = useContext(GlobalContext);
   const [community, setCommunity] = useState(false);
   const [posts, setPosts] = useState();
@@ -29,15 +29,7 @@ function CommunityGroupPage({setGroupPageIsActive, activeCommunityId, likedPostI
       <PostForm community={community} setPosts={setPosts} />
       {community &&
         posts.map((post) => (
-          <Post
-            post={post}
-            groupName={community.name}
-            key={post._id}
-            communityId={community._id}
-            id={post._id}
-            likedPostIds={likedPostIds}
-            setLikedPostIds={setLikedPostIds}
-          />
+          <Post post={post} groupName={community.name} key={post._id} communityId={community._id} id={post._id} />
         ))}
     </div>
   );
