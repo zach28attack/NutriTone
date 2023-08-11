@@ -1,10 +1,10 @@
 import Class from "./AccountModal.module.css";
 import AccountForm from "./AccountForm";
 
-function AccountModal(props) {
+function AccountModal({closeModal, setName, setUsername}) {
   const bgHandler = (e) => {
     if (e.target.classList.value === `${Class.bgModal}`) {
-      props.closeModal();
+      closeModal();
     }
   };
   return (
@@ -14,7 +14,8 @@ function AccountModal(props) {
           <span>Account</span>
           <span>Settings</span>
         </header>
-        <AccountForm />
+        <AccountForm setName={setName} setUsername={setUsername} />
+        {/* <Settings/> */}
       </div>
     </div>
   );

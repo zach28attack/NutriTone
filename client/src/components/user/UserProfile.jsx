@@ -5,11 +5,14 @@ import {BiDotsVerticalRounded} from "react-icons/bi";
 import AccountModal from "../user/AccountModal";
 import ProfileSummary from "./ProfileSummary";
 import UserPosts from "./UserPosts";
+import Cookies from "js-cookie";
 
 function UserProfile() {
   const [nameIsActive, setNameIsActive] = useState();
   const [usernameIsActive, setUsernameIsActive] = useState();
   const [accountModalIsActive, setAccountModalIsActive] = useState();
+  const [name, setName] = useState(Cookies.get("name"));
+  const [username, setUsername] = useState(Cookies.get("username"));
 
   // when user hovers over name/username display edit button
   const displayEditButtonHandler = (e) => {
@@ -45,7 +48,7 @@ function UserProfile() {
               onMouseOut={hideEditButtonHandler}
               id="name"
             >
-              <h4>Zachary Casares</h4>
+              <h4>{name}</h4>
               {nameIsActive && <PiPencilFill className={Class.editBtn} />}
             </div>
             <div className={Class.divider}></div>
@@ -55,12 +58,14 @@ function UserProfile() {
               onMouseOut={hideEditButtonHandler}
               id="username"
             >
-              <span>@user155493</span>
+              <span>@{username}</span>
               {usernameIsActive && <PiPencilFill className={Class.editBtn} />}
             </div>
           </div>
           <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
-          {accountModalIsActive && <AccountModal closeModal={accountClickHandler} />}
+          {accountModalIsActive && (
+            <AccountModal closeModal={accountClickHandler} setName={setName} setUsername={setUsername} />
+          )}
           <ProfileSummary />
         </article>
       </section>
