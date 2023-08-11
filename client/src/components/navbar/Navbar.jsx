@@ -18,19 +18,19 @@ function Navbar() {
   return (
     <div className={Class.navBanner}>
       <div className={Class.border}>
-        <Link to="/" prefetch>
+        <Link to="/">
           <BsJournalBookmark className={Class.icon} />
         </Link>
-        <Link to="/stats" prefetch>
+        <Link to="/stats">
           <BiLineChartDown className={Class.icon} />
         </Link>
-        <Link to="/community" prefetch>
+        <Link to="/community">
           <FaUserFriends className={Class.icon} />
         </Link>
-        <Link to="/" prefetch>
+        <Link to="/">
           <GiWhistle className={Class.icon} />
         </Link>
-        <Link to="/account" prefetch>
+        <Link to="/account">
           <FaUser className={Class.icon} />
         </Link>
 
