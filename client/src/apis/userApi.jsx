@@ -23,7 +23,38 @@ export async function signup(email, username, password, passwordConfirmation) {
       Cookies.set("userId", data.id, {expires: 1});
       Cookies.set("token", data.token, {expires: 1});
       Cookies.set("username", username, {expires: 1});
+      Cookies.set("email", email, {expires: 1});
 
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function updateAccount(name, username, email, password, passwordConfirm) {
+  try {
+    const res = await fetch("http://localhost:3000/user", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        username: username,
+        prevUsername: Cookies.get("username"),
+        email: email,
+        password: password,
+        passwordConfirm: passwordConfirm,
+      }),
+    });
+    if (res.ok) {
+      Cookies.set("name", name, {expires: 1});
+      Cookies.set("username", username, {expires: 1});
+      Cookies.set("email", email, {expires: 1});
       return true;
     } else {
       return false;
@@ -77,6 +108,8 @@ export async function login(username, password) {
       Cookies.set("userId", data.id, {expires: 1});
       Cookies.set("name", data.name, {expires: 1});
       Cookies.set("username", data.username, {expires: 1});
+      Cookies.set("email", data.email, {expires: 1});
+
       return true;
     } else {
       return false;

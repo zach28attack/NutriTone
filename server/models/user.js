@@ -31,6 +31,23 @@ class User {
       console.error(error);
     }
   }
+  async updateUser() {
+    try {
+      const db = await dbConnection();
+      if (this.email && this.name && this.username) {
+        const result = await db
+          .collection("users")
+          .updateOne(
+            {_id: new mongoDB.ObjectId(this.id)},
+            {$set: {name: this.name, username: this.username, email: this.email}}
+          );
+        console.log(result);
+        if (result.modifiedCount === 1) return true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   async validateUser() {
     try {
       const db = await dbConnection();
@@ -38,6 +55,7 @@ class User {
       if (result !== null) {
         this.id = result._id;
         this.username = result.username;
+        this.email = result.email;
         result.name ? (this.name = result.name) : undefined;
         this.token = await genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});

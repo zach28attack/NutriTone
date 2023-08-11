@@ -14,6 +14,7 @@ const {
   removeLikedPostId,
   saveCommunityId,
   removeCommunityId,
+  updateUser,
 } = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
 const {getCommunities, saveNewPost, deletePost, updatePost, addLike, removeLike} = require("./controllers/communities");
@@ -49,7 +50,9 @@ app.get("/user/likedPostIds", verifyToken, getLikedPostIds);
 
 app.post("/user/community", verifyToken, saveCommunityId); // saves a communities id to users joinedCommunities field
 
-app.patch("/user/community", verifyToken, removeCommunityId);
+app.patch("/user/community", verifyToken, removeCommunityId); // saves a communities id to users joinedCommunities field
+
+app.patch("/user", verifyToken, updateUser); // updates user's credentials
 
 app.post("/diary/item", verifyToken, saveItemToDiary); // new item route
 
