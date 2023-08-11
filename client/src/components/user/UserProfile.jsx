@@ -11,20 +11,24 @@ function UserProfile() {
   const [usernameIsActive, setUsernameIsActive] = useState();
   const [accountModalIsActive, setAccountModalIsActive] = useState();
 
-  const enterHandler = (e) => {
+  // when user hovers over name/username display edit button
+  const displayEditButtonHandler = (e) => {
     if (e.target.closest("#name")) {
       setNameIsActive(true);
     } else if (e.target.closest("#username")) {
       setUsernameIsActive(true);
     }
   };
-  const outHandler = (e) => {
+
+  // when user stops hovering over name/username hide edit button
+  const hideEditButtonHandler = (e) => {
     if (e.target.closest("#name")) {
       setNameIsActive(false);
     } else if (e.target.closest("#username")) {
       setUsernameIsActive(false);
     }
   };
+
   const accountClickHandler = () => {
     setAccountModalIsActive(!accountModalIsActive);
   };
@@ -35,12 +39,22 @@ function UserProfile() {
         <article className={Class.profile}>
           <img src="/default-profile-picture1.jpg" alt="" />
           <div className={Class.nameGroup}>
-            <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="name">
+            <div
+              className={Class.nameContainer}
+              onMouseOver={displayEditButtonHandler}
+              onMouseOut={hideEditButtonHandler}
+              id="name"
+            >
               <h4>Zachary Casares</h4>
               {nameIsActive && <PiPencilFill className={Class.editBtn} />}
             </div>
             <div className={Class.divider}></div>
-            <div className={Class.nameContainer} onMouseOver={enterHandler} onMouseOut={outHandler} id="username">
+            <div
+              className={Class.nameContainer}
+              onMouseOver={displayEditButtonHandler}
+              onMouseOut={hideEditButtonHandler}
+              id="username"
+            >
               <span>@user155493</span>
               {usernameIsActive && <PiPencilFill className={Class.editBtn} />}
             </div>
