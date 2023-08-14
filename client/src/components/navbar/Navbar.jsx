@@ -27,7 +27,7 @@ function Navbar() {
         <Link to="/community">
           <FaUserFriends className={Class.icon} />
         </Link>
-        <Link to="/">
+        <Link to="/coach">
           <GiWhistle className={Class.icon} />
         </Link>
         <Link to="/account">

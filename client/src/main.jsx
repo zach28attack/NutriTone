@@ -8,6 +8,7 @@ import WelcomePage from "./pages/WelcomePage.jsx";
 import StatsPage from "./pages/StatsPage.jsx";
 import CommunityPage from "./pages/CommunityPage.jsx";
 import AccountPage from "./pages/AccountPage.jsx";
+import CoachPage from "./pages/CoachPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/community",
         element: <CommunityPage />,
+      },
+      {
+        path: "/coach",
+        element: <CoachPage />,
       },
     ],
   },
