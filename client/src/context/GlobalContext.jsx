@@ -2,6 +2,7 @@ import {createContext, useState, useEffect} from "react";
 import Cookies from "js-cookie";
 import {getCommunities} from "../apis/communityApi";
 import {saveCommunityId, removeCommunityId, getLikedPostIds} from "../apis/userApi";
+import {getWeightLogs} from "../apis/weightApi";
 
 export const GlobalContext = createContext();
 
@@ -12,6 +13,14 @@ export function GlobalContextProvider(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [likedPostIds, setLikedPostIds] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(300);
+  const [sortedLogsByDay, setSortedLogsByDay] = useState([]);
+  const [sortedLogsByMonth, setSortedLogsByMonth] = useState([]);
+  const [sortedLogsAll, setSortedLogsAll] = useState([]);
+  const [firstLog, setFirstLog] = useState(0);
+  const [lastLog, setLastLog] = useState(0);
 
   const sortPosts = (joinedCommunities) => {
     // sort Posts from newest from the joinedCommunities instance var.
@@ -145,6 +154,33 @@ export function GlobalContextProvider(props) {
     setLikedPostIds(await getLikedPostIds());
   };
 
+  // get all weight logs and sort them by time frame
+  const getLogsAndSetLogs = async () => {
+    const logs = await getWeightLogs();
+    const sortedLogs = logs.sort((a, b) => new Date(a.date) - new Date(b.date));
+    setLogs(sortedLogs);
+    setMin(logs.reduce((prev, current) => (prev.weight < current.weight ? prev : current)));
+    setMax(logs.reduce((prev, current) => (prev.weight > current.weight ? prev : current)));
+    filterLogsThirtyDays(logs);
+    filterLogsTwelveMonths(logs);
+    sortAllLogs(logs);
+  };
+  const filterLogsThirtyDays = (logs) => {
+    const thirtyDayFilter = new Date();
+    thirtyDayFilter.setDate(thirtyDayFilter.getDate() - 30);
+    const sortedLogs = logs.filter((log) => new Date(log.date) >= thirtyDayFilter);
+    setSortedLogsByDay(sortedLogs.map((log) => ({x: log.date, y: log.weight})));
+  };
+  const filterLogsTwelveMonths = (logs) => {
+    const twelveMonthFilter = new Date();
+    twelveMonthFilter.setDate(twelveMonthFilter.getDate() - 30 * 12);
+    const sortedLogs = logs.filter((log) => new Date(log.date) >= twelveMonthFilter);
+    setSortedLogsByMonth(sortedLogs.map((log) => ({x: log.date, y: log.weight})));
+  };
+  const sortAllLogs = (logs) => {
+    setSortedLogsAll(logs.map((log) => ({x: log.date, y: log.weight})));
+  };
+
   useEffect(() => {
     const dayDate = Cookies.get("dayDate");
     if (dayDate) {
@@ -156,7 +192,17 @@ export function GlobalContextProvider(props) {
 
     // get list of users liked posts
     getAndSetLikedPostIds();
+
+    // gets weight logs and sorts
+    getLogsAndSetLogs();
   }, []);
+
+  useEffect(() => {
+    if (logs.length > 0) {
+      setFirstLog(logs[0].weight);
+      setLastLog(logs[logs.length - 1].weight);
+    }
+  }, [logs]);
   return (
     <GlobalContext.Provider
       value={{
@@ -174,6 +220,18 @@ export function GlobalContextProvider(props) {
         posts,
         likedPostIds,
         setLikedPostIds,
+        logs,
+        setLogs,
+        min,
+        max,
+        sortedLogsByDay,
+        sortedLogsByMonth,
+        sortedLogsAll,
+        filterLogsThirtyDays,
+        filterLogsTwelveMonths,
+        sortAllLogs,
+        firstLog,
+        lastLog,
       }}
     >
       {props.children}

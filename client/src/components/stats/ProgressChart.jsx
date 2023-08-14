@@ -10,35 +10,25 @@ import {
   Legend,
 } from "chart.js";
 import {Line} from "react-chartjs-2";
-import {useState, useEffect} from "react";
-import {getWeightLogs, deleteWeightLog} from "../../apis/weightApi";
+import {useState, useContext} from "react";
+import {deleteWeightLog} from "../../apis/weightApi";
 import ChartForm from "./ChartForm";
+import {GlobalContext} from "../../context/GlobalContext";
 
 function ProgressChart() {
   const [sortByFrame, setSortByFrame] = useState("30 days");
-  const [logs, setLogs] = useState([]);
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(300);
-  const [sortedLogsByDay, setSortedLogsByDay] = useState([]);
-  const [sortedLogsByMonth, setSortedLogsByMonth] = useState([]);
-  const [sortedLogsAll, setSortedLogsAll] = useState([]);
 
-  const filterLogsThirtyDays = (logs) => {
-    const thirtyDayFilter = new Date();
-    thirtyDayFilter.setDate(thirtyDayFilter.getDate() - 30);
-    const sortedLogs = logs.filter((log) => new Date(log.date) >= thirtyDayFilter);
-    setSortedLogsByDay(sortedLogs.map((log) => ({x: log.date, y: log.weight})));
-  };
-  const filterLogsTwelveMonths = (logs) => {
-    const twelveMonthFilter = new Date();
-    twelveMonthFilter.setDate(twelveMonthFilter.getDate() - 30 * 12);
-    const sortedLogs = logs.filter((log) => new Date(log.date) >= twelveMonthFilter);
-
-    setSortedLogsByMonth(sortedLogs.map((log) => ({x: log.date, y: log.weight})));
-  };
-  const sortAllLogs = (logs) => {
-    setSortedLogsAll(logs.map((log) => ({x: log.date, y: log.weight})));
-  };
+  const {
+    sortedLogsByDay,
+    sortedLogsByMonth,
+    sortedLogsAll,
+    setLogs,
+    min,
+    max,
+    filterLogsThirtyDays,
+    filterLogsTwelveMonths,
+    sortAllLogs,
+  } = useContext(GlobalContext);
 
   //
   // Line chart Config
@@ -104,17 +94,6 @@ function ProgressChart() {
   //
   //
 
-  const getLogsAndSetData = async () => {
-    const logs = await getWeightLogs();
-    const sortedLogs = logs.sort((a, b) => new Date(a.date) - new Date(b.date));
-    setLogs(sortedLogs);
-    setMin(logs.reduce((prev, current) => (prev.weight < current.weight ? prev : current)));
-    setMax(logs.reduce((prev, current) => (prev.weight > current.weight ? prev : current)));
-    filterLogsThirtyDays(logs);
-    filterLogsTwelveMonths(logs);
-    sortAllLogs(logs);
-  };
-
   const addWeightLogHandler = (log) => {
     setLogs((prevLogs) => {
       const newLogs = [...prevLogs, log];
@@ -130,10 +109,6 @@ function ProgressChart() {
     e.preventDefault();
     setSortByFrame(e.target.value);
   };
-
-  useEffect(() => {
-    getLogsAndSetData();
-  }, []);
 
   return (
     <div className={Class.chartContainer}>
