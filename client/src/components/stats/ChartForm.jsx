@@ -5,7 +5,7 @@ import {useState} from "react";
 function ChartForm(props) {
   const [date, setDate] = useState(new Date().toLocaleDateString());
   const [datePlaceHolder, setDatePlaceHolder] = useState(new Date().toLocaleDateString());
-  const [weight, setWeight] = useState();
+  const [weight, setWeight] = useState(0);
   const submitHandler = (e) => {
     e.preventDefault();
     saveNewWeightLog({date: date, weight: parseInt(weight)});
