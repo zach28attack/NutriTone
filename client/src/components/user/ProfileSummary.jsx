@@ -4,14 +4,6 @@ import {GlobalContext} from "../../context/GlobalContext";
 
 function ProfileSummary() {
   const {logs, firstLog, lastLog} = useContext(GlobalContext);
-  // const [startWeight, setStartWeight] = useState(0);
-  // const [currentWeight, setCurrentWeight] = useState(0);
-
-  // useEffect(() => {
-  //   setStartWeight(firstLog);
-  //   setCurrentWeight(lastLog);
-  // }, [logs]);
-
   return (
     <summary className={Class.container}>
       <span className={Class.startWeightTitle}>Starting W.</span>
