@@ -1,5 +1,7 @@
 import Class from "./AccountModal.module.css";
 import AccountForm from "./AccountForm";
+import {useState} from "react";
+import SettingsForm from "./SettingsForm";
 
 function AccountModal({closeModal, setName, setUsername}) {
   const bgHandler = (e) => {
@@ -7,15 +9,22 @@ function AccountModal({closeModal, setName, setUsername}) {
       closeModal();
     }
   };
+  const [accountFormActive, setAccountFormActive] = useState(true);
+  const FormClickHandler = () => {
+    setAccountFormActive(!accountFormActive);
+  };
   return (
     <div className={Class.bgModal} onClick={bgHandler}>
       <div className={Class.modal}>
         <header>
-          <span>Account</span>
-          <span>Settings</span>
+          <span className={accountFormActive && Class.active} onClick={FormClickHandler}>
+            Account
+          </span>
+          <span className={!accountFormActive && Class.active} onClick={FormClickHandler}>
+            Settings
+          </span>
         </header>
-        <AccountForm setName={setName} setUsername={setUsername} />
-        {/* <Settings/> */}
+        {accountFormActive ? <AccountForm setName={setName} setUsername={setUsername} /> : <SettingsForm />}
       </div>
     </div>
   );
