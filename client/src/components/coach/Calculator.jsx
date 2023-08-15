@@ -6,6 +6,24 @@ function Calculator() {
   const [weightMetric, setWeightMetric] = useState("Pounds");
   const [sex, setSex] = useState("Male");
 
+  const [ageInput, setAgeInput] = useState(0);
+  const [primaryHeightInput, setPrimaryHeightInput] = useState(0);
+  const [secondaryHeightInput, setSecondaryHeightInput] = useState(0);
+  const [weightInput, setWeightInput] = useState(0);
+
+  const ageInputHandler = (input) => {
+    setAgeInput(input.target.value);
+  };
+  const primaryHeightInputInputHandler = (input) => {
+    setPrimaryHeightInput(input.target.value);
+  };
+  const secondaryHeightInputInputHandler = (input) => {
+    setSecondaryHeightInput(input.target.value);
+  };
+  const weightInputHandler = (input) => {
+    setWeightInput(input.target.value);
+  };
+
   const feetClickHandler = (e) => {
     e.preventDefault();
     setHeightMetric("Feet");
@@ -30,12 +48,17 @@ function Calculator() {
     e.preventDefault();
     setSex("Female");
   };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(ageInput, primaryHeightInput, secondaryHeightInput, weightInput);
+  };
+
   return (
     <div className={Class.container}>
-      <form>
+      <form onSubmit={submitHandler}>
         <div className={Class.age}>
           <label>Age</label>
-          <input type="text" placeholder="years" />
+          <input type="text" placeholder="years" onChange={ageInputHandler} />
         </div>
 
         <div className={Class.sex}>
@@ -52,6 +75,7 @@ function Calculator() {
 
         <div className={Class.height}>
           <label>Height</label>
+
           <section className={Class.buttons}>
             <button onClick={feetClickHandler} className={heightMetric === "Feet" && Class.buttonActive}>
               Imperial
@@ -60,9 +84,18 @@ function Calculator() {
               Metric
             </button>
           </section>
+
           <div className={Class.heightInputSection}>
-            <input type="text" placeholder={`${heightMetric === "Feet" ? "Feet" : "Meters"}`} />
-            <input type="text" placeholder={`${heightMetric === "Feet" ? "Inches" : "Centimeters"}`} />
+            <input
+              type="text"
+              placeholder={`${heightMetric === "Feet" ? "Feet" : "Meters"}`}
+              onChange={primaryHeightInputInputHandler}
+            />
+            <input
+              type="text"
+              placeholder={`${heightMetric === "Feet" ? "Inches" : "Centimeters"}`}
+              onChange={secondaryHeightInputInputHandler}
+            />
           </div>
         </div>
 
@@ -76,7 +109,11 @@ function Calculator() {
               Metric
             </button>
           </section>
-          <input type="text" placeholder={`${weightMetric === "Pounds" ? "Pounds" : "Kilograms"}`} />
+          <input
+            type="text"
+            placeholder={`${weightMetric === "Pounds" ? "Pounds" : "Kilograms"}`}
+            onChange={weightInputHandler}
+          />
         </div>
         <button className={Class.submit}>Calculate</button>
       </form>
