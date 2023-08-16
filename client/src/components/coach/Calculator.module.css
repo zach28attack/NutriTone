@@ -13,7 +13,7 @@
 }
 .container form label {
   margin-top: 0.5rem;
-  padding: 0.2rem 1rem;
+  padding: 1rem 1rem;
 }
 .container form section button {
   font-size: 1.2rem;
@@ -69,4 +69,12 @@
 .buttons {
   display: flex;
   gap: 0.2rem;
+}
+.intensity sub {
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  color: rgba(118, 0, 0, 0.499);
+}
+.intensity sub span {
+  color: rgba(255, 0, 0, 0.651);
 }

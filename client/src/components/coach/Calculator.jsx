@@ -10,6 +10,7 @@ function Calculator() {
   const [primaryHeightInput, setPrimaryHeightInput] = useState(0);
   const [secondaryHeightInput, setSecondaryHeightInput] = useState(0);
   const [weightInput, setWeightInput] = useState(0);
+  const [intensity, setIntensity] = useState();
 
   const ageInputHandler = (input) => {
     setAgeInput(input.target.value);
@@ -24,33 +25,31 @@ function Calculator() {
     setWeightInput(input.target.value);
   };
 
-  const feetClickHandler = (e) => {
+  const heightClickHandler = (e) => {
     e.preventDefault();
-    setHeightMetric("Feet");
+    e.target.name === "Feet" ? setHeightMetric("Feet") : setHeightMetric("Meters");
   };
-  const metersClickHandler = (e) => {
+  const weightClickHandler = (e) => {
     e.preventDefault();
-    setHeightMetric("Meters");
+    e.target.name === "Pounds" ? setWeightMetric("Pounds") : setWeightMetric("Kilo");
   };
-  const poundsClickHandler = (e) => {
+  const sexHandler = (e) => {
     e.preventDefault();
-    setWeightMetric("Pounds");
+    e.target.name === "Male" ? setSex("Male") : setSex("Female");
   };
-  const kiloClickHandler = (e) => {
+
+  const intensityHandler = (e) => {
     e.preventDefault();
-    setWeightMetric("Kilo");
+    e.target.name === "Normal"
+      ? setIntensity("Normal")
+      : e.target.name === "Accelerated"
+      ? setIntensity("Accelerated")
+      : setIntensity("Extreme");
   };
-  const maleSexHandler = (e) => {
-    e.preventDefault();
-    setSex("Male");
-  };
-  const femaleSexHandler = (e) => {
-    e.preventDefault();
-    setSex("Female");
-  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(ageInput, primaryHeightInput, secondaryHeightInput, weightInput);
+    console.log(ageInput, primaryHeightInput, secondaryHeightInput, weightInput, intensity);
   };
 
   return (
@@ -64,10 +63,10 @@ function Calculator() {
         <div className={Class.sex}>
           <label>Sex</label>
           <section className={Class.buttons}>
-            <button onClick={maleSexHandler} className={sex === "Male" && Class.buttonActive}>
+            <button onClick={sexHandler} className={sex === "Male" && Class.buttonActive} name="Male">
               Male
             </button>
-            <button onClick={femaleSexHandler} className={sex === "Female" && Class.buttonActive}>
+            <button onClick={sexHandler} className={sex === "Female" && Class.buttonActive} name="Female">
               Female
             </button>
           </section>
@@ -77,10 +76,14 @@ function Calculator() {
           <label>Height</label>
 
           <section className={Class.buttons}>
-            <button onClick={feetClickHandler} className={heightMetric === "Feet" && Class.buttonActive}>
+            <button onClick={heightClickHandler} className={heightMetric === "Feet" && Class.buttonActive} name="Feet">
               Imperial
             </button>
-            <button onClick={metersClickHandler} className={heightMetric === "Meters" && Class.buttonActive}>
+            <button
+              onClick={heightClickHandler}
+              className={heightMetric === "Meters" && Class.buttonActive}
+              name="Meters"
+            >
               Metric
             </button>
           </section>
@@ -102,10 +105,14 @@ function Calculator() {
         <div className={Class.weight}>
           <label>Weight</label>
           <section className={Class.buttons}>
-            <button onClick={poundsClickHandler} className={weightMetric === "Pounds" && Class.buttonActive}>
+            <button
+              onClick={weightClickHandler}
+              className={weightMetric === "Pounds" && Class.buttonActive}
+              name="Pounds"
+            >
               Imperial
             </button>
-            <button onClick={kiloClickHandler} className={weightMetric === "Kilo" && Class.buttonActive}>
+            <button onClick={weightClickHandler} className={weightMetric === "Kilo" && Class.buttonActive} name="Kilo">
               Metric
             </button>
           </section>
@@ -114,6 +121,37 @@ function Calculator() {
             placeholder={`${weightMetric === "Pounds" ? "Pounds" : "Kilograms"}`}
             onChange={weightInputHandler}
           />
+        </div>
+
+        <div className={Class.intensity}>
+          <label>Intensity</label>
+
+          <section className={Class.buttons}>
+            <button onClick={intensityHandler} className={intensity === "Normal" && Class.buttonActive} name="Normal">
+              Normal
+            </button>
+            <button
+              onClick={intensityHandler}
+              className={intensity === "Accelerated" && Class.buttonActive}
+              name="Accelerated"
+            >
+              Accelerated
+            </button>
+            <button onClick={intensityHandler} className={intensity === "Extreme" && Class.buttonActive} name="Extreme">
+              Extreme
+            </button>
+          </section>
+          {!intensity ? (
+            <sub>Choose your desired intensity level</sub>
+          ) : intensity === "Normal" ? (
+            <sub>Expect to lose between 1/2 - 1 pound a week</sub>
+          ) : intensity === "Accelerated" ? (
+            <sub>Expect to lose between 1 - 2 pounds a week</sub>
+          ) : (
+            <sub>
+              <span>An extreme diet.</span> Expect to lose between 2-4 pounds a week
+            </sub>
+          )}
         </div>
         <button className={Class.submit}>Calculate</button>
       </form>
