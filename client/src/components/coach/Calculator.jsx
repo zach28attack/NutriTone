@@ -11,10 +11,10 @@ function Calculator() {
   const [primaryHeightInput, setPrimaryHeightInput] = useState(0);
   const [secondaryHeightInput, setSecondaryHeightInput] = useState(0);
   const [weightInput, setWeightInput] = useState(0);
-  const [intensity, setIntensity] = useState();
+  const [intensity, setIntensity] = useState("");
   const [results, setResults] = useState(0);
   const [resultsActive, setResultsActive] = useState(false);
-  const [activityLevel, setActivityLevel] = useState();
+  const [activityLevel, setActivityLevel] = useState("");
 
   const ageInputHandler = (input) => {
     setAgeInput(input.target.value);
@@ -31,9 +31,10 @@ function Calculator() {
   const formulaHandler = (input) => {
     setWeightInput(input.target.value);
   };
-  const activityHandler = (input) => {
-    setActivityLevel(input.target.name);
-    console.log(input.target.name);
+  const activityHandler = (e) => {
+    e.preventDefault();
+    setActivityLevel(e.target.name);
+    console.log(e.target.name);
   };
 
   const heightClickHandler = (e) => {
@@ -59,10 +60,42 @@ function Calculator() {
   };
 
   const HBFormula = () => {
-    // MEN
-    // BMR = (13.397 × weight in kg) + (4.799 × height in cm) – (5.677 × age in years) + 88.362
-    // WOMEN
-    // BMR = (9.247 × weight in kg) + (3.098 × height in cm) – (4.330 × age in years) + 447.593
+    let heightInCM = 0;
+    let weightInKG = 0;
+    const activityMultiplier =
+      activityLevel === "Sedentary"
+        ? 1.2
+        : activityLevel === "Lightly"
+        ? 1.375
+        : activityLevel === "Moderately"
+        ? 1.55
+        : 1.725;
+
+    // This calculates the calorie defecit. 10-20% deficit is recommended.
+    const intensityMultiplier = intensity === "Normal" ? 0.9 : intensity === "Accelerated" ? 0.85 : 0.8;
+
+    if (weightMetric === "Pounds") weightInKG = weightInput * 0.45359237; // converts pounds to kg
+    if (heightMetric === "Feet") {
+      heightInCM = (parseInt(primaryHeightInput) * 12 + parseInt(secondaryHeightInput)) * 2.54; // converts feet to inches then to cm
+    } else {
+      heightInCM = parseInt(primaryHeightInput) * 100 + parseInt(secondaryHeightInput); // converts meters to a sum of cm
+    }
+
+    if (sex === "Male") {
+      // BMR = (13.397 × weight in kg) + (4.799 × height in cm) – (5.677 × age in years) + 88.362
+      const calorieBudget =
+        (13.397 * weightInKG + 4.799 * heightInCM - 5.677 * ageInput + 88.362) *
+        activityMultiplier *
+        intensityMultiplier;
+      setResults(calorieBudget.toString().split(".")[0]);
+    } else {
+      // BMR = (9.247 × weight in kg) + (3.098 × height in cm) – (4.330 × age in years) + 447.593
+      const calorieBudget =
+        (9.247 * weightInKG + 3.098 * heightInCM - 4.33 * ageInput + 447.593) *
+        activityMultiplier *
+        intensityMultiplier;
+      setResults(calorieBudget.toString().split(".")[0]);
+    }
   };
 
   const submitHandler = (e) => {
@@ -82,10 +115,10 @@ function Calculator() {
         <div className={Class.sex}>
           <label>Sex</label>
           <section className={Class.buttons}>
-            <button onClick={sexHandler} className={sex === "Male" && Class.buttonActive} name="Male">
+            <button onClick={sexHandler} className={sex === "Male" ? Class.buttonActive : ""} name="Male">
               Male
             </button>
-            <button onClick={sexHandler} className={sex === "Female" && Class.buttonActive} name="Female">
+            <button onClick={sexHandler} className={sex === "Female" ? Class.buttonActive : ""} name="Female">
               Female
             </button>
           </section>
@@ -94,12 +127,16 @@ function Calculator() {
         <div className={Class.height}>
           <label>Height</label>
           <section className={Class.buttons}>
-            <button onClick={heightClickHandler} className={heightMetric === "Feet" && Class.buttonActive} name="Feet">
+            <button
+              onClick={heightClickHandler}
+              className={heightMetric === "Feet" ? Class.buttonActive : ""}
+              name="Feet"
+            >
               Imperial
             </button>
             <button
               onClick={heightClickHandler}
-              className={heightMetric === "Meters" && Class.buttonActive}
+              className={heightMetric === "Meters" ? Class.buttonActive : ""}
               name="Meters"
             >
               Metric
@@ -125,12 +162,16 @@ function Calculator() {
           <section className={Class.buttons}>
             <button
               onClick={weightClickHandler}
-              className={weightMetric === "Pounds" && Class.buttonActive}
+              className={weightMetric === "Pounds" ? Class.buttonActive : ""}
               name="Pounds"
             >
               Imperial
             </button>
-            <button onClick={weightClickHandler} className={weightMetric === "Kilo" && Class.buttonActive} name="Kilo">
+            <button
+              onClick={weightClickHandler}
+              className={weightMetric === "Kilo" ? Class.buttonActive : ""}
+              name="Kilo"
+            >
               Metric
             </button>
           </section>
@@ -145,29 +186,37 @@ function Calculator() {
           <label>Intensity</label>
 
           <section className={Class.buttons}>
-            <button onClick={intensityHandler} className={intensity === "Normal" && Class.buttonActive} name="Normal">
+            <button
+              onClick={intensityHandler}
+              className={intensity === "Normal" ? Class.buttonActive : ""}
+              name="Normal"
+            >
               Normal
             </button>
             <button
               onClick={intensityHandler}
-              className={intensity === "Accelerated" && Class.buttonActive}
+              className={intensity === "Accelerated" ? Class.buttonActive : ""}
               name="Accelerated"
             >
               Accelerated
             </button>
-            <button onClick={intensityHandler} className={intensity === "Extreme" && Class.buttonActive} name="Extreme">
+            <button
+              onClick={intensityHandler}
+              className={intensity === "Extreme" ? Class.buttonActive : ""}
+              name="Extreme"
+            >
               Extreme
             </button>
           </section>
           {!intensity ? (
             <sub>Choose your desired intensity level</sub>
           ) : intensity === "Normal" ? (
-            <sub>Expect to lose between 1/2 - 1 pound a week</sub>
+            <sub>Expect to lose around 1 pound a week</sub>
           ) : intensity === "Accelerated" ? (
-            <sub>Expect to lose between 1 - 2 pounds a week</sub>
+            <sub>Expect to lose around 2 pounds a week</sub>
           ) : (
             <sub>
-              <span>An extreme diet.</span> Expect to lose between 2-4 pounds a week
+              <span>An extreme diet.</span> Expect to lose around 3 pounds a week
             </sub>
           )}
         </div>
@@ -177,26 +226,30 @@ function Calculator() {
           <section className={Class.buttons}>
             <button
               onClick={activityHandler}
-              className={activityLevel === "Sedentary" && Class.buttonActive}
+              className={activityLevel === "Sedentary" ? Class.buttonActive : ""}
               name="Sedentary"
             >
               Sedentary
             </button>
             <button
               onClick={activityHandler}
-              className={activityLevel === "Lightly" && Class.buttonActive}
+              className={activityLevel === "Lightly" ? Class.buttonActive : ""}
               name="Lightly"
             >
               Lightly
             </button>
             <button
               onClick={activityHandler}
-              className={activityLevel === "Moderately" && Class.buttonActive}
+              className={activityLevel === "Moderately" ? Class.buttonActive : ""}
               name="Moderately"
             >
               Moderately
             </button>
-            <button onClick={activityHandler} className={activityLevel === "Very" && Class.buttonActive} name="Very">
+            <button
+              onClick={activityHandler}
+              className={activityLevel === "Very" ? Class.buttonActive : ""}
+              name="Very"
+            >
               Very
             </button>
           </section>
@@ -215,7 +268,7 @@ function Calculator() {
         </div>
         <button className={Class.submit}>Calculate</button>
       </form>
-      {resultsActive && <CalculatorResults />}
+      {resultsActive && <CalculatorResults results={results} />}
     </div>
   );
 }
