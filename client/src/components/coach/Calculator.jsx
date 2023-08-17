@@ -71,7 +71,7 @@ function Calculator() {
         : 1.725;
 
     // This calculates the calorie defecit. 10-20% deficit is recommended.
-    const intensityMultiplier = intensity === "Normal" ? 0.9 : intensity === "Accelerated" ? 0.85 : 0.8;
+    const intensityMultiplier = intensity === "Normal" ? 0.9 : intensity === "Accelerated" ? 0.8 : 0.7;
 
     if (weightMetric === "Pounds") weightInKG = weightInput * 0.45359237; // converts pounds to kg
     if (heightMetric === "Feet") {
