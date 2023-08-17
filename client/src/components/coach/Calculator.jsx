@@ -14,6 +14,7 @@ function Calculator() {
   const [intensity, setIntensity] = useState();
   const [results, setResults] = useState(0);
   const [resultsActive, setResultsActive] = useState(false);
+  const [activityLevel, setActivityLevel] = useState();
 
   const ageInputHandler = (input) => {
     setAgeInput(input.target.value);
@@ -31,7 +32,8 @@ function Calculator() {
     setWeightInput(input.target.value);
   };
   const activityHandler = (input) => {
-    setWeightInput(input.target.value);
+    setActivityLevel(input.target.name);
+    console.log(input.target.name);
   };
 
   const heightClickHandler = (e) => {
@@ -173,34 +175,42 @@ function Calculator() {
         <div className={Class.activityLevel}>
           <label>Activity Level</label>
           <section className={Class.buttons}>
-            <button onClick={intensityHandler} className={intensity === "Normal" && Class.buttonActive} name="Normal">
+            <button
+              onClick={activityHandler}
+              className={activityLevel === "Sedentary" && Class.buttonActive}
+              name="Sedentary"
+            >
               Sedentary
             </button>
             <button
-              onClick={intensityHandler}
-              className={intensity === "Accelerated" && Class.buttonActive}
-              name="Accelerated"
+              onClick={activityHandler}
+              className={activityLevel === "Lightly" && Class.buttonActive}
+              name="Lightly"
             >
-              lightly active
+              Lightly
             </button>
-            <button onClick={intensityHandler} className={intensity === "Extreme" && Class.buttonActive} name="Extreme">
-              Moderately active
+            <button
+              onClick={activityHandler}
+              className={activityLevel === "Moderately" && Class.buttonActive}
+              name="Moderately"
+            >
+              Moderately
             </button>
-            <button onClick={intensityHandler} className={intensity === "Extreme" && Class.buttonActive} name="Extreme">
-              Very active
+            <button onClick={activityHandler} className={activityLevel === "Very" && Class.buttonActive} name="Very">
+              Very
             </button>
           </section>
 
-          {!intensity ? (
+          {!activityLevel ? (
             <sub>Select your activity level</sub>
-          ) : intensity === "Sedentary" ? (
+          ) : activityLevel === "Sedentary" ? (
             <sub>Little or no exercise</sub>
-          ) : intensity === "Lightly" ? (
-            <sub>Light exercise/sports 1-3 days/week</sub>
-          ) : intensity === "Moderately" ? (
-            <sub>Moderate exercise/sports 3-5 days/week</sub>
+          ) : activityLevel === "Lightly" ? (
+            <sub>Light exercise 1-3 days/week</sub>
+          ) : activityLevel === "Moderately" ? (
+            <sub>Moderate exercise 3-5 days/week</sub>
           ) : (
-            <sub>Hard exercise/sports 6-7 days a week</sub>
+            <sub>Hard exercise 6-7 days a week</sub>
           )}
         </div>
         <button className={Class.submit}>Calculate</button>
