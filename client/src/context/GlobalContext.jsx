@@ -1,7 +1,7 @@
 import {createContext, useState, useEffect} from "react";
 import Cookies from "js-cookie";
 import {getCommunities} from "../apis/communityApi";
-import {saveCommunityId, removeCommunityId, getLikedPostIds} from "../apis/userApi";
+import {saveCommunityId, removeCommunityId, getLikedPostIds, getBudget} from "../apis/userApi";
 import {getWeightLogs} from "../apis/weightApi";
 
 export const GlobalContext = createContext();
@@ -21,6 +21,7 @@ export function GlobalContextProvider(props) {
   const [sortedLogsAll, setSortedLogsAll] = useState([]);
   const [firstLog, setFirstLog] = useState(0);
   const [lastLog, setLastLog] = useState(0);
+  const [budget, setBudget] = useState(2000);
 
   const sortPosts = (joinedCommunities) => {
     // sort Posts from newest from the joinedCommunities instance var.
@@ -181,6 +182,11 @@ export function GlobalContextProvider(props) {
     setSortedLogsAll(logs.map((log) => ({x: log.date, y: log.weight})));
   };
 
+  const getAndSetBudget = async () => {
+    const data = await getBudget();
+    setBudget(data);
+  };
+
   useEffect(() => {
     const dayDate = Cookies.get("dayDate");
     if (dayDate) {
@@ -195,8 +201,12 @@ export function GlobalContextProvider(props) {
 
     // gets weight logs and sorts
     getLogsAndSetLogs();
+
+    // gets budget from db and sets it for diet summary
+    getAndSetBudget();
   }, []);
 
+  // for user profile, beginning weight and current weight
   useEffect(() => {
     if (logs.length > 0) {
       setFirstLog(logs[0].weight);
@@ -232,6 +242,8 @@ export function GlobalContextProvider(props) {
         sortAllLogs,
         firstLog,
         lastLog,
+        budget,
+        setBudget,
       }}
     >
       {props.children}

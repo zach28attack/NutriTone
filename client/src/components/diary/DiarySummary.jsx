@@ -5,7 +5,6 @@ import {GlobalContext} from "../../context/GlobalContext";
 function DiarySummary(props) {
   const [calories, setCalories] = useState(0);
   const [caloriesBurned, setCaloriesBurned] = useState(0);
-  const [budget, setBudget] = useState(1850);
   const [under, setUnder] = useState(0);
 
   useEffect(() => {
@@ -13,7 +12,8 @@ function DiarySummary(props) {
     setUnder(budget - (props.calories - caloriesBurned));
   }, [props.calories]);
 
-  const {date} = useContext(GlobalContext);
+  const {date, budget} = useContext(GlobalContext);
+  console.log(budget);
 
   return (
     <div className={Class.container}>
@@ -29,16 +29,16 @@ function DiarySummary(props) {
           <li className={Class.headerItem}>Under</li>
         </ul>
         <ul className={Class.listValues}>
-          <li className={Class.valueItem}>{budget}</li> {/* Budget */}
+          <li className={Class.valueItem}>{budget}</li>
           <li className={Class.valueItem}>+</li>
-          <li className={Class.valueItem}>{calories}</li> {/* total calories logged */}
+          <li className={Class.valueItem}>{calories}</li>
           <li className={Class.valueItem}>+</li>
-          <li className={Class.valueItem}>{caloriesBurned}</li> {/* calories burned */}
+          <li className={Class.valueItem}>{caloriesBurned}</li>
           <li className={Class.valueItem}>+</li>
-          <li className={Class.valueItem}>{calories - caloriesBurned}</li> {/* total cals consumed - burned */}
+          <li className={Class.valueItem}>{calories - caloriesBurned}</li>
           <li className={Class.valueItem}>+</li>
           <li className={Class.valueItem}>
-            <div className={`${under >= 0 ? Class.calsUnder : Class.calsOver}`}>{under}</div> {/* total sum */}
+            <div className={`${under >= 0 ? Class.calsUnder : Class.calsOver}`}>{under}</div>
           </li>
         </ul>
         <div className={Class.dateContainer}>
