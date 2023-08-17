@@ -99,8 +99,8 @@ function Calculator() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setResultsActive(true);
     HBFormula();
+    setResultsActive(true);
   };
 
   return (
