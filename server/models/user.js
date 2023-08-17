@@ -2,7 +2,7 @@ const {dbConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
-  constructor(email, username, password, token, id, log, likedPostId, communityId) {
+  constructor(email, username, password, token, id, log, likedPostId, communityId, budget) {
     this.email = email;
     this.username = username;
     this.password = password;
@@ -11,6 +11,7 @@ class User {
     this.log = log;
     this.likedPostId = likedPostId;
     this.communityId = communityId;
+    this.budget = budget;
   }
 
   async saveNew() {
@@ -209,6 +210,30 @@ class User {
       if (result.modifiedCount === 1) {
         return true;
       }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async getBudget() {
+    try {
+      const db = await dbConnection();
+      const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
+      if (result) {
+        return result.budget;
+      } else return false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async updateBudget() {
+    try {
+      const db = await dbConnection();
+      const result = await db
+        .collection("users")
+        .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$set: {budget: parseInt(this.budget)}});
+      if (result.modifiedCount === 1) {
+        return true;
+      } else return false;
     } catch (error) {
       console.error(error);
     }
