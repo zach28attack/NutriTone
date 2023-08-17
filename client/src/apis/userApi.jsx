@@ -182,3 +182,40 @@ export async function removeCommunityId(id) {
     console.error("saveCommunityId() error:", error);
   }
 }
+
+export async function getBudget() {
+  try {
+    const res = await fetch("http://localhost:3000/user/budget", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.budget;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function updateBudget(budget) {
+  try {
+    const res = await fetch("http://localhost:3000/user/budget", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        budget: budget,
+      }),
+    });
+    if (res.ok) {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
