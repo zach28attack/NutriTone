@@ -34,7 +34,6 @@ function Calculator() {
   const activityHandler = (e) => {
     e.preventDefault();
     setActivityLevel(e.target.name);
-    console.log(e.target.name);
   };
 
   const heightClickHandler = (e) => {
