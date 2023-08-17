@@ -1,11 +1,11 @@
 import Class from "./CalculatorResults.module.css";
 
-function CalculatorResults() {
+function CalculatorResults({results}) {
   return (
     <div className={Class.container}>
       <header>
         <h4>Your custom budget</h4>
-        <h1>1800 cals</h1>
+        <h1>{results} cals</h1>
       </header>
       <section>
         <button>Use Budget</button>
