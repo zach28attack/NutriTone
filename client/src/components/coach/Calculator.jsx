@@ -1,5 +1,6 @@
 import Class from "./Calculator.module.css";
 import {useState} from "react";
+import CalculatorResults from "./CalculatorResults";
 
 function Calculator() {
   const [heightMetric, setHeightMetric] = useState("Feet");
@@ -11,6 +12,8 @@ function Calculator() {
   const [secondaryHeightInput, setSecondaryHeightInput] = useState(0);
   const [weightInput, setWeightInput] = useState(0);
   const [intensity, setIntensity] = useState();
+  const [results, setResults] = useState(0);
+  const [resultsActive, setResultsActive] = useState(false);
 
   const ageInputHandler = (input) => {
     setAgeInput(input.target.value);
@@ -22,6 +25,12 @@ function Calculator() {
     setSecondaryHeightInput(input.target.value);
   };
   const weightInputHandler = (input) => {
+    setWeightInput(input.target.value);
+  };
+  const formulaHandler = (input) => {
+    setWeightInput(input.target.value);
+  };
+  const activityHandler = (input) => {
     setWeightInput(input.target.value);
   };
 
@@ -47,9 +56,17 @@ function Calculator() {
       : setIntensity("Extreme");
   };
 
+  const HBFormula = () => {
+    // MEN
+    // BMR = (13.397 × weight in kg) + (4.799 × height in cm) – (5.677 × age in years) + 88.362
+    // WOMEN
+    // BMR = (9.247 × weight in kg) + (3.098 × height in cm) – (4.330 × age in years) + 447.593
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(ageInput, primaryHeightInput, secondaryHeightInput, weightInput, intensity);
+    setResultsActive(true);
+    HBFormula();
   };
 
   return (
@@ -74,7 +91,6 @@ function Calculator() {
 
         <div className={Class.height}>
           <label>Height</label>
-
           <section className={Class.buttons}>
             <button onClick={heightClickHandler} className={heightMetric === "Feet" && Class.buttonActive} name="Feet">
               Imperial
@@ -153,8 +169,43 @@ function Calculator() {
             </sub>
           )}
         </div>
+
+        <div className={Class.activityLevel}>
+          <label>Activity Level</label>
+          <section className={Class.buttons}>
+            <button onClick={intensityHandler} className={intensity === "Normal" && Class.buttonActive} name="Normal">
+              Sedentary
+            </button>
+            <button
+              onClick={intensityHandler}
+              className={intensity === "Accelerated" && Class.buttonActive}
+              name="Accelerated"
+            >
+              lightly active
+            </button>
+            <button onClick={intensityHandler} className={intensity === "Extreme" && Class.buttonActive} name="Extreme">
+              Moderately active
+            </button>
+            <button onClick={intensityHandler} className={intensity === "Extreme" && Class.buttonActive} name="Extreme">
+              Very active
+            </button>
+          </section>
+
+          {!intensity ? (
+            <sub>Select your activity level</sub>
+          ) : intensity === "Sedentary" ? (
+            <sub>Little or no exercise</sub>
+          ) : intensity === "Lightly" ? (
+            <sub>Light exercise/sports 1-3 days/week</sub>
+          ) : intensity === "Moderately" ? (
+            <sub>Moderate exercise/sports 3-5 days/week</sub>
+          ) : (
+            <sub>Hard exercise/sports 6-7 days a week</sub>
+          )}
+        </div>
         <button className={Class.submit}>Calculate</button>
       </form>
+      {resultsActive && <CalculatorResults />}
     </div>
   );
 }
