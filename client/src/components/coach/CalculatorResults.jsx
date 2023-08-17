@@ -1,6 +1,15 @@
 import Class from "./CalculatorResults.module.css";
+import {useContext} from "react";
+import {GlobalContext} from "../../context/GlobalContext";
+import {updateBudget} from "../../apis/userApi";
 
 function CalculatorResults({results}) {
+  const {setBudget} = useContext(GlobalContext);
+  const updateHandler = async () => {
+    setBudget(parseInt(results));
+    const success = await updateBudget(parseInt(results));
+  };
+
   return (
     <div className={Class.container}>
       <header>
@@ -8,7 +17,7 @@ function CalculatorResults({results}) {
         <h1>{results} cals</h1>
       </header>
       <section>
-        <button>Use Budget</button>
+        <button onClick={updateHandler}>Use Budget</button>
         <button>Re-do</button>
       </section>
       <sub>
