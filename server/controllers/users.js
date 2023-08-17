@@ -195,3 +195,26 @@ exports.removeCommunityId = async (req, res) => {
     console.error(error);
   }
 };
+
+exports.getBudget = async (req, res) => {
+  try {
+    const budget = await req.user.getBudget();
+    if (!budget) res.status(500).json();
+    res.status(200).json({
+      budget: budget,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.updateBudget = async (req, res) => {
+  try {
+    req.user.budget = req.body.budget;
+    const success = await req.user.updateBudget();
+    if (!success) res.status(500).json();
+    res.status(200).json();
+  } catch (error) {
+    console.error(error);
+  }
+};
