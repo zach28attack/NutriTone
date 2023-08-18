@@ -1,7 +1,7 @@
 import Class from "./FoodModal.module.css";
 import ModalRecentContent from "./ModalRecentContent";
 import ModalSearchContent from "./ModalSearchContent";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 function FoodModal(props) {
   const clickHandler = (e) => {
