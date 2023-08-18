@@ -11,12 +11,13 @@
   /* border: 1px solid black; */
 }
 .page h1 {
-  font-size: 3rem;
-  width: 120%;
+  font-size: 2rem;
+  width: fit-content;
+  border-bottom: #bf7d60 solid 1px;
 }
 .page h2 {
   padding-top: 1rem;
-  border-bottom: #bf7d60 solid 1px;
+
   width: 60%;
 }
 .page h3 {
@@ -27,4 +28,5 @@
   letter-spacing: 1px;
   color: #9a644d;
   margin-bottom: 1rem;
+  font-size: 0.8rem;
 }
