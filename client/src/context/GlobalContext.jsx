@@ -158,6 +158,13 @@ export function GlobalContextProvider(props) {
   // get all weight logs and sort them by time frame
   const getLogsAndSetLogs = async () => {
     const logs = await getWeightLogs();
+    if (logs.length === 0) {
+      // if logs array is empty intitalize the y-axis range as 0-100 on the stats page
+      setMin({weight: 20});
+      setMax({weight: 80});
+      return;
+    }
+
     const sortedLogs = logs.sort((a, b) => new Date(a.date) - new Date(b.date));
     setLogs(sortedLogs);
     setMin(logs.reduce((prev, current) => (prev.weight < current.weight ? prev : current)));
@@ -183,8 +190,8 @@ export function GlobalContextProvider(props) {
   };
 
   const getAndSetBudget = async () => {
-    const data = await getBudget();
-    setBudget(data);
+    let data = await getBudget();
+    !data ? undefined : setBudget(data);
   };
 
   useEffect(() => {
