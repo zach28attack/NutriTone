@@ -205,6 +205,7 @@ function HomePage() {
         updateTotalCals={updateLunchTotals}
         totalCalories={totalLunchCalories}
         deleteItem={deleteItemHandler}
+        recentItems={recentItems}
       />
       <Diary
         timeOfDay={"Dinner"}
@@ -214,6 +215,7 @@ function HomePage() {
         updateTotalCals={updateDinnerTotals}
         totalCalories={totalDinnerCalories}
         deleteItem={deleteItemHandler}
+        recentItems={recentItems}
       />
     </>
   );
