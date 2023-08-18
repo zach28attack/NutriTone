@@ -13,7 +13,6 @@ function DiarySummary(props) {
   }, [props.calories]);
 
   const {date, budget} = useContext(GlobalContext);
-  console.log(budget);
 
   return (
     <div className={Class.container}>
