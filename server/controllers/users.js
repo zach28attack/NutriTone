@@ -199,7 +199,6 @@ exports.removeCommunityId = async (req, res) => {
 exports.getBudget = async (req, res) => {
   try {
     const budget = await req.user.getBudget();
-    if (!budget) res.status(500).json();
     res.status(200).json({
       budget: budget,
     });
