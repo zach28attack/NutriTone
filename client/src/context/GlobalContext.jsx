@@ -201,6 +201,7 @@ export function GlobalContextProvider(props) {
       const date = new Date(year, 0, dayDate).toLocaleDateString();
       setDate(date);
     }
+    getAndSetCommunities();
 
     // get list of users liked posts
     getAndSetLikedPostIds();
@@ -220,7 +221,7 @@ export function GlobalContextProvider(props) {
     }
   }, [logs]);
   useEffect(() => {
-    getAndSetCommunities();
+    sortPosts(joinedCommunities);
   }, [communities]);
   return (
     <GlobalContext.Provider
