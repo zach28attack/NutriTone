@@ -164,19 +164,19 @@ function Calculator() {
               className={weightMetric === "Pounds" ? Class.buttonActive : ""}
               name="Pounds"
             >
-              Imperial
+              Pounds
             </button>
             <button
               onClick={weightClickHandler}
               className={weightMetric === "Kilo" ? Class.buttonActive : ""}
               name="Kilo"
             >
-              Metric
+              Kilograms
             </button>
           </section>
           <input
             type="text"
-            placeholder={`${weightMetric === "Pounds" ? "Pounds" : "Kilograms"}`}
+            placeholder={`${weightMetric === "Pounds" ? "lbs" : "kgs"}`}
             onChange={weightInputHandler}
           />
         </div>
