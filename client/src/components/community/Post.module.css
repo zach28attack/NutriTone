@@ -3,7 +3,7 @@
   min-height: 14rem;
   max-height: 28rem;
   background-color: white;
-  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 10px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
