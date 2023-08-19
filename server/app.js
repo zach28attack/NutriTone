@@ -17,6 +17,8 @@ const {
   updateUser,
   getBudget,
   updateBudget,
+  getImage,
+  uploadImage,
 } = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
 const {getCommunities, saveNewPost, deletePost, updatePost, addLike, removeLike} = require("./controllers/communities");
@@ -28,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.use(express.json({limit: "10mb"}));
 
 app.get("/communities", verifyToken, getCommunities);
 
@@ -57,6 +59,10 @@ app.patch("/user/community", verifyToken, removeCommunityId); // saves a communi
 app.get("/user/budget", verifyToken, getBudget);
 
 app.patch("/user/budget", verifyToken, updateBudget);
+
+app.get("/user/image", verifyToken, getImage);
+
+app.patch("/user/image", verifyToken, uploadImage);
 
 app.patch("/user", verifyToken, updateUser); // updates user's credentials
 

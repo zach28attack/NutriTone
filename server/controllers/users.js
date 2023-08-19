@@ -217,3 +217,25 @@ exports.updateBudget = async (req, res) => {
     console.error(error);
   }
 };
+
+exports.getImage = async (req, res) => {
+  try {
+    const imageData = await req.user.getImage();
+    res.status(200).json({
+      imageData: imageData,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+exports.uploadImage = async (req, res) => {
+  if (req.body.imageData === undefined) res.status(400).json();
+  try {
+    req.user.profilePic = req.body.imageData;
+    const success = await req.user.uploadImage();
+    if (success) res.status(200).json();
+    res.status(500).json();
+  } catch (error) {
+    console.error(error);
+  }
+};
