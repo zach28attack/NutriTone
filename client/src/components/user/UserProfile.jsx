@@ -1,11 +1,12 @@
 import Class from "./UserProfile.module.css";
 import {PiPencilFill} from "react-icons/pi";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {BiDotsVerticalRounded} from "react-icons/bi";
 import AccountModal from "../user/AccountModal";
 import ProfileSummary from "./ProfileSummary";
 import UserPosts from "./UserPosts";
 import Cookies from "js-cookie";
+import {getProfilePic} from "../../apis/userApi";
 
 function UserProfile() {
   const [nameIsActive, setNameIsActive] = useState();
@@ -13,6 +14,7 @@ function UserProfile() {
   const [accountModalIsActive, setAccountModalIsActive] = useState();
   const [name, setName] = useState(Cookies.get("name"));
   const [username, setUsername] = useState(Cookies.get("username"));
+  const [image, setImage] = useState();
 
   // when user hovers over name/username display edit button
   const displayEditButtonHandler = (e) => {
@@ -35,12 +37,19 @@ function UserProfile() {
   const accountClickHandler = () => {
     setAccountModalIsActive(!accountModalIsActive);
   };
+  const getUserProfileImg = async () => {
+    const imgData = await getProfilePic();
+    setImage(imgData);
+  };
+  useEffect(() => {
+    getUserProfileImg();
+  }, []);
 
   return (
     <>
       <section className={Class.container}>
         <article className={Class.profile}>
-          <img src="/default-profile-picture1.jpg" alt="" />
+          <img src={image ? image : "default-profile-picture1.jpg"} alt="user profile pic" />
           <div className={Class.nameGroup}>
             <div
               className={Class.nameContainer}
@@ -64,7 +73,12 @@ function UserProfile() {
           </div>
           <BiDotsVerticalRounded className={Class.accountEdit} onClick={accountClickHandler} />
           {accountModalIsActive && (
-            <AccountModal closeModal={accountClickHandler} setName={setName} setUsername={setUsername} />
+            <AccountModal
+              closeModal={accountClickHandler}
+              setName={setName}
+              setUsername={setUsername}
+              setImage={setImage}
+            />
           )}
           <ProfileSummary />
         </article>
