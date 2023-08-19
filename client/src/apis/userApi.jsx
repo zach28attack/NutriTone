@@ -219,3 +219,39 @@ export async function updateBudget(budget) {
     console.error(error);
   }
 }
+export async function getProfilePic() {
+  try {
+    const res = await fetch("http://localhost:3000/user/image", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.imageData;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function uploadImage(imageData) {
+  try {
+    const res = await fetch("http://localhost:3000/user/image", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        imageData: imageData,
+      }),
+    });
+    if (res.ok) {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
