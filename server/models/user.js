@@ -2,7 +2,7 @@ const {dbConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
-  constructor(email, username, password, token, id, log, likedPostId, communityId, budget) {
+  constructor(email, username, password, token, id, log, likedPostId, communityId, budget, profilePic) {
     this.email = email;
     this.username = username;
     this.password = password;
@@ -12,6 +12,7 @@ class User {
     this.likedPostId = likedPostId;
     this.communityId = communityId;
     this.budget = budget;
+    this.profilePic = profilePic;
   }
 
   async saveNew() {
@@ -42,7 +43,6 @@ class User {
             {_id: new mongoDB.ObjectId(this.id)},
             {$set: {name: this.name, username: this.username, email: this.email}}
           );
-        console.log(result);
         if (result.modifiedCount === 1) return true;
       }
     } catch (error) {
@@ -234,6 +234,28 @@ class User {
       if (result.modifiedCount === 1) {
         return true;
       } else return false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async getImage() {
+    try {
+      const db = await dbConnection();
+      const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
+      if (!result) return false;
+      return result.profilePic;
+    } catch (error) {}
+  }
+  async uploadImage() {
+    try {
+      const db = await dbConnection();
+      if (this.profilePic !== undefined) {
+        const result = await db
+          .collection("users")
+          .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$set: {profilePic: this.profilePic}});
+        console.log("result", result);
+        if (result.modifiedCount === 1) return true;
+      }
     } catch (error) {
       console.error(error);
     }
