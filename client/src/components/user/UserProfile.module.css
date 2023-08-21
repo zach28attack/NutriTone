@@ -5,6 +5,7 @@
 }
 .container img {
   width: 14rem;
+  height: 14rem;
   position: absolute;
   transform: translateX(2rem) translateY(4rem);
   border: #bf7d60 solid 4px;
