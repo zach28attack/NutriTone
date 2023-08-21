@@ -17,8 +17,10 @@ const {
   updateUser,
   getBudget,
   updateBudget,
-  getImage,
+  getCompressedImage,
   uploadImage,
+  compressImage,
+  getUserProfileImage,
 } = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
 const {getCommunities, saveNewPost, deletePost, updatePost, addLike, removeLike} = require("./controllers/communities");
@@ -60,9 +62,11 @@ app.get("/user/budget", verifyToken, getBudget);
 
 app.patch("/user/budget", verifyToken, updateBudget);
 
-app.get("/user/image", verifyToken, getImage);
+app.get("/user/image/:id", verifyToken, getCompressedImage); // get compressed user profile image
 
-app.patch("/user/image", verifyToken, uploadImage);
+app.get("/user/image", verifyToken, getUserProfileImage); // get hd user profile image
+
+app.patch("/user/image", verifyToken, uploadImage, compressImage);
 
 app.patch("/user", verifyToken, updateUser); // updates user's credentials
 
