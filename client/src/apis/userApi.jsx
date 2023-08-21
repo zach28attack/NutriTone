@@ -221,7 +221,7 @@ export async function updateBudget(budget) {
 }
 export async function getProfilePic() {
   try {
-    const res = await fetch("http://localhost:3000/user/image", {
+    const res = await fetch(`http://localhost:3000/user/image`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
@@ -231,6 +231,23 @@ export async function getProfilePic() {
     if (res.ok) {
       const data = await res.json();
       return data.imageData;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function getCompressedProfilePic(id) {
+  try {
+    const res = await fetch(`http://localhost:3000/user/image/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.compressedImageData;
     }
   } catch (error) {
     console.error(error);
