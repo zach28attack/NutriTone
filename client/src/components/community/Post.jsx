@@ -1,15 +1,17 @@
 import Class from "./Post.module.css";
-import {useState, useContext} from "react";
+import {useState, useContext, useEffect} from "react";
 import PostOptionsBtn from "./PostOptionsBtn";
 import Cookies from "js-cookie";
 import {updatePost} from "../../apis/communityApi";
 import HeartIcon from "./HeartIcon";
 import {GlobalContext} from "../../context/GlobalContext";
+import {getCompressedProfilePic} from "../../apis/userApi";
 
 function Post({post, groupName, id, communityId}) {
   const [isEditing, setIsEditing] = useState();
   const [input, setInput] = useState();
   const {updatePosts, likedPostIds, setLikedPostIds} = useContext(GlobalContext);
+  const [imageData, setImageData] = useState();
 
   const cancelEditHandler = () => {
     setIsEditing(false);
@@ -24,6 +26,20 @@ function Post({post, groupName, id, communityId}) {
     setIsEditing(false);
   };
 
+  const getAndSetImageData = async () => {
+    try {
+      const data = await getCompressedProfilePic(post.userId);
+      if (data) {
+        setImageData(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getAndSetImageData();
+  }, []);
+
   return (
     <div className={Class.post}>
       <header className={Class.header}>
@@ -31,7 +47,7 @@ function Post({post, groupName, id, communityId}) {
         <span>{new Date(post.date).toLocaleDateString()}</span>
       </header>
       <div className={Class.userGroup}>
-        <img src="/default-profile-picture1.jpg" className={Class.img} />
+        <img src={imageData ? imageData : "/default-profile-picture1.jpg"} className={Class.img} />
         <div className={Class.userNameGroup}>
           {post.name !== "undefined" ? (
             <>
