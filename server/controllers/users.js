@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const sharp = require("sharp");
 
 exports.signup = async (req, res) => {
   const user = new User();
@@ -218,7 +219,7 @@ exports.updateBudget = async (req, res) => {
   }
 };
 
-exports.getImage = async (req, res) => {
+exports.getUserProfileImage = async (req, res) => {
   try {
     const imageData = await req.user.getImage();
     res.status(200).json({
@@ -228,13 +229,66 @@ exports.getImage = async (req, res) => {
     console.error(error);
   }
 };
-exports.uploadImage = async (req, res) => {
+
+exports.getCompressedImage = async (req, res) => {
+  try {
+    const user = new User();
+    user.id = req.params.id;
+    const imageData = await user.getCompressedtImage();
+    if (!imageData) res.status(500).json();
+    res.status(200).json({
+      compressedImageData: imageData,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.uploadImage = async (req, res, next) => {
   if (req.body.imageData === undefined) res.status(400).json();
   try {
-    req.user.profilePic = req.body.imageData;
-    const success = await req.user.uploadImage();
-    if (success) res.status(200).json();
-    res.status(500).json();
+    const {imageData} = req.body;
+
+    // extract the base64-encoded data from the imageData
+    const base64Data = imageData.replace(/^data:image\/\w+;base64,/, "");
+
+    // convert base64 to buffer
+    const imageBuffer = Buffer.from(base64Data, "base64");
+
+    // compress the image using sharp
+    const compressedImageBuffer = await sharp(imageBuffer)
+      .resize(800, 800)
+      .jpeg({quality: 100}) // Set JPEG quality
+      .toBuffer();
+
+    req.user.profilePic = `data:image/jpeg;base64,${compressedImageBuffer.toString("base64")}`;
+    await req.user.uploadImage();
+    next();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+exports.compressImage = async (req, res) => {
+  try {
+    const {imageData} = req.body;
+
+    // extract the base64-encoded data from the imageData
+    const base64Data = imageData.replace(/^data:image\/\w+;base64,/, "");
+
+    // convert base64 to buffer
+    const imageBuffer = Buffer.from(base64Data, "base64");
+
+    // compress the image using sharp
+    const compressedImageBuffer = await sharp(imageBuffer)
+      .resize(200, 200)
+      .jpeg({quality: 50}) // Set JPEG quality
+      .toBuffer();
+
+    req.user.profilePic = `data:image/jpeg;base64,${compressedImageBuffer.toString("base64")}`;
+    const success = await req.user.uploadCompressedImage();
+    if (!success) res.status(500).json();
+    res.status(200).json();
   } catch (error) {
     console.error(error);
   }
