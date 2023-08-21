@@ -246,6 +246,14 @@ class User {
       return result.profilePic;
     } catch (error) {}
   }
+  async getCompressedtImage() {
+    try {
+      const db = await dbConnection();
+      const result = await db.collection("users").findOne({_id: new mongoDB.ObjectId(this.id)});
+      if (!result) return false;
+      return result.compressedImageData;
+    } catch (error) {}
+  }
   async uploadImage() {
     try {
       const db = await dbConnection();
@@ -253,7 +261,20 @@ class User {
         const result = await db
           .collection("users")
           .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$set: {profilePic: this.profilePic}});
-        console.log("result", result);
+        if (result.modifiedCount === 1) return true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async uploadCompressedImage() {
+    try {
+      const db = await dbConnection();
+      if (this.profilePic !== undefined) {
+        const result = await db
+          .collection("users")
+          .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$set: {compressedImageData: this.profilePic}});
+        console.log(result);
         if (result.modifiedCount === 1) return true;
       }
     } catch (error) {
