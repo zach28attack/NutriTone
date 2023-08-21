@@ -6,13 +6,12 @@ function DiarySummary(props) {
   const [calories, setCalories] = useState(0);
   const [caloriesBurned, setCaloriesBurned] = useState(0);
   const [under, setUnder] = useState(0);
+  const {date, budget} = useContext(GlobalContext);
 
   useEffect(() => {
     setCalories(props.calories);
     setUnder(budget - (props.calories - caloriesBurned));
-  }, [props.calories]);
-
-  const {date, budget} = useContext(GlobalContext);
+  }, [props.calories, budget]);
 
   return (
     <div className={Class.container}>
