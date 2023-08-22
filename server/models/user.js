@@ -2,10 +2,11 @@ const {dbConnection} = require("../database");
 const {genToken} = require("../jwtAuth");
 const mongoDB = require("mongodb");
 class User {
-  constructor(email, username, password, token, id, log, likedPostId, communityId, budget, profilePic) {
+  constructor(email, username, password, token, id, log, likedPostId, communityId, budget, profilePic, newPassword) {
     this.email = email;
     this.username = username;
     this.password = password;
+    this.newPassword = newPassword;
     this.token = token;
     this.id = id;
     this.log = log;
@@ -26,7 +27,7 @@ class User {
           .insertOne({email: this.email, username: this.username, password: this.password});
 
         this.id = await result.insertedId;
-        this.token = await genToken(this.id);
+        this.token = genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
       }
     } catch (error) {
@@ -36,15 +37,38 @@ class User {
   async updateUser() {
     try {
       const db = await dbConnection();
-      if (this.email && this.name && this.username) {
-        const result = await db
-          .collection("users")
-          .updateOne(
-            {_id: new mongoDB.ObjectId(this.id)},
-            {$set: {name: this.name, username: this.username, email: this.email}}
-          );
-        if (result.modifiedCount === 1) return true;
-      }
+      const result = await db
+        .collection("users")
+        .updateOne({_id: new mongoDB.ObjectId(this.id)}, {$set: {name: this.name, username: this.username}});
+      if (result.modifiedCount === 1) return true;
+      else return false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async updateEmail() {
+    try {
+      const db = await dbConnection();
+      const result = await db
+        .collection("users")
+        .updateOne({_id: new mongoDB.ObjectId(this.id), password: this.password}, {$set: {email: this.email}});
+      if (result.modifiedCount === 1) return true;
+      else return false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  async updatePassword() {
+    try {
+      const db = await dbConnection();
+      const result = await db
+        .collection("users")
+        .updateOne(
+          {_id: new mongoDB.ObjectId(this.id), password: this.password.toString()},
+          {$set: {password: this.newPassword}}
+        );
+      if (result.modifiedCount === 1) return true;
+      else return false;
     } catch (error) {
       console.error(error);
     }
