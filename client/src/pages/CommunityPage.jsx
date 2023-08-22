@@ -14,9 +14,12 @@ function CommunityPage() {
     useContext(GlobalContext);
 
   const [postsArr, setPostsArr] = useState([]);
+
   useEffect(() => {
     setPostsArr(posts);
+    return;
   }, [posts]);
+
   return (
     <div className={Class.page}>
       {!groupPageIsActive ? (
