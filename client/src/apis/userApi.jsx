@@ -34,7 +34,7 @@ export async function signup(email, username, password, passwordConfirmation) {
   }
 }
 
-export async function updateAccount(name, username, email, password, passwordConfirm) {
+export async function updateAccount(name, username) {
   try {
     const res = await fetch("http://localhost:3000/user", {
       method: "PATCH",
@@ -44,19 +44,67 @@ export async function updateAccount(name, username, email, password, passwordCon
       },
       body: JSON.stringify({
         name: name,
+        prevName: Cookies.get("name"),
         username: username,
         prevUsername: Cookies.get("username"),
-        email: email,
-        password: password,
-        passwordConfirm: passwordConfirm,
       }),
     });
     if (res.ok) {
       Cookies.set("name", name, {expires: 1});
       Cookies.set("username", username, {expires: 1});
+      return true;
+    } else {
+      const errorMsg = await res.json();
+      console.error(errorMsg.message);
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function updateAccountEmail(email, password) {
+  try {
+    const res = await fetch("http://localhost:3000/user/email", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    if (res.ok) {
       Cookies.set("email", email, {expires: 1});
       return true;
     } else {
+      const errorMsg = await res.json();
+      console.error(errorMsg.message);
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+export async function updateAccountPassword(newPassword, passwordConfirm, password) {
+  try {
+    const res = await fetch("http://localhost:3000/user/password", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: password,
+        newPassword: newPassword,
+        passwordConfirm: passwordConfirm,
+      }),
+    });
+    if (res.ok) return true;
+    else {
+      const errorMsg = await res.json();
+      console.error(errorMsg.message);
       return false;
     }
   } catch (error) {
