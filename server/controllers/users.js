@@ -64,25 +64,50 @@ exports.logout = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const user = req.user;
-    const {name, username, prevUsername, email, password, passwordConfirm} = req.body;
+    const {name, username, prevName, prevUsername} = req.body;
 
-    // TODO: verify email format with REGEX
-    // TODO: add password encryption to all authentication
+    // if new name exists then set name, else set as prevName when saving to db
+    if (name) user.name = name;
+    else user.name = prevName;
 
-    // if passwords dont pass validation return
-    if (password !== passwordConfirm || password.toString().length <= 2) return res.status(400).json();
+    // if new username exists then set name, else set as prevUsername when saving to db
+    if (username) user.username = username;
+    else user.username = prevUsername;
 
-    // set username to prevUsername to validate user
-    user.username = prevUsername;
-    user.password = password;
-    const success = await user.validateUser();
+    const success = await user.updateUser();
+    if (!success) res.status(400).json({message: "name or username is too short"});
+    res.status(200).json();
+  } catch (error) {
+    res.status(500).json();
+    console.error(error);
+  }
+};
 
-    if (!success) return res.status(400).json();
+exports.updateUserEmail = async (req, res) => {
+  try {
+    const user = req.user;
+    const {email, password} = req.body;
     user.email = email;
-    user.name = name;
-    user.username = username;
-    const updateSuccess = user.updateUser();
-    if (!updateSuccess) return res.status(500).json();
+    user.password = password;
+    const success = await user.updateEmail();
+    if (!success) res.status(401).json({message: "password is incorrect"});
+    res.status(200).json();
+  } catch (error) {
+    res.status(500).json();
+    console.error(error);
+  }
+};
+exports.updateUserPassword = async (req, res) => {
+  try {
+    const user = req.user;
+    const {password, newPassword, passwordConfirm} = req.body;
+    user.password = password;
+    user.newPassword = newPassword;
+    if (passwordConfirm !== newPassword || newPassword.toString().length <= 2)
+      res.status(401).json({message: "New passwords don't match or new password is too short"});
+    const success = await user.updatePassword();
+    if (!success) res.status(401).json({message: "password is incorrect"});
+
     res.status(200).json();
   } catch (error) {
     res.status(500).json();
