@@ -41,18 +41,21 @@ export function GlobalContextProvider(props) {
         obj[community._id] = community;
         return obj;
       }, {});
-      // Find joined communities based on their IDs and set the state in reverse order
-      let joinedArr = [];
-      for (let i = 0; i < res.joinedCommunities.length; i++) {
-        joinedArr.push(communitiesObj[res.joinedCommunities[i].communityId]);
-      }
-      setJoinedCommunities(joinedArr);
-      // Add a 'joined' field to each community object, indicating if the user has joined
-      const joinedIds = res.joinedCommunities.map((community) => community.communityId);
-      setCommunities(res.communities.map((community) => ({...community, joined: joinedIds.includes(community._id)})));
+      let joinedIds = [];
+      if (res.joinedCommunities) {
+        // Find joined communities based on their IDs and set the state in reverse order
+        let joinedArr = [];
+        for (let i = 0; i < res.joinedCommunities.length; i++) {
+          joinedArr.push(communitiesObj[res.joinedCommunities[i].communityId]);
+        }
+        setJoinedCommunities(joinedArr);
 
-      // sort posts in joinedCommunites by date
-      sortPosts(joinedArr);
+        // Add a 'joined' field to each community object, indicating if the user has joined
+        joinedIds = res.joinedCommunities.map((community) => community.communityId);
+        // sort posts in joinedCommunites by date
+        sortPosts(joinedArr);
+      }
+      setCommunities(res.communities.map((community) => ({...community, joined: joinedIds.includes(community._id)})));
 
       // Set loading state to false after processing
       setIsLoading(false);
