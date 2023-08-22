@@ -318,3 +318,10 @@ exports.compressImage = async (req, res) => {
     console.error(error);
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  const user = req.user;
+  const success = await user.deleteUser();
+  if (!success) res.status(500).json({message: "Failed to delete user"});
+  res.status(200).json();
+};

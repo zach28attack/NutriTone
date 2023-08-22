@@ -305,6 +305,16 @@ class User {
       console.error(error);
     }
   }
+  async deleteUser() {
+    try {
+      const db = await dbConnection();
+      const result = await db.collection("users").deleteOne({_id: new mongoDB.ObjectId(this.id)});
+      if (result.deletedCount === 1) return true;
+      else return false;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 module.exports = User;

@@ -320,3 +320,29 @@ export async function uploadImage(imageData) {
     console.error(error);
   }
 }
+
+export async function deleteAccount() {
+  try {
+    const res = await fetch("http://localhost:3000/user", {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      Cookies.remove("userId");
+      Cookies.remove("token");
+      Cookies.remove("dayDate");
+      Cookies.remove("name");
+      Cookies.remove("username");
+      return true;
+    } else {
+      const data = await res.json();
+      console.error(data.message);
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}

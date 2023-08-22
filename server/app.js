@@ -23,6 +23,7 @@ const {
   getUserProfileImage,
   updateUserEmail,
   updateUserPassword,
+  deleteUser,
 } = require("./controllers/users");
 const {getDiary, saveItemToDiary, getTenDiaries, updateItem, deleteItem} = require("./controllers/diaries");
 const {getCommunities, saveNewPost, deletePost, updatePost, addLike, removeLike} = require("./controllers/communities");
@@ -75,6 +76,8 @@ app.patch("/user/email", verifyToken, updateUserEmail);
 app.patch("/user/password", verifyToken, updateUserPassword);
 
 app.patch("/user", verifyToken, updateUser);
+
+app.delete("/user", verifyToken, deleteUser);
 
 app.post("/diary/item", verifyToken, saveItemToDiary); // new item route
 

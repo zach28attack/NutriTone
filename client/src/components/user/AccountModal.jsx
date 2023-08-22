@@ -2,7 +2,8 @@ import Class from "./AccountModal.module.css";
 import AccountForm from "./AccountForm";
 import {useState} from "react";
 import SettingsForm from "./SettingsForm";
-import {uploadImage} from "../../apis/userApi";
+import {uploadImage, deleteAccount} from "../../apis/userApi";
+import {useNavigate} from "react-router-dom";
 
 function AccountModal({closeModal, setName, setUsername, setImage}) {
   const bgHandler = (e) => {
@@ -12,7 +13,6 @@ function AccountModal({closeModal, setName, setUsername, setImage}) {
   };
   const [accountFormActive, setAccountFormActive] = useState(false);
   const [settingsFormActive, setSettingsFormActive] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
 
   const accountClickHandler = () => {
     setAccountFormActive(true);
@@ -33,6 +33,12 @@ function AccountModal({closeModal, setName, setUsername, setImage}) {
         uploadImage(reader.result);
       };
     }
+  };
+  const navigate = useNavigate();
+  const deleteAccountHandler = async () => {
+    const success = await deleteAccount();
+    if (!success) return;
+    navigate("/welcome");
   };
 
   return (
@@ -66,7 +72,7 @@ function AccountModal({closeModal, setName, setUsername, setImage}) {
             </section>
             <section className={Class.deleteGroup}>
               <h3>Delete Account</h3>
-              <button>DELETE</button>
+              <button onClick={deleteAccountHandler}>DELETE</button>
             </section>
           </div>
           //
@@ -81,8 +87,3 @@ function AccountModal({closeModal, setName, setUsername, setImage}) {
 }
 
 export default AccountModal;
-
-// make account modal more modern
-// open to list of settings
-
-//  - manage payment
