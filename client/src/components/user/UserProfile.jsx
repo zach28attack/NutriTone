@@ -49,7 +49,7 @@ function UserProfile() {
     <>
       <section className={Class.container}>
         <article className={Class.profile}>
-          <img src={image ? image : "default-profile-picture1.jpg"} alt="user profile pic" />
+          <img src={image ? image : "blank.png"} alt="user profile pic" />
           <div className={Class.nameGroup}>
             <div
               className={Class.nameContainer}

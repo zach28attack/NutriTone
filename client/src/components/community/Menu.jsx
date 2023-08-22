@@ -12,7 +12,7 @@ function Menu({setGroupPageIsActive, communities, isLoading, setActiveCommunityI
   return (
     <aside className={Class.container}>
       <header>
-        <img src="/default-profile-picture1.jpg" />
+        <img src="blank.png" />
         <div className={Class.nameGroup}>
           {Cookies.get("name") && <span>{Cookies.get("name")}</span>}
           <sub>@{Cookies.get("username")}</sub>

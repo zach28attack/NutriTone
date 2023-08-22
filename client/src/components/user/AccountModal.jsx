@@ -35,3 +35,11 @@ function AccountModal({closeModal, setName, setUsername, setImage}) {
 }
 
 export default AccountModal;
+// make account modal more modern
+// open to list of settings
+//  - upload image
+//  - manage payment
+//  - change password/email
+//  - and the already made account form for name/username
+//      - remove password authentication for superfluous data
+//  - delete account

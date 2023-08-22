@@ -47,7 +47,7 @@ function Post({post, groupName, id, communityId}) {
         <span>{new Date(post.date).toLocaleDateString()}</span>
       </header>
       <div className={Class.userGroup}>
-        <img src={imageData ? imageData : "/default-profile-picture1.jpg"} className={Class.img} />
+        <img src={imageData ? imageData : "blank.png"} className={Class.img} />
         <div className={Class.userNameGroup}>
           {post.name !== "undefined" ? (
             <>
