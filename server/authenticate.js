@@ -16,9 +16,9 @@ exports.verifyToken = async (req, res, next) => {
       }
     } catch (error) {
       console.error(error);
-      res.status(401).json();
+      res.status(400).json();
     }
   } else {
-    res.status(401).json();
+    res.status(400).json();
   }
 };
