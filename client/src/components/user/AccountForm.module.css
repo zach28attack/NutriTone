@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  margin: 1rem;
 }
 .form div {
   display: flex;

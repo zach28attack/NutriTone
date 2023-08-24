@@ -12,7 +12,8 @@
 }
 .modal {
   min-width: 35%;
-  height: 34rem;
+  min-height: 20rem;
+  max-height: 30rem;
   background-color: #fff3e6;
   border: solid 2px #bf7d60;
   border-radius: 10px;
@@ -86,6 +87,12 @@
   margin-top: 1rem;
   border: none;
   transform: translateY(-0.8rem);
+}
+.deleteGroup {
+  width: 100% !important;
+  bottom: 0;
+  position: absolute;
+  margin-bottom: 1rem;
 }
 .deleteGroup h3 {
   color: #da4100;
