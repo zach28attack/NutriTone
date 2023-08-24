@@ -98,8 +98,10 @@
   color: #da4100;
   border-top: #da4100 solid 2px;
   width: 100%;
+  padding-left: 1rem;
 }
 .deleteGroup button {
   background-image: linear-gradient(180deg, #ef341f, #c22817) !important;
   margin-top: 0.5rem !important;
+  margin-left: 1rem;
 }
