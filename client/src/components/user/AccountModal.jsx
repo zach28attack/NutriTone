@@ -62,14 +62,6 @@ function AccountModal({closeModal, setName, setUsername, setImage}) {
                 <input type="file" onChange={fileHandler} />
               </form>
             </section>
-            <section>
-              <h3>Update Payment method</h3>
-              <button onClick={accountClickHandler}>Name/Username</button>
-            </section>
-            <section>
-              <h3>Manage Subscription</h3>
-              <button onClick={settingsClickHandler}>Email or Password</button>
-            </section>
             <section className={Class.deleteGroup}>
               <h3>Delete Account</h3>
               <button onClick={deleteAccountHandler}>DELETE</button>
