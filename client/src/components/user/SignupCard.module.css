@@ -1,0 +1,20 @@
+.jumbotron {
+  margin: 1rem auto;
+  width: 70%;
+  height: 35rem;
+  background-color: #bf7d60;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  padding: 1rem 2rem;
+  right: 0;
+  transform: scale(0.8);
+  position: absolute;
+}
+.divider {
+  width: 5px;
+  height: 90%;
+  background-color: #fff3e6;
+  align-self: center;
+  border-radius: 10px;
+}

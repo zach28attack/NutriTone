@@ -33,12 +33,6 @@ function Login() {
         <input type="password" className={Class.input} onChange={passwordHandler}></input>
 
         <input type="submit" className={Class.login} />
-
-        <div className={Class.formLinks}>
-          <a className={Class.formLink}>Forgot Username</a>
-          <div className={Class.divider}></div>
-          <a className={Class.formLink}>Forgot Password</a>
-        </div>
       </form>
     </div>
   );
