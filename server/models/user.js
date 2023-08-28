@@ -29,6 +29,7 @@ class User {
         this.id = await result.insertedId;
         this.token = genToken(this.id);
         await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
+        return true;
       }
     } catch (error) {
       console.error(error);
@@ -76,14 +77,13 @@ class User {
   async validateUser() {
     try {
       const db = await dbConnection();
-      const result = await db.collection("users").findOne({username: this.username, password: this.password});
+      const result = await db.collection("users").findOne({username: this.username});
       if (result !== null) {
+        this.password = result.password; // hashed password will be compareed in controller
         this.id = result._id;
         this.username = result.username;
         this.email = result.email;
         result.name ? (this.name = result.name) : undefined;
-        this.token = await genToken(this.id);
-        await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
         return true;
       } else {
         return false;
@@ -91,6 +91,12 @@ class User {
     } catch (error) {
       console.error(error);
     }
+  }
+  async saveToken() {
+    const db = await dbConnection();
+    this.token = genToken(this.id);
+    const result = await db.collection("tokens").insertOne({token: this.token, userId: this.id, revoked: false});
+    return result.insertedId ? true : false;
   }
   async validateToken() {
     try {
@@ -114,11 +120,11 @@ class User {
       if (result.modifiedCount === 1) {
         return true;
       }
+      console.log(result);
     } catch (error) {
       console.error(error);
     }
   }
-
   async getLogs() {
     try {
       const db = await dbConnection();

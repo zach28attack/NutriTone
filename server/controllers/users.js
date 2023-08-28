@@ -1,20 +1,28 @@
 const User = require("../models/user");
 const sharp = require("sharp");
+const bcrypt = require("bcrypt");
+const {genToken} = require("../jwtAuth");
 
 exports.signup = async (req, res) => {
   const user = new User();
   user.email = req.body.email;
   user.username = req.body.username;
-  user.password = req.body.password;
+  const plainPassword = req.body.password;
 
-  if (user.email && user.username && user.password && user.password === req.body.passwordConfirmation) {
+  if (user.email && user.username && plainPassword && plainPassword === req.body.passwordConfirmation) {
     try {
-      await user.saveNew();
-      res.status(200).json({
-        username: user.username,
-        id: user.id,
-        token: user.token,
+      bcrypt.hash(plainPassword, 10, function (err, hash) {
+        user.password = hash;
+        if (err) console.error("Hashing error:", err);
       });
+      const success = await user.saveNew();
+      if (success) {
+        res.status(200).json({
+          username: user.username,
+          id: user.id,
+          token: user.token,
+        });
+      } else res.status(500).json();
     } catch (error) {
       console.error(error);
       res.status(400).json();
@@ -27,19 +35,27 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   const user = new User();
   user.username = req.body.username;
-  user.password = req.body.password;
+  const plainPassword = req.body.password;
   try {
     const success = await user.validateUser();
     if (success) {
-      res.status(200).json({
-        username: user.username,
-        name: user.name,
-        email: user.email,
-        id: user.id,
-        token: user.token,
+      bcrypt.compare(plainPassword, user.password, async function (err, result) {
+        const tokenSuccess = await user.saveToken(); // generate JWT token and save to db
+        if (result && tokenSuccess) {
+          res.status(200).json({
+            username: user.username,
+            name: user.name,
+            email: user.email,
+            id: user.id,
+            token: user.token,
+          });
+        } else {
+          console.error(err);
+          res.status(401).json();
+        }
       });
     } else {
-      res.status(401).json({});
+      res.status(401).json();
     }
   } catch (error) {
     console.error(error);
@@ -50,11 +66,12 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
   try {
     const user = req.user;
+    console.log(user);
     const success = await user.revokeToken();
     if (success) {
       res.status(200).json();
     } else {
-      res.status(500).json();
+      res.status(500).json({message: "Token revoke failure"});
     }
   } catch (error) {
     console.error(error);
@@ -260,9 +277,13 @@ exports.getCompressedImage = async (req, res) => {
     const user = new User();
     user.id = req.params.id;
     const imageData = await user.getCompressedtImage();
-    if (!imageData) res.status(500).json();
+    if (imageData) {
+      res.status(200).json({
+        compressedImageData: imageData,
+      });
+    }
     res.status(200).json({
-      compressedImageData: imageData,
+      compressedImageData: undefined,
     });
   } catch (error) {
     console.error(error);
