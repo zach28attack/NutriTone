@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 export async function signup(email, username, password, passwordConfirmation) {
   try {
-    const response = await fetch("http://localhost:3000/user/signup", {
+    const res = await fetch("http://localhost:3000/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,8 +14,8 @@ export async function signup(email, username, password, passwordConfirmation) {
         passwordConfirmation: passwordConfirmation,
       }),
     });
-    if (response.ok) {
-      const data = await response.json();
+    if (res.ok) {
+      const data = await res.json();
       const today = new Date();
       const startOfYear = new Date(today.getFullYear(), 0, 1);
       const dayDate = Math.ceil((today - startOfYear) / (1000 * 60 * 60 * 24));
@@ -114,14 +114,14 @@ export async function updateAccountPassword(newPassword, passwordConfirm, passwo
 
 export async function logout() {
   try {
-    const response = await fetch("http://localhost:3000/user/logout", {
+    const res = await fetch("http://localhost:3000/user/logout", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     });
-    if (response.ok) {
+    if (res.ok) {
       Cookies.remove("userId");
       Cookies.remove("token");
       Cookies.remove("dayDate");
@@ -129,7 +129,8 @@ export async function logout() {
       Cookies.remove("username");
       return true;
     } else {
-      console.error("Server error on logout");
+      const data = await res.json();
+      console.error(data.message);
       return false;
     }
   } catch (error) {
@@ -139,15 +140,15 @@ export async function logout() {
 
 export async function login(username, password) {
   try {
-    const response = await fetch("http://localhost:3000/user/login", {
+    const res = await fetch("http://localhost:3000/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({username: username, password: password}),
     });
-    if (response.ok) {
-      const data = await response.json();
+    if (res.ok) {
+      const data = await res.json();
       const today = new Date();
       const startOfYear = new Date(today.getFullYear(), 0, 1);
       const dayDate = Math.ceil((today - startOfYear) / (1000 * 60 * 60 * 24));
