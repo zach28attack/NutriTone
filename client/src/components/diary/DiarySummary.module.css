@@ -8,7 +8,7 @@
 }
 
 .summary {
-  width: 70%;
+  width: 60%;
   height: 100%;
   font-size: 2rem;
   background-color: white;
@@ -21,7 +21,7 @@
 .summaryHeader {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: #bf7d60;
   color: white;
 }
@@ -31,7 +31,7 @@
 .listValues {
   list-style: none;
   display: grid;
-  grid-template-columns: 5fr 1fr 5fr 1fr 5fr 1fr 5fr 1fr 5fr;
+  grid-template-columns: 5fr 1fr 5fr 1fr 5fr;
 }
 .valueItem {
   margin: 0 auto;
