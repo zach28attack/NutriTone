@@ -4,13 +4,12 @@ import {GlobalContext} from "../../context/GlobalContext";
 
 function DiarySummary(props) {
   const [calories, setCalories] = useState(0);
-  const [caloriesBurned, setCaloriesBurned] = useState(0);
   const [under, setUnder] = useState(0);
   const {date, budget} = useContext(GlobalContext);
 
   useEffect(() => {
     setCalories(props.calories);
-    setUnder(budget - (props.calories - caloriesBurned));
+    setUnder(budget - props.calories);
   }, [props.calories, budget]);
 
   return (
@@ -22,8 +21,6 @@ function DiarySummary(props) {
         <ul className={Class.summaryHeader}>
           <li className={Class.headerItem}>Budget</li>
           <li className={Class.headerItem}>Food</li>
-          <li className={Class.headerItem}>Exercise</li>
-          <li className={Class.headerItem}>Net</li>
           <li className={Class.headerItem}>Under</li>
         </ul>
         <ul className={Class.listValues}>
@@ -31,10 +28,7 @@ function DiarySummary(props) {
           <li className={Class.valueItem}>+</li>
           <li className={Class.valueItem}>{calories}</li>
           <li className={Class.valueItem}>+</li>
-          <li className={Class.valueItem}>{caloriesBurned}</li>
-          <li className={Class.valueItem}>+</li>
-          <li className={Class.valueItem}>{calories - caloriesBurned}</li>
-          <li className={Class.valueItem}>+</li>
+
           <li className={Class.valueItem}>
             <div className={`${under >= 0 ? Class.calsUnder : Class.calsOver}`}>{under}</div>
           </li>
