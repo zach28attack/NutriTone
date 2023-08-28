@@ -1,19 +1,15 @@
-.jumbotron {
-  margin: 1rem auto;
-  width: 70%;
-  height: 35rem;
-  background-color: #bf7d60;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
+.container img {
+  position: fixed; /* Position it relative to the viewport */
+  top: 0;
+  left: 0;
+  height: 100vh; /* 100% of viewport height */
+  overflow: hidden;
 }
-.divider {
-  width: 5px;
-  height: 90%;
-  background-color: #fff3e6;
-  align-self: center;
-  border-radius: 10px;
+.background {
+  background-color: #bf7d60;
+}
+.container {
+  background-color: #bf7d60 !important;
+  width: 100vw;
+  height: 100vh;
 }
