@@ -14,3 +14,7 @@
 
 - Coaching
   - Users can calculate budgeting goals by inputing thie gender, age, weight, activity level, and desired intensity
+
+## Techonologies
+
+React.js, Node.js, Express.js, MongoDB, Javascript
