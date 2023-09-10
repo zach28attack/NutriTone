@@ -6,7 +6,6 @@ function SignupCard() {
   return (
     <div className={Class.jumbotron}>
       <UserSignup />
-      <div className={Class.divider}></div>
       <UserLogin />
     </div>
   );
