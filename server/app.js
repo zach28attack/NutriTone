@@ -95,4 +95,6 @@ app.post("/logs", verifyToken, saveNewLog);
 
 app.delete("/logs", verifyToken, deleteLog);
 
+app.get("/foods/search", require("./usda"));
+
 app.listen(3000);

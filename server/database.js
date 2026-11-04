@@ -1,3 +1,4 @@
+const {requiredEnv} = require("./config");
 const mongoDB = require("mongodb");
 const mongoClient = mongoDB.MongoClient;
 
@@ -18,7 +19,7 @@ exports.dbConnection = dbConnection;
 
 // connect and return db
 async function connectDB() {
-  const uri = "mongodb+srv://zach28attack:MongoDBPassword@cluster0.im0uft8.mongodb.net/?retryWrites=true&w=majority";
+  const uri = requiredEnv("MONGODB_URI");
   try {
     client = new mongoClient(uri);
     const clientConnection = await client.connect();

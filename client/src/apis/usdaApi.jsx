@@ -1,7 +1,6 @@
 export async function apiTest(searchItem) {
   try {
-    const apiKey = "e2Viz8HtgD5XR78PeWbUKi58HkmmfiseLhdC8vma";
-    const res = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${apiKey}&query=${searchItem}`, {
+    const res = await fetch(`http://127.0.0.1:3000/foods/search?query=${encodeURIComponent(searchItem)}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
